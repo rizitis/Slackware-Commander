@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Encoding=UTF-8
+Name=Slackware-Commander
+Comment=configuration loader
+Exec=kdesu /usr/local/bin/Slackware-Commander.sh
+Icon=/usr/share/icons/Slackware-Commander/Slackware-Commander.png
+Terminal=false
+Categories=Settings;HardwareSettings;
