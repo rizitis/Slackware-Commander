@@ -1,30 +1,4 @@
 #! /bin/bash
-
-# Slackware-Commander Anagnostakis Ioannis <rizitis@gmail.com> Chania Greece 4/2023
-# It is based on this work http://pclosmag.com/html/Issues/200910/page21.html
-# rcstatus script is from https://www.linuxquestions.org/questions/slackware-14/how-can-i-check-the-system-running-services-534612/page2.html#post6410525
-# Thank you very much.
-# requires: gtkdialog, zenity. From SlackBuilds.org
-
-# Permission is hereby granted, free of charge, to any person obtaining
-# a copy of this software and associated documentation files (the
-# "Software"), to deal in the Software without restriction, including
-# without limitation the rights to use, copy, modify, merge, publish,
-# distribute, sublicense, and/or sell copies of the Software, and to
-# permit persons to whom the Software is furnished to do so, subject to
-# the following conditions:
-#
-# The above copyright notice and this permission notice shall be
-# included in all copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-# IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-# CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-# TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-# SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
 Encoding=UTF-8
 
 FILE1=/etc/X11/xorg.conf
@@ -39,29 +13,38 @@ FILE9=/etc/group
 FILE10=/etc/sudoers
 dir1=/usr/share/icons/Slackware-Commander/
 
-
 export MAIN_DIALOG='
 <window window_position="1" title="Slackware Commander">
 
-<vbox homogeneous="False">
+<vbox>
   <hbox homogeneous="True">
     <frame>
     <hbox homogeneous="True">
       
-      <pixmap>
-            <input file>/usr/share/icons/Slackware-Commander/slackware.png</input>
-          </pixmap><text use-markup="true"><label>"<span color='"'white'"' font-family='"'purisa'"' weight='"'bold'"' size='"'large'"'><small>System Tools</small></span>"</label></text>
-          
-              <button>
+
+      <vbox homogeneous="True">
+        
+        <pixmap>
+            <input file>/usr/share/icons/Slackware-Commander/slackware_logo_med.png</input>
+          </pixmap><text use-markup="true"><label>"<span color='"'white'"' font-family='"'purisa'"' weight='"'bold'"' size='"'large'"'><small>System Commander</small></span>"</label></text>
+      </vbox>
+    </hbox>
+    </frame>
+    
+    
+    
+    
+    
+    
+    <vbox>
+    <frame Slackware Package Manager>
+    <button>
           <label>Slackpkg Update</label>
           <action>xfce4-terminal -x /usr/sbin/slackpkg update &</action>
           <input file>/usr/share/icons/Adwaita/32x32/status/software-update-urgent-symbolic.symbolic.png</input>
-        </button>  
-      
-
-
-      <vbox homogeneous="True">
-        <button>
+        </button> 
+    
+    <button>
          <input file>/usr/share/icons/Adwaita/32x32/actions/document-save-as-symbolic.symbolic.png</input>
           <label>Slackpkg Upgrade-all</label>
           <action>xfce4-terminal -x /usr/sbin/slackpkg upgrade-all &</action>
@@ -77,17 +60,38 @@ export MAIN_DIALOG='
            <input file>/usr/share/icons/Adwaita/32x32/actions/edit-find-replace-symbolic.symbolic.png</input>
           <label>Slackpkg new-config</label>
           <action>xfce4-terminal -x /usr/sbin/slackpkg new-config &</action>
-        </button>
-
-      </vbox>
-    </hbox>
-    </frame>
+        </button> 
     
-       
-      <vbox homogeneous="True">
-      <frame Slackpkg configs>
+    
+    </frame>
+      </vbox>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
-        <button>
+    <vbox>
+      <frame Slackpkg setup>
+
+        
+<button>
           <input file>/usr/share/icons/Adwaita/32x32/actions/document-properties-symbolic.symbolic.png</input>
           <label>BLACKLIST </label>
           <action>xfce4-terminal -x nano /etc/slackpkg/blacklist &</action>
@@ -101,20 +105,44 @@ export MAIN_DIALOG='
           <input file>/usr/share/icons/Adwaita/32x32/actions/document-page-setup-symbolic.symbolic.png</input>
           <label>Slackpkg.conf</label>
           <action>xfce4-terminal -x nano /etc/slackpkg/slackpkg.conf &</action>
-        </button>      
-       </frame>
+        </button> 
+        <button>
+          <input file>/usr/share/icons/Adwaita/32x32/categories/emoji-recent-symbolic.symbolic.png</input>
+          <label>ChangeLog</label>
+          <action>cat /var/lib/slackpkg/ChangeLog.txt | zenity --text-info --width=600 --height=600 --title $"ChangeLog" &</action>
+        </button> 
+        </frame>
       </vbox>
-     
     </hbox>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
-    <frame Installed Packages Informations and commands...>
+    <frame Packages Commander>
     <hbox>
       <text> <label>Package:</label> </text>
       <entry><variable>VAR1</variable></entry>
     </hbox>
 
     <hbox>
-      <button>
+        <button>
         <label>slackpkg install</label>
         <action>xfce4-terminal -H -x slackpkg install $VAR1 &</action>
       </button>
@@ -157,21 +185,28 @@ export MAIN_DIALOG='
       <button>
         <label>Manual</label>
         <action>man $VAR1 | zenity --text-info --width=400 --height=500 --title $"Manual" &</action>
-      </button> 
-      <button>
-      <label> Last Installed Packages</label>
-      <action>ls -ltr /var/log/packages/ | zenity --text-info --width=900 --height=600 --title $"Last Installed Packages" &</action>
       </button>
-      <button>
-      <label>All Installed Packages</label>
-      <action>cd /var/adm/packages && ls | zenity --text-info --width=900 --height=600 --title $"All Installed Packages" &</action>
-      </button>
-      
     </hbox>
     </frame>
     <hbox homogeneous="True">
 
-    <frame Hardware files>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <frame Hardware Informations>
       <vbox>
         <button>
           <input file>/usr/share/icons/Adwaita/16x16/devices/computer-symbolic.symbolic.png</input>
@@ -217,9 +252,26 @@ export MAIN_DIALOG='
       </vbox>
     </frame>
 
-    <frame Package Managers.conf>
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+    <frame Package Managers>
       <vbox>
         <hbox>
+         <entry><variable>VAR2</variable></entry>
           <pixmap>
             <input file>/usr/share/icons/Adwaita/32x32/categories/applications-utilities-symbolic.symbolic.png</input>
           </pixmap>
@@ -232,25 +284,55 @@ export MAIN_DIALOG='
             </menuitem>
 
             <menuitem>
-              <label>EMPTY FILE</label>
-              <action>echo "NOT IN USE, BUT JUST IN CASE" | zenity --text-info  --width=900 --height=10 --title "NO ENTRY"&</action>
+              <label>Not supported yet</label>
+              <action>echo "NOT IN USE, BUT SOON WILL BE..." | zenity --text-info  --width=900 --height=10 --title "NO ENTRY"&</action>
             </menuitem>
 
             
-          <label>Slackpkg+</label>
+          <label>slackpkg+</label>
           </menu>
           </menubar>
         </hbox>
 
         <hbox>
-          <pixmap>
+          <entry><variable>VAR3</variable></entry><pixmap>
             <input file>/usr/share/icons/Adwaita/32x32/categories/applications-engineering-symbolic.symbolic.png</input>
           </pixmap>
 
           <menubar>
           <menu>
+          <menuitem>
+          <label>sbopkg update</label>
+          <action>xfce4-terminal -x sbopkg -r &</action>          
+          </menuitem>
+          
+          <menuitem>
+          <label>sbopkg search for package</label>
+          <action>sbopkg -g $VAR3 | zenity --text-info  --width=200 --height=600 --title $"FILES" &</action>          
+          </menuitem>
+          
+          <menuitem>
+          <label>sbopkg view package files</label>
+          <action>sbopkg -s $VAR3 | zenity --text-info  --width=900 --height=600 --title $"FILES" &</action>          
+          </menuitem>
+          
+          <menuitem>
+          <label>sbopkg build package only</label>
+          <action>xfce4-terminal -H -x sbopkg -b $VAR3 &</action>          
+          </menuitem>
+          
+          <menuitem>
+          <label>sbopkg install (sqg -p && sbopkg -k -i)</label>
+          <action>sqg -p $VAR3 && xfce4-terminal -H -x sbopkg -k -i $VAR3 &</action>          
+          </menuitem>
+          
+          <menuitem>
+          <label>Display a list of installed SBo packages and potential updates (need some time)</label>
+          <action>sbopkg -c -q | zenity --text-info  --width=900 --height=600 --title $"FILES" &</action>          
+          </menuitem>
+                  
             <menuitem>
-              <label>Blacklist</label>
+              <label>sbopkg blacklist</label>
               <action>xfce4-terminal -x nano /etc/sbopkg/blacklist &</action>
             </menuitem>
 
@@ -270,12 +352,58 @@ export MAIN_DIALOG='
         </hbox>
 
         <hbox>
-          <pixmap>
+          <entry><variable>VAR4</variable></entry><pixmap>
             <input file>/usr/share/icons/Adwaita/32x32/categories/preferences-system-symbolic.symbolic.png</input>
           </pixmap>
 
           <menubar>
           <menu>
+          
+          <menuitem>
+          <label>check-updates </label>
+          <action>xfce4-terminal -H -x slpkg -c &</action>          
+          </menuitem>
+          
+          <menuitem>
+          <label>slpkg update </label>
+          <action>xfce4-terminal -H -x slpkg -u &</action>          
+          </menuitem>
+          
+          <menuitem>
+          <label>slpkg Upgrade all the installed packages </label>
+          <action>xfce4-terminal -H -x slpkg -U &</action>          
+          </menuitem>
+          
+          <menuitem>
+          <label>slpkg search slackbuilds </label>
+          <action>xfce4-terminal -H -x slpkg -s $VAR4 &</action>          
+          </menuitem>
+          
+          <menuitem>
+          <label>Tracking the packages dependencies </label>
+          <action>xfce4-terminal -H -x slpkg -t $VAR4 &</action>          
+          </menuitem>
+          
+          <menuitem>
+          <label>View information packages from the repository </label>
+          <action>xfce4-terminal -H -x slpkg -w $VAR4 &</action>          
+          </menuitem>
+          
+          <menuitem>
+          <label>slpkg build package only </label>
+          <action>xfce4-terminal -H -x slpkg -by $VAR4 &</action>          
+          </menuitem>
+          
+          <menuitem>
+          <label>slpkg reinstall </label>
+          <action>xfce4-terminal -H -x slpkg -iry $VAR4 &</action>          
+          </menuitem>
+          
+          <menuitem>
+          <label>slpkg install </label>
+          <action>xfce4-terminal -H -x slpkg -iy $VAR4 &</action>          
+          </menuitem>
+          
             <menuitem>
               <label>Edit repo.toml</label>
               <action>xfce4-terminal -x nano /etc/slpkg/repositories.toml &</action>
@@ -300,12 +428,14 @@ export MAIN_DIALOG='
           <label>slpkg</label>
           </menu>
           </menubar>
-
         </hbox>
-     <pixmap>
-            <input file>'"$dir1"'slackware_logo_med.png</input>
-          </pixmap>
-          <button>
+<button>
+          <label>View dmesg messages</label>
+          <action>dmesg | zenity --text-info  --width=900 --height=700 --title $"View kernel messages" &</action>
+        </button>
+
+        
+        <button>
           <label>Loaded modules</label>
           <action>lsmod | zenity --text-info  --width=700 --height=500 --title $"View loaded modules" &</action>
         </button>
@@ -319,18 +449,26 @@ export MAIN_DIALOG='
           <label>Terminal as root</label>
           <action>xfce4-terminal &</action>
         </button>
+
       </vbox>
     </frame>
     </hbox>
-        
 
     
-      <hbox><frame System Files>
-        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <hbox>
+      <frame System Files>
         <hbox>
-        
-         <button><label>'"$FILE1"'</label><action>zenity --title='"$FILE1"' --text-info --width 500 --height 400 --filename='"$FILE1"' &</action></button>
-          <button><input file>/usr/share/icons/Adwaita/32x32/legacy/preferences-desktop-display-symbolic.symbolic.png</input><action>xfce4-terminal -x nano $"FILE1" &</action></button>
+          <button><label>'"$FILE1"'</label><action>zenity --title='"$FILE1"' --text-info --width 500 --height 400 --filename='"$FILE1"' &</action></button>
+          <button><input file>/usr/share/icons/Adwaita/32x32/legacy/preferences-desktop-display-symbolic.symbolic.png</input><action>xfce4-terminal -x nano '"$FILE1"' &</action></button>
         </hbox>
 
         <hbox>
@@ -408,50 +546,12 @@ export MAIN_DIALOG='
           </button>
 
         </hbox>
-       
       </frame>
     </hbox>
-     
- <frame>
-    <hbox homogeneous="True">
-       <button>
-          <label>Execute SBKS</label>
-          <action>xfce4-terminal -x SBKS &</action>
-        </button> 
-        <button>
-          <label>info</label>
-          <action>xdg-open https://raw.githubusercontent.com/rizitis/SBKS/main/README.md &</action>
-        </button> 
-        <button>
-          <label>install SBKS</label>
-          <action>xfce4-terminal -x wget -P /usr/local/bin/ https://raw.githubusercontent.com/rizitis/SBKS/main/SBKS && xfce4-terminal -x chmod +x /usr/local/bin/SBKS &</action>
-        </button> 
 
-      <text use-markup="true"><label>"<span color='"'green'"' font-family='"'purisa'"' weight='"'bold'"' size='"'large'"'><small>OPTIONAL TOOLS</small></span>"</label></text>
-
-      <button>
-          <label>Execute slackup-grub</label>
-          <action>xfce4-terminal -x /etc/rc.d/slackup-grub.sh &</action>
-        </button> 
-        <button>
-          <label>info</label>
-          <action>xdg-open https://raw.githubusercontent.com/rizitis/slackup-grub/main/README.md &</action>
-        </button> 
-        <button>
-        <label>install slackup-grub</label>
-          <action>xfce4-terminal -x wget -P /etc/rc.d/ https://raw.githubusercontent.com/rizitis/slackup-grub/main/slackup-grub.sh && xfce4-terminal -x chmod +x /etc/rc.d/slackup-grub.sh &</action>
-        </button><button>
-        <label>edit rc.6</label>
-        <action>echo "if [ -x /etc/rc.d/slackup-grub.sh ]; then /etc/rc.d/slackup-grub.sh fi" |  zenity --text-info --title="COPY PASTE THIS TO RC.6" --width 500 --height 400 &</action>
-          <action>xfce4-terminal -x nano /etc/rc.d/rc.6 &</action>
-          
-        </button>    
-    </hbox>
-    </frame>
+    
   </vbox>
   </window>
   '
 
   gtkdialog --program=MAIN_DIALOG
-
-
