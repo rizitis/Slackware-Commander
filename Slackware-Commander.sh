@@ -418,7 +418,7 @@ export MAIN_DIALOG='
         </button> 
         <button>
           <label>info</label>
-          <action>xfce4-terminal -x lynx https://raw.githubusercontent.com/rizitis/SBKS/main/README.md &</action>
+          <action>xdg-open https://raw.githubusercontent.com/rizitis/SBKS/main/README.md &</action>
         </button> 
         <button>
           <label>install SBKS</label>
@@ -433,7 +433,7 @@ export MAIN_DIALOG='
         </button> 
         <button>
           <label>info</label>
-          <action>xfce4-terminal -x lynx https://raw.githubusercontent.com/rizitis/slackup-grub/main/README.md &</action>
+          <action>xdg-open https://raw.githubusercontent.com/rizitis/slackup-grub/main/README.md &</action>
         </button> 
         <button>
         <label>install slackup-grub</label>
