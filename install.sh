@@ -5,7 +5,7 @@ dir2=/usr/share/applications/
 dir3=/usr/local/bin/
 
 mkdir -p "$dir1" || exit 
-cp Slackware-Commander.png "$dir1"
+cp Slackware-Commander2.png "$dir1"
 cp slackware_logo_med.png "$dir1"
 cp slackware_whitelogo_med.png "$dir1"
 cp slackware.png "$dir1"
