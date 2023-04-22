@@ -12,7 +12,7 @@ gtkdialog
 zenity
 ```
 ![Slackware-Commander](https://github.com/rizitis/Slackware-Commander/raw/main/Slackware-Commander.png)
-#### Dark and white 
+#### Dark and Light 
 ![Slackware-Commander1](https://github.com/rizitis/Slackware-Commander/raw/main/Slackware-Commander1.png)
 
 ##### Uninstall
