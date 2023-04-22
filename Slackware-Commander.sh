@@ -2,6 +2,8 @@
 
 # Slackware-Commander Anagnostakis Ioannis <rizitis@gmail.com> Chania Greece 4/2023
 # It is based on this work http://pclosmag.com/html/Issues/200910/page21.html
+# rcstatus script is from https://www.linuxquestions.org/questions/slackware-14/how-can-i-check-the-system-running-services-534612/page2.html#post6410525
+# Thank you very much.
 # requires: gtkdialog, zenity. From SlackBuilds.org
 
 # Permission is hereby granted, free of charge, to any person obtaining
