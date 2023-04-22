@@ -391,12 +391,12 @@ export MAIN_DIALOG='
           
           <menuitem>
           <label>slpkg update </label>
-          <action>xfce4-terminal -H -x slpkg -u &</action>          
+          <action>xfce4-terminal -H -x slpkg update &</action>          
           </menuitem>
           
           <menuitem>
           <label>slpkg Upgrade all the installed packages </label>
-          <action>xfce4-terminal -H -x slpkg -U &</action>          
+          <action>xfce4-terminal -H -x slpkg upgrade &</action>          
           </menuitem>
           
           <menuitem>
