@@ -2,9 +2,8 @@
 Slackware Commander
 
 ## Install
-Download zip file, extract, and run as root 
 ```
-./install.sh
+https://github.com/rizitis/Slackware-Commander/releases
 ```
 ### requires
 ```
