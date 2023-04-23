@@ -24,6 +24,7 @@
 # CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 # TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 # SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 Encoding=UTF-8
 
 FILE1=/etc/X11/xorg.conf
@@ -65,58 +66,41 @@ export MAIN_DIALOG='
     <frame Slackware Package Manager>
     <button>
           <label>Slackpkg Update</label>
-          <action>xfce4-terminal -x /usr/sbin/slackpkg update &</action>
+          <action>rm /var/lock/slackpkg.* &</action>
+          <action>xfce4-terminal -H -x  /usr/sbin/slackpkg update &</action>
           <input file>/usr/share/icons/Adwaita/32x32/status/software-update-urgent-symbolic.symbolic.png</input>
         </button> 
     
     <button>
          <input file>/usr/share/icons/Adwaita/32x32/actions/document-save-as-symbolic.symbolic.png</input>
           <label>Slackpkg Upgrade-all</label>
-          <action>xfce4-terminal -x /usr/sbin/slackpkg upgrade-all &</action>
+          <action>rm /var/lock/slackpkg.* &</action>
+          <action>xfce4-terminal -H -x /usr/sbin/slackpkg upgrade-all &</action>
         </button>        
         
         <button>
           <input file>/usr/share/icons/Adwaita/32x32/actions/star-new-symbolic.symbolic.png</input>
           <label>Slackpkg Install-new</label>
-          <action>xfce4-terminal -x slackpkg install-new &</action>
+          <action>rm /var/lock/slackpkg.* &</action>
+          <action>xfce4-terminal -H -x slackpkg install-new &</action>
         </button>
         
         <button>
            <input file>/usr/share/icons/Adwaita/32x32/actions/edit-find-replace-symbolic.symbolic.png</input>
           <label>Slackpkg new-config</label>
-          <action>xfce4-terminal -x /usr/sbin/slackpkg new-config &</action>
-        </button> 
-    
-    
-    </frame>
-      </vbox>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+           <action>rm /var/lock/slackpkg.* &</action>
+          <action>xfce4-terminal -H -x /usr/sbin/slackpkg new-config &</action>
+        </button>     
+     </frame>
+   </vbox>   
     
     
     
     
 
     <vbox>
-      <frame Slackpkg setup>
-
-        
-<button>
+      <frame Slackpkg setup>        
+         <button>
           <input file>/usr/share/icons/Adwaita/32x32/actions/document-properties-symbolic.symbolic.png</input>
           <label>BLACKLIST </label>
           <action>xfce4-terminal -x nano /etc/slackpkg/blacklist &</action>
@@ -143,22 +127,6 @@ export MAIN_DIALOG='
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 
     <frame Packages Commander>
     <hbox>
@@ -169,21 +137,25 @@ export MAIN_DIALOG='
     <hbox>
         <button>
         <label>slackpkg install</label>
+        <action>rm /var/lock/slackpkg.* &</action>
         <action>xfce4-terminal -H -x slackpkg install $VAR1 &</action>
       </button>
       
       <button>
         <label>slackpkg reinstall</label>
+        <action>rm /var/lock/slackpkg.* &</action>
         <action>xfce4-terminal -H -x /usr/sbin/slackpkg reinstall $VAR1 &</action>
       </button>
       
       <button>
         <label>slackpkg search</label>
+        <action>rm /var/lock/slackpkg.* &</action>
         <action>xfce4-terminal -H -x slackpkg search $VAR1 &</action>      
       </button>
       
       <button>
         <label>slackpkg remove</label>
+        <action>rm /var/lock/slackpkg.* &</action>
         <action>xfce4-terminal -H -x slackpkg remove $VAR1 &</action>
       </button>
     
@@ -213,24 +185,10 @@ export MAIN_DIALOG='
       </button>
     </hbox>
     </frame>
-    <hbox homogeneous="True">
-
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    <hbox homogeneous="True">    
     <frame Hardware Informations>
       <vbox>
         <button>
@@ -275,20 +233,7 @@ export MAIN_DIALOG='
           <action>lspci | zenity --text-info  --width=700 --height=500 --title $"PCI devices" &</action>
         </button>
       </vbox>
-    </frame>
-
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
+    </frame>  
    
    
    
@@ -328,36 +273,43 @@ export MAIN_DIALOG='
           <menu>
           <menuitem>
           <label>sbopkg update</label>
-          <action>xfce4-terminal -x sbopkg -r &</action>          
+          <action>killall sbopkg &</action>
+          <action>xfce4-terminal -H -x sbopkg -r &</action>          
           </menuitem>
           
           <menuitem>
           <label>sbopkg search for package</label>
+          <action>killall sbopkg &</action>
           <action>sbopkg -g $VAR3 | zenity --text-info  --width=200 --height=600 --title $"FILES" &</action>          
           </menuitem>
           
           <menuitem>
           <label>sbopkg view package files</label>
+          <action>killall sbopkg &</action>
           <action>sbopkg -s $VAR3 | zenity --text-info  --width=900 --height=600 --title $"FILES" &</action>          
           </menuitem>
           
           <menuitem>
           <label>sbopkg build package only</label>
+          <action>killall sbopkg &</action>
           <action>xfce4-terminal -H -x sbopkg -b $VAR3 &</action>          
           </menuitem>
           
           <menuitem>
           <label>sbopkg install (sqg -p && sbopkg -k -i)</label>
+          <action>killall sbopkg &</action>
           <action>sqg -p $VAR3 && xfce4-terminal -H -x sbopkg -k -i $VAR3 &</action>          
           </menuitem>
           
           <menuitem>
           <label>Display a list of installed SBo packages and potential updates (need some time)</label>
+          <action>killall sbopkg &</action>
           <action>sbopkg -c -q | zenity --text-info  --width=900 --height=600 --title $"FILES" &</action>          
           </menuitem>
                   
             <menuitem>
               <label>sbopkg blacklist</label>
+              <action>killall sbopkg &</action>
               <action>xfce4-terminal -x nano /etc/sbopkg/blacklist &</action>
             </menuitem>
 
@@ -386,61 +338,73 @@ export MAIN_DIALOG='
           
           <menuitem>
           <label>check-updates </label>
+          <action>killall slpkg &</action>
           <action>xfce4-terminal -H -x slpkg -c &</action>          
           </menuitem>
           
           <menuitem>
           <label>slpkg update </label>
-          <action>xfce4-terminal -H -x slpkg update &</action>          
+          <action>killall slpkg &</action>
+          <action>xfce4-terminal -H -x slpkg -u &</action>          
           </menuitem>
           
           <menuitem>
           <label>slpkg Upgrade all the installed packages </label>
-          <action>xfce4-terminal -H -x slpkg upgrade &</action>          
+          <action>killall slpkg &</action>
+          <action>xfce4-terminal -H -x slpkg -U &</action>          
           </menuitem>
           
           <menuitem>
           <label>slpkg search slackbuilds </label>
+          <action>killall slpkg &</action>
           <action>xfce4-terminal -H -x slpkg -s $VAR4 &</action>          
           </menuitem>
           
           <menuitem>
           <label>Tracking the packages dependencies </label>
+          <action>killall slpkg &</action>
           <action>xfce4-terminal -H -x slpkg -t $VAR4 &</action>          
           </menuitem>
           
           <menuitem>
-          <label>View information packages from the repository </label>
+          <label>View package information </label>
+          <action>killall slpkg &</action>
           <action>xfce4-terminal -H -x slpkg -w $VAR4 &</action>          
           </menuitem>
           
           <menuitem>
           <label>slpkg build package only </label>
+          <action>killall slpkg &</action>
           <action>xfce4-terminal -H -x slpkg -by $VAR4 &</action>          
           </menuitem>
           
           <menuitem>
           <label>slpkg reinstall </label>
+          <action>killall slpkg &</action>
           <action>xfce4-terminal -H -x slpkg -iry $VAR4 &</action>          
           </menuitem>
           
           <menuitem>
           <label>slpkg install </label>
+          <action>killall slpkg &</action>
           <action>xfce4-terminal -H -x slpkg -iy $VAR4 &</action>          
           </menuitem>
           
             <menuitem>
               <label>Edit repo.toml</label>
+              <action>killall slpkg &</action>
               <action>xfce4-terminal -x nano /etc/slpkg/repositories.toml &</action>
             </menuitem>
 
             <menuitem>
               <label>Edit slpkg.toml</label>
+              <action>killall slpkg &</action>
               <action>xfce4-terminal -x nano /etc/slpkg/slpkg.toml &</action>
             </menuitem>
 
               <menuitem>
               <label>Edit Blacklist</label>
+              <action>killall slpkg &</action>
               <action>xfce4-terminal -x nano /etc/slpkg/blacklist.toml & </action>
             </menuitem>
 
@@ -454,7 +418,7 @@ export MAIN_DIALOG='
           </menu>
           </menubar>
         </hbox>
-<button>
+       <button>
           <label>View dmesg messages</label>
           <action>dmesg | zenity --text-info  --width=900 --height=700 --title $"View kernel messages" &</action>
         </button>
@@ -462,7 +426,7 @@ export MAIN_DIALOG='
         
         <button>
           <label>Loaded modules</label>
-          <action>lsmod | zenity --text-info  --width=700 --height=500 --title $"View loaded modules" &</action>
+         <action>lsmod | zenity --text-info  --width=700 --height=500 --title $"View loaded modules" &</action>
         </button>
 
         <button>
@@ -477,13 +441,7 @@ export MAIN_DIALOG='
 
       </vbox>
     </frame>
-    </hbox>
-
-    
-    
-    
-    
-    
+    </hbox>   
     
     
     
