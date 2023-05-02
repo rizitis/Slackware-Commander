@@ -8,7 +8,7 @@ https://github.com/rizitis/Slackware-Commander/releases
 ### requires
 ```
 gtkdialog
-zenity
+yad
 ```
 ![Slackware-Commander](https://github.com/rizitis/Slackware-Commander/raw/main/Slackware-Commander.png)
 #### Dark and Light 
