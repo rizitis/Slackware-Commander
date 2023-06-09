@@ -9,6 +9,7 @@ https://github.com/rizitis/Slackware-Commander/releases
 ```
 gtkdialog
 yad
+zenity
 ```
 ![Slackware-Commander](https://github.com/rizitis/Slackware-Commander/raw/main/Slackware-Commander.png)
 #### Dark and Light 
