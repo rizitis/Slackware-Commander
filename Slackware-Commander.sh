@@ -120,7 +120,7 @@ export MAIN_DIALOG='
         <button>
           <input file>/usr/share/icons/Adwaita/32x32/categories/emoji-recent-symbolic.symbolic.png</input>
           <label>ChangeLog</label>
-          <action>cat /var/lib/slackpkg/ChangeLog.txt | zenity --text-info --width=600 --height=600 --title $"ChangeLog" &</action>
+          <action>cat /var/lib/slackpkg/ChangeLog.txt | yad --text-info --width=600 --height=600 --title $"ChangeLog" &</action>
         </button> 
         </frame>
       </vbox>
@@ -163,27 +163,27 @@ export MAIN_DIALOG='
     
       <button>
         <label>Help</label>
-        <action>$VAR1 --help | zenity --text-info --width=600 --height=600 --title $"Help" &</action>
+        <action>$VAR1 --help | yad --text-info --width=600 --height=600 --title $"Help" &</action>
       </button>
 
       <button>
         <label>Whereis</label>
-        <action>whereis $VAR1 | zenity --text-info  --width=400 --height=20 --title $"Whereis" &</action>
+        <action>whereis $VAR1 | yad --text-info  --width=400 --height=20 --title $"Whereis" &</action>
       </button>
 
       <button>
         <label>Which</label>
-        <action>which $VAR1 | zenity --text-info --width=200 --height=200 --title $"Version" &</action>
+        <action>which $VAR1 | yad --text-info --width=200 --height=200 --title $"Version" &</action>
       </button>
 
       <button>
         <label>Version</label>
-        <action>$VAR1 --version | zenity --text-info --width=200 --height=200 --title $"Version" &</action>
+        <action>$VAR1 --version | yad --text-info --width=200 --height=200 --title $"Version" &</action>
       </button>
 
       <button>
         <label>Manual</label>
-        <action>man $VAR1 | zenity --text-info --width=400 --height=500 --title $"Manual" &</action>
+        <action>man $VAR1 | yad --text-info --width=400 --height=500 --title $"Manual" &</action>
       </button>
     </hbox>
     </frame>
@@ -200,43 +200,43 @@ export MAIN_DIALOG='
         <button>
           <input file>/usr/share/icons/Adwaita/16x16/devices/computer-symbolic.symbolic.png</input>
           <label>CPU infos</label>
-          <action>cat /proc/cpuinfo | zenity --text-info  --width=700 --height=500 --title $"CPU infos" &</action>
+          <action>cat /proc/cpuinfo | yad --text-info  --width=700 --height=500 --title $"CPU infos" &</action>
         </button>
 
         <button>
           <input file>/usr/share/icons/Adwaita/16x16/status/network-error-symbolic.symbolic.png</input>
           <label>Ethernet Interfaces</label>
-          <action>ifconfig | zenity --text-info  --width=700 --height=500 --title $"View an ethernet network interface" &</action>
+          <action>ifconfig | yad --text-info  --width=700 --height=500 --title $"View an ethernet network interface" &</action>
         </button>
 
         <button>
           <input file>/usr/share/icons/Adwaita/16x16/status/network-cellular-signal-good-symbolic.symbolic.png</input>
           <label>Wireless Interfaces</label>
-          <action>iwconfig | zenity --text-info  --width=700 --height=500 --title $"Current wireless network interface" &</action>
+          <action>iwconfig | yad --text-info  --width=700 --height=500 --title $"Current wireless network interface" &</action>
         </button>
 
         <button>
           <input file>/usr/share/icons/Adwaita/16x16/status/thunderbolt-acquiring-symbolic.symbolic.png</input>
           <label>USB devices</label>
-          <action>lsusb | zenity --text-info  --width=700 --height=500 --title $"USB devices" &</action>
+          <action>lsusb | yad --text-info  --width=700 --height=500 --title $"USB devices" &</action>
         </button>
 
         <button>
           <input file>/usr/share/icons/Adwaita/16x16/categories/applications-system-symbolic.symbolic.png</input>
           <label>inxi </label>
-          <action>inxi -v 8 | zenity --text-info  --width=700 --height=500 --title $"inxi" &</action>
+          <action>inxi -v 8 | yad --text-info  --width=700 --height=500 --title $"inxi" &</action>
         </button>
 
         <button>
           <input file>/usr/share/icons/Adwaita/16x16/mimetypes/application-x-addon-symbolic.symbolic.png</input>
           <label> Block devices</label>
-          <action>lsblk | zenity --text-info  --width=700 --height=500 --title $"Block devices" &</action>
+          <action>lsblk | yad --text-info  --width=700 --height=500 --title $"Block devices" &</action>
         </button>
 
         <button>
           <input file>/usr/share/icons/Adwaita/16x16/mimetypes/application-x-firmware-symbolic.symbolic.png</input>
           <label>PCI devices</label>
-          <action>lspci | zenity --text-info  --width=700 --height=500 --title $"PCI devices" &</action>
+          <action>lspci | yad --text-info  --width=700 --height=500 --title $"PCI devices" &</action>
         </button>
         
         
@@ -270,13 +270,13 @@ export MAIN_DIALOG='
           <menuitem>
           <label>sbopkg search for package</label>
           <action>killall sbopkg &</action>
-          <action>sbopkg -g $VAR3 | zenity --text-info  --width=200 --height=600 --title $"FILES" &</action>          
+          <action>sbopkg -g $VAR3 | yad --text-info  --width=200 --height=600 --title $"FILES" &</action>          
           </menuitem>
           
           <menuitem>
           <label>sbopkg view package files</label>
           <action>killall sbopkg &</action>
-          <action>sbopkg -s $VAR3 | zenity --text-info  --width=900 --height=600 --title $"FILES" &</action>          
+          <action>sbopkg -s $VAR3 | yad --text-info  --width=900 --height=600 --title $"FILES" &</action>          
           </menuitem>
           
           <menuitem>
@@ -294,7 +294,7 @@ export MAIN_DIALOG='
           <menuitem>
           <label>Display a list of installed SBo packages and potential updates (need some time)</label>
           <action>killall sbopkg &</action>
-          <action>sbopkg -c -q | zenity --text-info  --width=900 --height=600 --title $"FILES" &</action>          
+          <action>sbopkg -c -q | yad --text-info  --width=900 --height=600 --title $"FILES" &</action>          
           </menuitem>
                   
             <menuitem>
@@ -310,7 +310,7 @@ export MAIN_DIALOG='
 
             <menuitem>
               <label>sbopkg manual</label>
-              <action>man sbopkg | zenity --text-info  --width=700 --height=500 --title $"sbopkg manual" &</action>
+              <action>man sbopkg | yad --text-info  --width=700 --height=500 --title $"sbopkg manual" &</action>
             </menuitem>
 
           <label>sbopkg</label>
@@ -400,7 +400,7 @@ export MAIN_DIALOG='
 
             <menuitem>
               <label>slpkg manual</label>
-              <action>man slpkg | zenity --text-info  --width=700 --height=500 --title $"slpkg manual"  &</action>
+              <action>man slpkg | yad --text-info  --width=700 --height=500 --title $"slpkg manual"  &</action>
             </menuitem>
 
             
@@ -410,13 +410,13 @@ export MAIN_DIALOG='
         </hbox>
        <button>
           <label>View dmesg messages</label>
-          <action>dmesg | zenity --text-info  --width=900 --height=700 --title $"View kernel messages" &</action>
+          <action>dmesg | yad --text-info  --width=900 --height=700 --title $"View kernel messages" &</action>
         </button>
 
         
         <button>
           <label>Loaded modules</label>
-         <action>lsmod | zenity --text-info  --width=700 --height=500 --title $"View loaded modules" &</action>
+         <action>lsmod | yad --text-info  --width=700 --height=500 --title $"View loaded modules" &</action>
         </button>
 
         <button>
@@ -440,28 +440,28 @@ export MAIN_DIALOG='
     <hbox>
       <frame System Files>
         <hbox>
-          <button><label>'"$FILE1"'</label><action>zenity --title='"$FILE1"' --text-info --width 500 --height 400 --filename='"$FILE1"' &</action></button>
+          <button><label>'"$FILE1"'</label><action>yad --title='"$FILE1"' --text-info --width 500 --height 400 --filename='"$FILE1"' &</action></button>
           <button><input file>/usr/share/icons/Adwaita/32x32/legacy/preferences-desktop-display-symbolic.symbolic.png</input><action>xfce4-terminal -x nano '"$FILE1"' &</action></button>
         </hbox>
 
         <hbox>
-          <button><label>'"$FILE2"'</label><action>zenity --title='"$FILE2"' --text-info --width 500 --height 400 --filename='"$FILE2"' &</action></button>
+          <button><label>'"$FILE2"'</label><action>yad --title='"$FILE2"' --text-info --width 500 --height 400 --filename='"$FILE2"' &</action></button>
           <button><input file>/usr/share/icons/Adwaita/32x32/legacy/preferences-system-devices-symbolic.symbolic.png</input><action>xfce4-terminal -x nano '"$FILE2"' &</action></button>
         </hbox>
 
         <hbox>
-          <button><label>'"$FILE3"'</label><action>zenity --title='"$FILE3"' --text-info --width 500 --height 400 --filename='"$FILE3"' &</action></button>
+          <button><label>'"$FILE3"'</label><action>yad --title='"$FILE3"' --text-info --width 500 --height 400 --filename='"$FILE3"' &</action></button>
           <button><input file>/usr/share/icons/Adwaita/32x32/status/semi-starred-symbolic.symbolic.png</input><action>xfce4-terminal -x nano '"$FILE3"' &</action></button>
         </hbox>
 
         <hbox>
-          <button><label>'"$FILE4"'</label><action>zenity --title='"$FILE4"' --text-info --width 500 --height 400 --filename='"$FILE4"' &</action></button>
+          <button><label>'"$FILE4"'</label><action>yad --title='"$FILE4"' --text-info --width 500 --height 400 --filename='"$FILE4"' &</action></button>
           <button><input file>/usr/share/icons/Adwaita/32x32/legacy/preferences-desktop-appearance-symbolic.symbolic.png</input><action>xfce4-terminal -x nano '"$FILE4"' &</action></button>
         </hbox>
          <hbox>
           <button>
             <label>'"$FILE10"'</label>
-            <action>zenity --title='"$FILE10"' --text-info --width 500 --height 400 --filename='"$FILE10"' &</action>
+            <action>yad --title='"$FILE10"' --text-info --width 500 --height 400 --filename='"$FILE10"' &</action>
           </button>
 
           <button>
@@ -473,19 +473,19 @@ export MAIN_DIALOG='
 
       <frame>
         <hbox>
-          <button><label>'"$FILE5"'</label><action>zenity --title='"$FILE5"' --text-info --width 500 --height 400 --filename='"$FILE5"' &</action></button>
+          <button><label>'"$FILE5"'</label><action>yad --title='"$FILE5"' --text-info --width 500 --height 400 --filename='"$FILE5"' &</action></button>
           <button><input file>/usr/share/icons/Adwaita/32x32/status/non-starred-symbolic.symbolic.png</input><action>xfce4-terminal -x nano '"$FILE5"' &</action></button>
         </hbox>
 
         <hbox>
-          <button><label>'"$FILE6"'</label><action>zenity --title='"$FILE6"' --text-info --width 500 --height 400 --filename='"$FILE6"' &</action></button>
+          <button><label>'"$FILE6"'</label><action>yad --title='"$FILE6"' --text-info --width 500 --height 400 --filename='"$FILE6"' &</action></button>
           <button><input file>/usr/share/icons/Adwaita/32x32/legacy/preferences-desktop-accessibility-symbolic.symbolic.png</input><action>xfce4-terminal -x nano '"$FILE6"' &</action></button>
         </hbox>
 
         <hbox>
           <button>
             <label>'"$FILE7"'</label>
-            <action>zenity --title='"$FILE7"' --text-info --width 500 --height 400 --filename='"$FILE7"' &</action>
+            <action>yad --title='"$FILE7"' --text-info --width 500 --height 400 --filename='"$FILE7"' &</action>
           </button>
 
           <button>
@@ -498,7 +498,7 @@ export MAIN_DIALOG='
         <hbox>
           <button>
             <label>'"$FILE8"'</label>
-            <action>zenity --title='"$FILE8"' --text-info --width 500 --height 400 --filename='"$FILE8"' &</action>
+            <action>yad --title='"$FILE8"' --text-info --width 500 --height 400 --filename='"$FILE8"' &</action>
           </button>
 
           <button>
@@ -510,7 +510,7 @@ export MAIN_DIALOG='
         <hbox>
           <button>
             <label>'"$FILE9"'</label>
-            <action>zenity --title='"$FILE9"' --text-info --width 500 --height 400 --filename='"$FILE9"' &</action>
+            <action>yad --title='"$FILE9"' --text-info --width 500 --height 400 --filename='"$FILE9"' &</action>
           </button>
 
           <button>
