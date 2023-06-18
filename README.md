@@ -20,7 +20,7 @@ yad
 
 ##### Uninstall
 ```
-./Slackware-Commander-uninstall.sh
+Slackware-Commander-uninstall.sh
 ```
 
 
