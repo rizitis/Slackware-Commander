@@ -1,11 +1,12 @@
 #! /bin/bash
 
-# Slackware-Commander Anagnostakis Ioannis <rizitis@gmail.com> Chania Greece 4/2023
+# Slackware-Commander Anagnostakis Ioannis <rizitis@gmail.com> Chania Greece 7/2023
 # It is based on this work http://pclosmag.com/html/Issues/200910/page21.html
 # rcstatus script is from https://www.linuxquestions.org/questions/slackware-14/how-can-i-check-the-system-running-services-534612/page2.html#post6410525
 # Thank you very much.
-# requires: gtkdialog, yad or zenity. From SlackBuilds.org
-# I found yad more stable. 
+# requires: gtkdialog and yad from SlackBuilds.org
+# I found yad more stable than zenity. 
+# Added GFS-tracker for Slackers with Gnome installation. (https://github.com/rizitis/GFS-tracker) #
 
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
@@ -66,6 +67,7 @@ export MAIN_DIALOG='
     
     <vbox>
     <frame Slackware Package Manager>
+
     <button>
           <label>Slackpkg Update</label>
           <action>rm /var/lock/slackpkg.* &</action>
@@ -433,7 +435,11 @@ export MAIN_DIALOG='
     </frame>
     </hbox>   
     
-    
+    <button>
+          <input file>/usr/share/icons/Adwaita/32x32/legacy/system-software-install-symbolic.symbolic.png</input>
+          <label>GSF-tracker (for Gnome Desktop)</label>
+           <action>xfce4-terminal -H -x python3 /usr/local/bin/GFS-tracker.py  &</action>
+          </button>
     
     
     
