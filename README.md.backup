@@ -11,7 +11,7 @@ gtkdialog
 yad
 ```
 #### XFCE retro theme
-![XFCE-RETRO](https://github.com/rizitis/Slackware-Commander/blob/main/Slackware-Commander-0.8.png?raw=true)
+![XFCE-RETRO](https://github.com/rizitis/Slackware-Commander/blob/main/SC-XFCE-RETRO.png?raw=true)
 
 #### GNOME-KDE
 ![Slackware-Commander](https://github.com/rizitis/Slackware-Commander/raw/main/Slackware-Commander.png)
