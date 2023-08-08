@@ -435,12 +435,7 @@ export MAIN_DIALOG='
     </frame>
     </hbox>   
     
-    <button>
-          <input file>/usr/share/icons/Adwaita/32x32/legacy/system-software-install-symbolic.symbolic.png</input>
-          <label>GSF-tracker (for Gnome Desktop)</label>
-           <action>xfce4-terminal -H -x python3 /usr/local/bin/GFS-tracker.py  &</action>
-          </button>
-    
+       
     
     
     <hbox>
