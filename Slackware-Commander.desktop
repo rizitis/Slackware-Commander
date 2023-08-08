@@ -3,7 +3,7 @@ Type=Application
 Encoding=UTF-8
 Name=Slackware-Commander
 Comment=configuration loader
-Exec=pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY /usr/local/bin/Slackware-Commander.sh
+Exec=kdesu /usr/local/bin/Slackware-Commander.sh
 Icon=/usr/share/icons/Slackware-Commander/Slackware-Commander2.png
 Terminal=false
 Categories=Settings;HardwareSettings;
