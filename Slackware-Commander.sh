@@ -72,25 +72,25 @@ export MAIN_DIALOG='
           <label>Slackpkg Update</label>
           <action>rm /var/lock/slackpkg.* &</action>
           <action>xfce4-terminal -H -x  /usr/sbin/slackpkg update &</action>
-          <input file>/usr/share/icons/Adwaita/32x32/status/software-update-urgent-symbolic.symbolic.png</input>
+          <input file>/usr/share/icons/Slackware-Commander/this-way-up-symbol-icon.png</input>
         </button> 
     
     <button>
-         <input file>/usr/share/icons/Adwaita/32x32/actions/document-save-as-symbolic.symbolic.png</input>
+         <input file>/usr/share/icons/Slackware-Commander/deep-water-icon.png</input>
           <label>Slackpkg Upgrade-all</label>
           <action>rm /var/lock/slackpkg.* &</action>
           <action>xfce4-terminal -H -x /usr/sbin/slackpkg upgrade-all &</action>
         </button>        
         
         <button>
-          <input file>/usr/share/icons/Adwaita/32x32/actions/star-new-symbolic.symbolic.png</input>
+          <input file>/usr/share/icons/Slackware-Commander/wow-icon.png</input>
           <label>Slackpkg Install-new</label>
           <action>rm /var/lock/slackpkg.* &</action>
           <action>xfce4-terminal -H -x slackpkg install-new &</action>
         </button>
         
         <button>
-           <input file>/usr/share/icons/Adwaita/32x32/actions/edit-find-replace-symbolic.symbolic.png</input>
+           <input file>/usr/share/icons/Slackware-Commander/project-work-icon.png</input>
           <label>Slackpkg new-config</label>
            <action>rm /var/lock/slackpkg.* &</action>
           <action>xfce4-terminal -H -x /usr/sbin/slackpkg new-config &</action>
@@ -98,29 +98,29 @@ export MAIN_DIALOG='
      </frame>
    </vbox>   
     
-    
+   
     
     
 
     <vbox>
       <frame Slackpkg setup>        
          <button>
-          <input file>/usr/share/icons/Adwaita/32x32/actions/document-properties-symbolic.symbolic.png</input>
+          <input file>/usr/share/icons/Slackware-Commander/silence-icon.png</input>
           <label>BLACKLIST </label>
           <action>xfce4-terminal -x nano /etc/slackpkg/blacklist &</action>
         </button> 
         <button>
-        <input file>/usr/share/icons/Adwaita/32x32/actions/document-edit-symbolic.symbolic.png</input>
+        <input file>/usr/share/icons/Slackware-Commander/business-management-icon.png</input>
           <label>MIRRORS</label>
           <action>xfce4-terminal -x nano /etc/slackpkg/mirrors &</action>
         </button> 
         <button>
-          <input file>/usr/share/icons/Adwaita/32x32/actions/document-page-setup-symbolic.symbolic.png</input>
+          <input file>/usr/share/icons/Slackware-Commander/carpenter-tools-icon.png</input>
           <label>Slackpkg.conf</label>
           <action>xfce4-terminal -x nano /etc/slackpkg/slackpkg.conf &</action>
         </button> 
         <button>
-          <input file>/usr/share/icons/Adwaita/32x32/categories/emoji-recent-symbolic.symbolic.png</input>
+          <input file>/usr/share/icons/Slackware-Commander/downtime-arrow-icon.png</input>
           <label>ChangeLog</label>
           <action>cat /var/lib/slackpkg/ChangeLog.txt | yad --text-info --width=600 --height=600 --title $"ChangeLog" &</action>
         </button> 
@@ -192,7 +192,7 @@ export MAIN_DIALOG='
     
     
     <button>
-          <input file>/usr/share/icons/Adwaita/32x32/categories/applications-utilities-symbolic.symbolic.png</input>
+          <input file>/usr/share/icons/Slackware-Commander/diy-do-it-yourself-icon.png</input>
           <label>slackpkg+.conf</label>
            <action>xfce4-terminal -x nano /etc/slackpkg/slackpkgplus.conf &</action>
           </button>
@@ -200,43 +200,43 @@ export MAIN_DIALOG='
     <frame Hardware Informations>
       <vbox>
         <button>
-          <input file>/usr/share/icons/Adwaita/16x16/devices/computer-symbolic.symbolic.png</input>
+          <input file>/usr/share/icons/Slackware-Commander/process-icon.png</input>
           <label>CPU infos</label>
           <action>cat /proc/cpuinfo | yad --text-info  --width=700 --height=500 --title $"CPU infos" &</action>
         </button>
 
         <button>
-          <input file>/usr/share/icons/Adwaita/16x16/status/network-error-symbolic.symbolic.png</input>
+          <input file>/usr/share/icons/Slackware-Commander/construction-hinge-icon.png</input>
           <label>Ethernet Interfaces</label>
           <action>ifconfig | yad --text-info  --width=700 --height=500 --title $"View an ethernet network interface" &</action>
         </button>
 
         <button>
-          <input file>/usr/share/icons/Adwaita/16x16/status/network-cellular-signal-good-symbolic.symbolic.png</input>
+          <input file>/usr/share/icons/Slackware-Commander/construction-hinges-icon.png</input>
           <label>Wireless Interfaces</label>
           <action>iwconfig | yad --text-info  --width=700 --height=500 --title $"Current wireless network interface" &</action>
         </button>
 
         <button>
-          <input file>/usr/share/icons/Adwaita/16x16/status/thunderbolt-acquiring-symbolic.symbolic.png</input>
+          <input file>/usr/share/icons/Slackware-Commander/bolt-icon.png</input>
           <label>USB devices</label>
           <action>lsusb | yad --text-info  --width=700 --height=500 --title $"USB devices" &</action>
         </button>
 
         <button>
-          <input file>/usr/share/icons/Adwaita/16x16/categories/applications-system-symbolic.symbolic.png</input>
+          <input file>/usr/share/icons/Slackware-Commander/configuration-icon.png</input>
           <label>inxi </label>
           <action>inxi -v 8 | yad --text-info  --width=700 --height=500 --title $"inxi" &</action>
         </button>
 
         <button>
-          <input file>/usr/share/icons/Adwaita/16x16/mimetypes/application-x-addon-symbolic.symbolic.png</input>
+          <input file>/usr/share/icons/Slackware-Commander/home-improvement-icon.png</input>
           <label> Block devices</label>
           <action>lsblk | yad --text-info  --width=700 --height=500 --title $"Block devices" &</action>
         </button>
 
         <button>
-          <input file>/usr/share/icons/Adwaita/16x16/mimetypes/application-x-firmware-symbolic.symbolic.png</input>
+          <input file>/usr/share/icons/Slackware-Commander/settings-icon.png</input>
           <label>PCI devices</label>
           <action>lspci | yad --text-info  --width=700 --height=500 --title $"PCI devices" &</action>
         </button>
@@ -251,14 +251,14 @@ export MAIN_DIALOG='
     <frame Package Managers>
       <vbox>
        <button>
-       <input file>/usr/share/icons/Adwaita/16x16/status/software-update-available-symbolic.symbolic.png</input>
+       <input file>/usr/share/icons/Slackware-Commander/solution-thinking-icon.png</input>
           <label>sboui</label>
           <action>killall sboui &</action>
           <action>xfce4-terminal -H -x  sboui &</action>
           </button> 
         <hbox>
           <entry><variable>VAR3</variable></entry><pixmap>
-            <input file>/usr/share/icons/Adwaita/32x32/categories/applications-engineering-symbolic.symbolic.png</input>
+            <input file>/usr/share/icons/Slackware-Commander/solution-strategy-icon.png</input>
           </pixmap>
 
           <menubar>
@@ -322,7 +322,7 @@ export MAIN_DIALOG='
 
         <hbox>
           <entry><variable>VAR4</variable></entry><pixmap>
-            <input file>/usr/share/icons/Adwaita/32x32/categories/preferences-system-symbolic.symbolic.png</input>
+            <input file>/usr/share/icons/Slackware-Commander/manager-icon.png</input>
           </pixmap>
 
           <menubar>
@@ -442,22 +442,22 @@ export MAIN_DIALOG='
       <frame System Files>
         <hbox>
           <button><label>'"$FILE1"'</label><action>yad --title='"$FILE1"' --text-info --width 500 --height 400 --filename='"$FILE1"' &</action></button>
-          <button><input file>/usr/share/icons/Adwaita/32x32/legacy/preferences-desktop-display-symbolic.symbolic.png</input><action>xfce4-terminal -x nano '"$FILE1"' &</action></button>
+          <button><input file>/usr/share/icons/Slackware-Commander/it-icon.png</input><action>xfce4-terminal -x nano '"$FILE1"' &</action></button>
         </hbox>
 
         <hbox>
           <button><label>'"$FILE2"'</label><action>yad --title='"$FILE2"' --text-info --width 500 --height 400 --filename='"$FILE2"' &</action></button>
-          <button><input file>/usr/share/icons/Adwaita/32x32/legacy/preferences-system-devices-symbolic.symbolic.png</input><action>xfce4-terminal -x nano '"$FILE2"' &</action></button>
+          <button><input file>/usr/share/icons/Slackware-Commander/service-tools-icon.png</input><action>xfce4-terminal -x nano '"$FILE2"' &</action></button>
         </hbox>
 
         <hbox>
           <button><label>'"$FILE3"'</label><action>yad --title='"$FILE3"' --text-info --width 500 --height 400 --filename='"$FILE3"' &</action></button>
-          <button><input file>/usr/share/icons/Adwaita/32x32/status/semi-starred-symbolic.symbolic.png</input><action>xfce4-terminal -x nano '"$FILE3"' &</action></button>
+          <button><input file>/usr/share/icons/Slackware-Commander/scissor-icon.png</input><action>xfce4-terminal -x nano '"$FILE3"' &</action></button>
         </hbox>
 
         <hbox>
           <button><label>'"$FILE4"'</label><action>yad --title='"$FILE4"' --text-info --width 500 --height 400 --filename='"$FILE4"' &</action></button>
-          <button><input file>/usr/share/icons/Adwaita/32x32/legacy/preferences-desktop-appearance-symbolic.symbolic.png</input><action>xfce4-terminal -x nano '"$FILE4"' &</action></button>
+          <button><input file>/usr/share/icons/Slackware-Commander/select-area-icon.png</input><action>xfce4-terminal -x nano '"$FILE4"' &</action></button>
         </hbox>
          <hbox>
           <button>
@@ -466,7 +466,7 @@ export MAIN_DIALOG='
           </button>
 
           <button>
-            <input file>/usr/share/icons/Adwaita/32x32/legacy/preferences-system-parental-controls-symbolic.symbolic.png</input>
+            <input file>/usr/share/icons/Slackware-Commander/myspace-icon.png</input>
             <action>xfce4-terminal -x nano '"$FILE10"' &</action>
           </button>
         </hbox>
@@ -475,12 +475,12 @@ export MAIN_DIALOG='
       <frame>
         <hbox>
           <button><label>'"$FILE5"'</label><action>yad --title='"$FILE5"' --text-info --width 500 --height 400 --filename='"$FILE5"' &</action></button>
-          <button><input file>/usr/share/icons/Adwaita/32x32/status/non-starred-symbolic.symbolic.png</input><action>xfce4-terminal -x nano '"$FILE5"' &</action></button>
+          <button><input file>/usr/share/icons/Slackware-Commander/drill-icon.png</input><action>xfce4-terminal -x nano '"$FILE5"' &</action></button>
         </hbox>
 
         <hbox>
           <button><label>'"$FILE6"'</label><action>yad --title='"$FILE6"' --text-info --width 500 --height 400 --filename='"$FILE6"' &</action></button>
-          <button><input file>/usr/share/icons/Adwaita/32x32/legacy/preferences-desktop-accessibility-symbolic.symbolic.png</input><action>xfce4-terminal -x nano '"$FILE6"' &</action></button>
+          <button><input file>/usr/share/icons/Slackware-Commander/green-circle-icon.png</input><action>xfce4-terminal -x nano '"$FILE6"' &</action></button>
         </hbox>
 
         <hbox>
@@ -490,7 +490,7 @@ export MAIN_DIALOG='
           </button>
 
           <button>
-            <input file>/usr/share/icons/Adwaita/32x32/legacy/preferences-desktop-screensaver-symbolic.symbolic.png</input>
+            <input file>/usr/share/icons/Slackware-Commander/red-circle-icon.png</input>
             <action>xfce4-terminal -x nano '"$FILE7"' &</action>
           </button>
 
@@ -503,7 +503,7 @@ export MAIN_DIALOG='
           </button>
 
           <button>
-            <input file>/usr/share/icons/Adwaita/32x32/legacy/utilities-terminal-symbolic.symbolic.png</input>
+            <input file>/usr/share/icons/Slackware-Commander/cruelty-free-sign-icon.png</input>
             <action>xfce4-terminal -x nano '"$FILE8"' &</action>
           </button>
 
@@ -515,7 +515,7 @@ export MAIN_DIALOG='
           </button>
 
           <button>
-            <input file>/usr/share/icons/Adwaita/32x32/legacy/system-users-symbolic.symbolic.png</input>
+            <input file>/usr/share/icons/Slackware-Commander/share-group-member-icon.png</input>
             <action>xfce4-terminal -x nano '"$FILE9"' &</action>
           </button>
 
