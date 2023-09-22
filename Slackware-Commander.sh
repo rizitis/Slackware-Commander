@@ -71,7 +71,7 @@ export MAIN_DIALOG='
     <button>
           <label>Slackpkg Update</label>
           <action>rm /var/lock/slackpkg.* &</action>
-          <action>xfce4-terminal -H -x  /usr/sbin/slackpkg update &</action>
+          <action>xterm -hold -e  /usr/sbin/slackpkg update &</action>
           <input file>/usr/share/icons/Slackware-Commander/this-way-up-symbol-icon.png</input>
         </button> 
     
@@ -79,21 +79,21 @@ export MAIN_DIALOG='
          <input file>/usr/share/icons/Slackware-Commander/deep-water-icon.png</input>
           <label>Slackpkg Upgrade-all</label>
           <action>rm /var/lock/slackpkg.* &</action>
-          <action>xfce4-terminal -H -x /usr/sbin/slackpkg upgrade-all &</action>
+          <action>xterm -hold -e /usr/sbin/slackpkg upgrade-all &</action>
         </button>        
         
         <button>
           <input file>/usr/share/icons/Slackware-Commander/wow-icon.png</input>
           <label>Slackpkg Install-new</label>
           <action>rm /var/lock/slackpkg.* &</action>
-          <action>xfce4-terminal -H -x slackpkg install-new &</action>
+          <action>xterm -hold -e slackpkg install-new &</action>
         </button>
         
         <button>
            <input file>/usr/share/icons/Slackware-Commander/project-work-icon.png</input>
           <label>Slackpkg new-config</label>
            <action>rm /var/lock/slackpkg.* &</action>
-          <action>xfce4-terminal -H -x /usr/sbin/slackpkg new-config &</action>
+          <action>xterm -hold -e /usr/sbin/slackpkg new-config &</action>
         </button>     
      </frame>
    </vbox>   
@@ -142,25 +142,25 @@ export MAIN_DIALOG='
         <button>
         <label>slackpkg install</label>
         <action>rm /var/lock/slackpkg.* &</action>
-        <action>xfce4-terminal -H -x slackpkg install $VAR1 &</action>
+        <action>xterm -hold -e slackpkg install $VAR1 &</action>
       </button>
       
       <button>
         <label>slackpkg reinstall</label>
         <action>rm /var/lock/slackpkg.* &</action>
-        <action>xfce4-terminal -H -x /usr/sbin/slackpkg reinstall $VAR1 &</action>
+        <action>xterm -hold -e /usr/sbin/slackpkg reinstall $VAR1 &</action>
       </button>
       
       <button>
         <label>slackpkg search</label>
         <action>rm /var/lock/slackpkg.* &</action>
-        <action>xfce4-terminal -H -x slackpkg search $VAR1 &</action>      
+        <action>xterm -hold -e slackpkg search $VAR1 &</action>      
       </button>
       
       <button>
         <label>slackpkg remove</label>
         <action>rm /var/lock/slackpkg.* &</action>
-        <action>xfce4-terminal -H -x slackpkg remove $VAR1 &</action>
+        <action>xterm -hold -e slackpkg remove $VAR1 &</action>
       </button>
     
       <button>
@@ -254,7 +254,7 @@ export MAIN_DIALOG='
        <input file>/usr/share/icons/Slackware-Commander/solution-thinking-icon.png</input>
           <label>sboui</label>
           <action>killall sboui &</action>
-          <action>xfce4-terminal -H -x  sboui &</action>
+          <action>xterm -hold -e  sboui &</action>
           </button> 
         <hbox>
           <entry><variable>VAR3</variable></entry><pixmap>
@@ -266,7 +266,7 @@ export MAIN_DIALOG='
           <menuitem>
           <label>sbopkg update</label>
           <action>killall sbopkg &</action>
-          <action>xfce4-terminal -H -x sbopkg -r &</action>          
+          <action>xterm -hold -e sbopkg -r &</action>          
           </menuitem>
           
           <menuitem>
@@ -284,13 +284,13 @@ export MAIN_DIALOG='
           <menuitem>
           <label>sbopkg build package only</label>
           <action>killall sbopkg &</action>
-          <action>xfce4-terminal -H -x sbopkg -b $VAR3 &</action>          
+          <action>xterm -hold -e sbopkg -b $VAR3 &</action>          
           </menuitem>
           
           <menuitem>
           <label>sbopkg install (sqg -p && sbopkg -k -i)</label>
           <action>killall sbopkg &</action>
-          <action>sqg -p $VAR3 && xfce4-terminal -H -x sbopkg -k -i $VAR3 &</action>          
+          <action>sqg -p $VAR3 && xterm -hold -e sbopkg -k -i $VAR3 &</action>          
           </menuitem>
           
           <menuitem>
@@ -331,55 +331,55 @@ export MAIN_DIALOG='
           <menuitem>
           <label>check-updates </label>
           <action>killall slpkg &</action>
-          <action>xfce4-terminal -H -x slpkg -c &</action>          
+          <action>xterm -hold -e slpkg -c &</action>          
           </menuitem>
           
           <menuitem>
           <label>slpkg update </label>
           <action>killall slpkg &</action>
-          <action>xfce4-terminal -H -x slpkg -u &</action>          
+          <action>xterm -hold -e slpkg -u &</action>          
           </menuitem>
           
           <menuitem>
           <label>slpkg Upgrade all the installed packages </label>
           <action>killall slpkg &</action>
-          <action>xfce4-terminal -H -x slpkg -U &</action>          
+          <action>xterm -hold -e slpkg -U &</action>          
           </menuitem>
           
           <menuitem>
           <label>slpkg search slackbuilds </label>
           <action>killall slpkg &</action>
-          <action>xfce4-terminal -H -x slpkg -s $VAR4 &</action>          
+          <action>xterm -hold -e slpkg -s $VAR4 &</action>          
           </menuitem>
           
           <menuitem>
           <label>Tracking the packages dependencies </label>
           <action>killall slpkg &</action>
-          <action>xfce4-terminal -H -x slpkg -t $VAR4 &</action>          
+          <action>xterm -hold -e slpkg -t $VAR4 &</action>          
           </menuitem>
           
           <menuitem>
           <label>View package information </label>
           <action>killall slpkg &</action>
-          <action>xfce4-terminal -H -x slpkg -w $VAR4 &</action>          
+          <action>xterm -hold -e slpkg -w $VAR4 &</action>          
           </menuitem>
           
           <menuitem>
           <label>slpkg build package only </label>
           <action>killall slpkg &</action>
-          <action>xfce4-terminal -H -x slpkg -by $VAR4 &</action>          
+          <action>xterm -hold -e slpkg -by $VAR4 &</action>          
           </menuitem>
           
           <menuitem>
           <label>slpkg reinstall </label>
           <action>killall slpkg &</action>
-          <action>xfce4-terminal -H -x slpkg -iry $VAR4 &</action>          
+          <action>xterm -hold -e slpkg -iry $VAR4 &</action>          
           </menuitem>
           
           <menuitem>
           <label>slpkg install </label>
           <action>killall slpkg &</action>
-          <action>xfce4-terminal -H -x slpkg -iy $VAR4 &</action>          
+          <action>xterm -hold -e slpkg -iy $VAR4 &</action>          
           </menuitem>
           
             <menuitem>
@@ -423,7 +423,7 @@ export MAIN_DIALOG='
 
         <button>
           <label>Services</label>
-          <action>xfce4-terminal -H -x /usr/local/bin/rcstatus &</action>
+          <action>xterm -hold -e /usr/local/bin/rcstatus &</action>
           </button>
           
           <button>
