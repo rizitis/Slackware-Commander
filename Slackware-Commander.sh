@@ -107,17 +107,17 @@ export MAIN_DIALOG='
          <button>
           <input file>/usr/share/icons/Slackware-Commander/silence-icon.png</input>
           <label>BLACKLIST </label>
-          <action>xfce4-terminal -x nano /etc/slackpkg/blacklist &</action>
+          <action>xterm -e nano /etc/slackpkg/blacklist &</action>
         </button> 
         <button>
         <input file>/usr/share/icons/Slackware-Commander/business-management-icon.png</input>
           <label>MIRRORS</label>
-          <action>xfce4-terminal -x nano /etc/slackpkg/mirrors &</action>
+          <action>xterm -e nano /etc/slackpkg/mirrors &</action>
         </button> 
         <button>
           <input file>/usr/share/icons/Slackware-Commander/carpenter-tools-icon.png</input>
           <label>Slackpkg.conf</label>
-          <action>xfce4-terminal -x nano /etc/slackpkg/slackpkg.conf &</action>
+          <action>xterm -e nano /etc/slackpkg/slackpkg.conf &</action>
         </button> 
         <button>
           <input file>/usr/share/icons/Slackware-Commander/downtime-arrow-icon.png</input>
@@ -194,7 +194,7 @@ export MAIN_DIALOG='
     <button>
           <input file>/usr/share/icons/Slackware-Commander/diy-do-it-yourself-icon.png</input>
           <label>slackpkg+.conf</label>
-           <action>xfce4-terminal -x nano /etc/slackpkg/slackpkgplus.conf &</action>
+           <action>xterm -e nano /etc/slackpkg/slackpkgplus.conf &</action>
           </button>
     <hbox homogeneous="True">    
     <frame Hardware Informations>
@@ -302,12 +302,12 @@ export MAIN_DIALOG='
             <menuitem>
               <label>sbopkg blacklist</label>
               <action>killall sbopkg &</action>
-              <action>xfce4-terminal -x nano /etc/sbopkg/blacklist &</action>
+              <action>xterm -e nano /etc/sbopkg/blacklist &</action>
             </menuitem>
 
             <menuitem>
               <label>sbopkg.conf</label>
-              <action>xfce4-terminal -x nano /etc/sbopkg/sbopkg.conf</action>
+              <action>xterm -e nano /etc/sbopkg/sbopkg.conf</action>
             </menuitem>
 
             <menuitem>
@@ -385,19 +385,19 @@ export MAIN_DIALOG='
             <menuitem>
               <label>Edit repo.toml</label>
               <action>killall slpkg &</action>
-              <action>xfce4-terminal -x nano /etc/slpkg/repositories.toml &</action>
+              <action>xterm -e nano /etc/slpkg/repositories.toml &</action>
             </menuitem>
 
             <menuitem>
               <label>Edit slpkg.toml</label>
               <action>killall slpkg &</action>
-              <action>xfce4-terminal -x nano /etc/slpkg/slpkg.toml &</action>
+              <action>xterm -e nano /etc/slpkg/slpkg.toml &</action>
             </menuitem>
 
               <menuitem>
               <label>Edit Blacklist</label>
               <action>killall slpkg &</action>
-              <action>xfce4-terminal -x nano /etc/slpkg/blacklist.toml & </action>
+              <action>xterm -e nano /etc/slpkg/blacklist.toml & </action>
             </menuitem>
 
             <menuitem>
@@ -428,7 +428,7 @@ export MAIN_DIALOG='
           
           <button>
           <label>Terminal as root</label>
-          <action>xfce4-terminal &</action>
+          <action>xterm &</action>
         </button>
 
       </vbox>
@@ -442,22 +442,22 @@ export MAIN_DIALOG='
       <frame System Files>
         <hbox>
           <button><label>'"$FILE1"'</label><action>yad --title='"$FILE1"' --text-info --width 500 --height 400 --filename='"$FILE1"' &</action></button>
-          <button><input file>/usr/share/icons/Slackware-Commander/it-icon.png</input><action>xfce4-terminal -x nano '"$FILE1"' &</action></button>
+          <button><input file>/usr/share/icons/Slackware-Commander/it-icon.png</input><action>xterm -e nano '"$FILE1"' &</action></button>
         </hbox>
 
         <hbox>
           <button><label>'"$FILE2"'</label><action>yad --title='"$FILE2"' --text-info --width 500 --height 400 --filename='"$FILE2"' &</action></button>
-          <button><input file>/usr/share/icons/Slackware-Commander/service-tools-icon.png</input><action>xfce4-terminal -x nano '"$FILE2"' &</action></button>
+          <button><input file>/usr/share/icons/Slackware-Commander/service-tools-icon.png</input><action>xterm -e nano '"$FILE2"' &</action></button>
         </hbox>
 
         <hbox>
           <button><label>'"$FILE3"'</label><action>yad --title='"$FILE3"' --text-info --width 500 --height 400 --filename='"$FILE3"' &</action></button>
-          <button><input file>/usr/share/icons/Slackware-Commander/scissor-icon.png</input><action>xfce4-terminal -x nano '"$FILE3"' &</action></button>
+          <button><input file>/usr/share/icons/Slackware-Commander/scissor-icon.png</input><action>xterm -e nano '"$FILE3"' &</action></button>
         </hbox>
 
         <hbox>
           <button><label>'"$FILE4"'</label><action>yad --title='"$FILE4"' --text-info --width 500 --height 400 --filename='"$FILE4"' &</action></button>
-          <button><input file>/usr/share/icons/Slackware-Commander/select-area-icon.png</input><action>xfce4-terminal -x nano '"$FILE4"' &</action></button>
+          <button><input file>/usr/share/icons/Slackware-Commander/select-area-icon.png</input><action>xterm -e nano '"$FILE4"' &</action></button>
         </hbox>
          <hbox>
           <button>
@@ -467,7 +467,7 @@ export MAIN_DIALOG='
 
           <button>
             <input file>/usr/share/icons/Slackware-Commander/myspace-icon.png</input>
-            <action>xfce4-terminal -x nano '"$FILE10"' &</action>
+            <action>xterm -e nano '"$FILE10"' &</action>
           </button>
         </hbox>
       </frame>
@@ -475,12 +475,12 @@ export MAIN_DIALOG='
       <frame>
         <hbox>
           <button><label>'"$FILE5"'</label><action>yad --title='"$FILE5"' --text-info --width 500 --height 400 --filename='"$FILE5"' &</action></button>
-          <button><input file>/usr/share/icons/Slackware-Commander/drill-icon.png</input><action>xfce4-terminal -x nano '"$FILE5"' &</action></button>
+          <button><input file>/usr/share/icons/Slackware-Commander/drill-icon.png</input><action>xterm -e nano '"$FILE5"' &</action></button>
         </hbox>
 
         <hbox>
           <button><label>'"$FILE6"'</label><action>yad --title='"$FILE6"' --text-info --width 500 --height 400 --filename='"$FILE6"' &</action></button>
-          <button><input file>/usr/share/icons/Slackware-Commander/green-circle-icon.png</input><action>xfce4-terminal -x nano '"$FILE6"' &</action></button>
+          <button><input file>/usr/share/icons/Slackware-Commander/green-circle-icon.png</input><action>xterm -e nano '"$FILE6"' &</action></button>
         </hbox>
 
         <hbox>
@@ -491,7 +491,7 @@ export MAIN_DIALOG='
 
           <button>
             <input file>/usr/share/icons/Slackware-Commander/red-circle-icon.png</input>
-            <action>xfce4-terminal -x nano '"$FILE7"' &</action>
+            <action>xterm -e nano '"$FILE7"' &</action>
           </button>
 
         </hbox>
@@ -504,7 +504,7 @@ export MAIN_DIALOG='
 
           <button>
             <input file>/usr/share/icons/Slackware-Commander/cruelty-free-sign-icon.png</input>
-            <action>xfce4-terminal -x nano '"$FILE8"' &</action>
+            <action>xterm -e nano '"$FILE8"' &</action>
           </button>
 
         </hbox>
@@ -516,7 +516,7 @@ export MAIN_DIALOG='
 
           <button>
             <input file>/usr/share/icons/Slackware-Commander/share-group-member-icon.png</input>
-            <action>xfce4-terminal -x nano '"$FILE9"' &</action>
+            <action>xterm -e nano '"$FILE9"' &</action>
           </button>
 
         </hbox>
