@@ -234,7 +234,7 @@ export MAIN_DIALOG='
     </hbox>
 <button>
           <label>SBKS (SLACK BUILD KERNEL SCRIPT)</label>
-           <action>bash SBKS &</action>
+           <action>xterm -e SBKS &</action>
           </button>    
     
   </vbox>
