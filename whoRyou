@@ -113,4 +113,8 @@ print_heading "─────────────────────�
 echo -e "${BOLD}${BLUE}"
 clear
 cat /tmp/whoRyou/$pkgvar.whoRyou
+icon_path="$(find /usr/share/ -name $pkgvar.png -print -quit)"
+wait
+        # If a valid icon path is found, display it with catimg
+        /usr/bin/catimg -w 60 "$icon_path"
 rm -rf /tmp/whoRyou
