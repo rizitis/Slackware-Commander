@@ -12,7 +12,7 @@ yad
 ```
 
 #### GNOME-KDE-XFCE
-![Slackware-Commander](https://github.com/rizitis/Slackware-Commander/raw/main/Slackware-Commander-1.0.0.png)
+![Slackware-Commander](https://github.com/rizitis/Slackware-Commander/raw/main/Slackware-Commander-2.0.2.png)
 ![Slackware-Commander](https://github.com/rizitis/Slackware-Commander/blob/main/Slackware-Commander-dark.png?raw=true)
 
 ##### Uninstall
