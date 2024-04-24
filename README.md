@@ -27,5 +27,7 @@ http://www.slackware.com/trademark/trademark.php
 All icons are from [uxwing](https://uxwing.com/license/)
 
 ![](https://uxwing.com/wp-content/themes/uxwing/images/logo.svg)
+
 https://uxwing.com/
+
 Thank you, thank you, thank you!
