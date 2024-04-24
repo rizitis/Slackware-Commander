@@ -194,8 +194,9 @@ export MAIN_DIALOG='
     </frame>
     
     <button>
-          <label>System Informations and Files conf</label>
-           <action>bash SLCMD2.sh &</action>
+          <input file>/usr/share/icons/Slackware-Commander/toolbox-icon.png</input>
+          <label>MORE TOOLS</label>
+          <action>bash SLCMD2.sh &</action>
           </button>    
 
 

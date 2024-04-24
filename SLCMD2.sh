@@ -52,9 +52,12 @@ export MAIN_DIALOG='
 
       <vbox homogeneous="True">
         
-        <pixmap>
+<pixmap>
             <input file>/usr/share/icons/Slackware-Commander/slackware_logo_med.png</input>
-          </pixmap><text use-markup="true"><label>"<span color='"'white'"' font-family='"'purisa'"' weight='"'bold'"' size='"'large'"'><small>SYSTEM INFORMATIONS and CONFS</small></span>"</label></text>
+          </pixmap><text use-markup="true"><label>"<span color='"'white'"' font-family='"'purisa'"' weight='"'bold'"' size='"'large'"'><small>SYSTEM INFORMATIONS </small></span>"</label></text><text use-markup="true"><label>"<span color='"'white'"' font-family='"'purisa'"' weight='"'bold'"' size='"'large'"'><small>and TOOLS </small></span>"</label></text>
+
+
+
           
       </vbox>
     </hbox>
@@ -142,6 +145,7 @@ export MAIN_DIALOG='
     </hbox>
     
     <button>
+          <input file>/usr/share/icons/Slackware-Commander/flexible-customizable-icon.png</input>
           <label>whoRyou?</label>
            <action>xterm -hold -e /usr/local/bin/whoRyou &</action>
           </button>    
@@ -233,7 +237,8 @@ export MAIN_DIALOG='
       </frame>
     </hbox>
 <button>
-          <label>SBKS (SLACK BUILD KERNEL SCRIPT)</label>
+         <input file>/usr/share/icons/Slackware-Commander/project-work-icon.png</input>
+          <label>SBKS (Slack Buld Kernel Script)</label>
            <action>xterm -e SBKS &</action>
           </button>    
     
