@@ -139,6 +139,11 @@ export MAIN_DIALOG='
     <hbox>
       <text> <label>Package:</label> </text>
       <entry><variable>VAR1</variable></entry>
+       <button>
+          <input file>/usr/share/icons/Slackware-Commander/hammer-icon.png</input>
+          <label>slackpkg_build</label>
+          <action>xterm -hold -e slackpkg_build $VAR1 &</action>
+    </button>
     </hbox>
 
     <hbox>
@@ -192,12 +197,15 @@ export MAIN_DIALOG='
       </button>
     </hbox>
     </frame>
-    
+   
     <button>
           <input file>/usr/share/icons/Slackware-Commander/toolbox-icon.png</input>
           <label>MORE TOOLS</label>
           <action>bash SLCMD2.sh &</action>
-          </button>    
+          </button> 
+           
+              
+         
 
 
     
