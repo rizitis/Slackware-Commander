@@ -1,0 +1,62 @@
+This is Slackware-Commander.info, produced by makeinfo version 7.1 from
+Slackware-Commander.texi.
+
+
+File: Slackware-Commander.info,  Node: Top,  Next: Overview,  Up: (dir)
+
+Slackware-Commander
+*******************
+
+This is the documentation for Slackware-Commander.
+
+* Menu:
+
+* Overview::   A gtkdialog and yad menu for Slackware system administration.
+* Installation::   How to install Slackware-Commander.
+* Usage::   How to use Slackware-Commander.
+
+
+File: Slackware-Commander.info,  Node: Overview,  Next: Installation,  Prev: Top,  Up: Top
+
+1 Overview
+**********
+
+Slackware-Commander provides easy Slackware system administration while
+keeping the KISS philosophy.  It offers new tools: - **SBKS**: Builds
+and installs a backup Linux kernel.  - **whoRyou**: Gathers information
+about installed apps, libraries, or services.  - **slackpkg_build**:
+Downloads and builds packages from official Slackware repositories.
+
+
+File: Slackware-Commander.info,  Node: Installation,  Next: Usage,  Prev: Overview,  Up: Top
+
+2 Installation
+**************
+
+To install, download a binary or source tarball and
+Slackware-Commander.SlackBuild from the GitHub releases page:
+https://github.com/rizitis/Slackware-Commander/releases
+
+
+File: Slackware-Commander.info,  Node: Usage,  Prev: Installation,  Up: Top
+
+3 Usage
+*******
+
+Using Slackware-Commander is straightforward.  However, remember to use
+root privileges responsibly.
+
+
+
+Tag Table:
+Node: Top99
+Node: Overview453
+Node: Installation922
+Node: Usage1220
+
+End Tag Table
+
+
+Local Variables:
+coding: utf-8
+End:
