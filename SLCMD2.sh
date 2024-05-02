@@ -236,6 +236,11 @@ export MAIN_DIALOG='
         </hbox>
       </frame>
     </hbox>
+    <button>
+         <input file>/usr/share/icons/Slackware-Commander/online-community-icon.png</input>
+          <label>slack-revert</label>
+           <action>xterm -e slack-revert &</action>
+          </button>    
 <button>
          <input file>/usr/share/icons/Slackware-Commander/project-work-icon.png</input>
           <label>SBKS (Slack Buld Kernel Script)</label>
