@@ -239,12 +239,12 @@ export MAIN_DIALOG='
     <button>
          <input file>/usr/share/icons/Slackware-Commander/online-community-icon.png</input>
           <label>slack-revert</label>
-           <action>xterm -e slack-revert &</action>
+           <action>xterm -hold -e slack-revert &</action>
           </button>    
 <button>
          <input file>/usr/share/icons/Slackware-Commander/project-work-icon.png</input>
           <label>SBKS (Slack Buld Kernel Script)</label>
-           <action>xterm -e SBKS &</action>
+           <action>xterm -hold -e SBKS &</action>
           </button>    
     
   </vbox>
