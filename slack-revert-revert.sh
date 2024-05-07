@@ -71,7 +71,8 @@ read -p "Do you want to revert /etc/ snapshot with an older one? (yes/no): " etc
                     # Revert /etc/ 
                     echo -e "${GREEN}Apply selected etc snapshot $etc_file${RESET}"
                     tar -xzvf "$DIR"/2/$etc_file -C /tmp/
-                    cp -r /tmp/etc/* /etc/
+                    cp -r /tmp/etc/* /etc/ 
+                    rm -r /tmp/etc
                 else
                     echo -e "${BLUE}No etc revert requested.${RESET}"
                 fi
