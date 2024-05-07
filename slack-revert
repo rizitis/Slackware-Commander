@@ -74,7 +74,7 @@ if [ -d "$DIR"/2/ ]; then
     case $etc_question in
           yes)
                echo "Creating snapshot for /etc/..."
-               tar -czvf "$DIR"/2/etc-snap-$(date +%Y%m%d).tar.gz /etc/  
+               tar -czvf "$DIR"/2/etc-snap-$(date +%d%m%Y).tar.gz /etc/  
                 ;;
           no)
                echo "Skip /etc/ snapshot..."
