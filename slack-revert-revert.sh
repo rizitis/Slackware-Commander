@@ -35,6 +35,46 @@ if [ "$(id -u)" -ne 0 ]; then
   exit 
 fi
 
+read -p "Do you want to revert /etc/ snapshot with an older one? (yes/no): " etc_revert
+                etc_revert=$(echo "$etc_revert" | tr '[:upper:]' '[:lower:]')
+
+                if [[ "$etc_revert" == "yes" ]]; then
+                    # List all tar.gz files in DIR and store them in an array
+                    etc_files=($(ls "$DIR"/2 | grep .tar.gz))
+
+                    # Check if there are any .tar.gz files
+                    if [ ${#etc_files[@]} -eq 0 ]; then
+                        echo -e "${BLUE}No .etc.tar.gz files found in $DIR/2.${RESET}"
+                        exit 1
+                    fi
+
+                    # Display the list of .tar.gz files with numbering
+                    echo -e "${GREEN}Please select a etc_snapshot by entering the corresponding number:${RESET}"
+                    echo -e "${GREEN} Safe choice is the the same date as packages  $snap1 ${RESET}"
+                    for i in "${!etc_files[@]}"; do
+                        echo "$((i + 1)). ${etc_files[$i]}"
+                    done
+
+                    # Get user input to select a file for installation
+                    read -p "Enter the number. : " etc_index
+                    etc_index=$((etc_index - 1))
+
+                    # Validate the index
+                    if [[ $etc_index -lt 0 || $etc_index -ge ${#etc_files[@]} ]]; then
+                        echo -e "${BLUE}Invalid selection.${RESET}"
+                        exit 1
+                    fi
+
+                    # Get the file name to install
+                    etc_file="${etc_files[$etc_index]}"
+
+                    # Revert /etc/ 
+                    echo -e "${GREEN}Apply selected etc snapshot $etc_file${RESET}"
+                    tar -xzvf "$DIR"/2/$etc_file -C /tmp/
+                    cp -r /tmp/etc/* /etc/
+                else
+                    echo -e "${BLUE}No etc revert requested.${RESET}"
+                fi
 
 # URL for FILELIST.TXT
 file_list_url="${mirror_url}FILELIST.TXT"

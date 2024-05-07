@@ -67,7 +67,23 @@ if [ -d "$DIR"/2/ ]; then
 
                 cat "$output_1" > "$DIR"/2/snapshot-$DATE.txt
                 echo -e "${GREEN}System snapshot created${RESET}"
-
+                
+                # Ask for /etc/ backup also
+  read -p "Do you also want to create a today's snapshot for your /etc/ ? (yes/no): " etc_question
+                etc_question=$(echo "$etc_question" | tr '[:upper:]' '[:lower:]')
+    case $etc_question in
+          yes)
+               echo "Creating snapshot for /etc/..."
+               tar -czvf "$DIR"/2/etc-snap-$(date +%Y%m%d).tar.gz /etc/  
+                ;;
+          no)
+               echo "Skip /etc/ snapshot..."
+               ;;
+          *)
+            echo -e "${RED}Invalid answer. Please enter 'yes' or 'no'.${RESET}"
+            ;;
+    esac
+              
                 # Ask if the user wants to compare today's snapshot with an older one
                 read -p "Do you want to compare today's snapshot with an older one? (yes/no): " compare_response
                 compare_response=$(echo "$compare_response" | tr '[:upper:]' '[:lower:]')
