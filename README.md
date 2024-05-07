@@ -14,7 +14,7 @@ catimg
 
 #### GNOME-KDE-XFCE
 ![Slackware-Commander](https://github.com/rizitis/Slackware-Commander/raw/main/Slackware-Commander-2.0.2.png)
-![Slackware-Commander](https://github.com/rizitis/Slackware-Commander/blob/main/Slackware-Commander-dark.png)
+![Slackware-Commander](https://github.com/rizitis/Slackware-Commander/raw/main/Slackware-Commander-dark.png)
 
 ##### Uninstall
 ```
