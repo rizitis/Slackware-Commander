@@ -4,6 +4,6 @@ Encoding=UTF-8
 Name=Slackware-Commander
 Comment=configuration loader
 Exec=kdesu /usr/local/bin/Slackware-Commander.sh
-Icon=/usr/share/icons/Slackware-Commander/Slackware-Commander2.png
+Icon=/usr/share/icons/Slackware-Commander/sl_logo1.png
 Terminal=false
 Categories=Settings;HardwareSettings;
