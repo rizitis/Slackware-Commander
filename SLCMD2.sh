@@ -98,6 +98,12 @@ export MAIN_DIALOG='
           <label>inxi </label>
           <action>inxi -v 8 | yad --text-info  --width=700 --height=500 --title $"inxi" &</action>
         </button>
+        
+        <button>
+          <input file>/usr/share/icons/Slackware-Commander/speed-test-icon.png</input>
+          <label>Panic button </label>
+          <action>xterm -hold -e fortune &</action>
+        </button>
 
         
       </vbox>
@@ -121,22 +127,26 @@ export MAIN_DIALOG='
         </button>
          
        <button>
+          <input file>/usr/share/icons/Slackware-Commander/alert-icon.png</input>
           <label>View dmesg messages</label>
           <action>dmesg | yad --text-info  --width=900 --height=700 --title $"View kernel messages" &</action>
         </button>
 
         
         <button>
+         <input file>/usr/share/icons/Slackware-Commander/pin-line-icon.png</input>
           <label>Loaded modules</label>
          <action>lsmod | yad --text-info  --width=700 --height=500 --title $"View loaded modules" &</action>
         </button>
 
         <button>
+         <input file>/usr/share/icons/Slackware-Commander/paint-roller-bucket-icon.png</input>
           <label>Services</label>
           <action>xterm -hold -e /usr/local/bin/rcstatus &</action>
           </button>
           
           <button>
+            <input file>/usr/share/icons/Slackware-Commander/hashtag-icon.png</input>
           <label>Terminal as root</label>
           <action>xterm &</action>
         </button>
@@ -149,7 +159,14 @@ export MAIN_DIALOG='
           <label>whoRyou?</label>
            <action>xterm -hold -e /usr/local/bin/whoRyou &</action>
           </button>    
-    
+    <hbox>
+      <entry><variable>VAR1</variable></entry>
+       <button>
+          <input file>/usr/share/icons/Slackware-Commander/dimension-3d-icon.png</input>
+          <label>Find package`s deps</label>
+          <action>xterm -hold -e curl -sSL https://raw.githubusercontent.com/gapan/slackware-deps/15.0/$VAR1.dep &</action>
+    </button>
+    </hbox>
     
 
     <hbox>
@@ -168,7 +185,6 @@ export MAIN_DIALOG='
           <button><label>'"$FILE3"'</label><action>yad --title='"$FILE3"' --text-info --width 500 --height 400 --filename='"$FILE3"' &</action></button>
           <button><input file>/usr/share/icons/Slackware-Commander/scissor-icon.png</input><action>xterm -e nano '"$FILE3"' &</action></button>
         </hbox>
-
         <hbox>
           <button><label>'"$FILE4"'</label><action>yad --title='"$FILE4"' --text-info --width 500 --height 400 --filename='"$FILE4"' &</action></button>
           <button><input file>/usr/share/icons/Slackware-Commander/select-area-icon.png</input><action>xterm -e nano '"$FILE4"' &</action></button>
