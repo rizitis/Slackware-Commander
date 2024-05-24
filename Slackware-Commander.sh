@@ -70,7 +70,7 @@ export MAIN_DIALOG='
     <button>
           <label>Slackpkg Update</label>
           <action>rm /var/lock/slackpkg.* &</action>
-          <action>kosnole --hold -e  /usr/sbin/slackpkg update &</action>
+          <action>konsole --hold -e  /usr/sbin/slackpkg update &</action>
           <input file>/usr/share/icons/Slackware-Commander/this-way-up-symbol-icon.png</input>
         </button> 
     
@@ -78,21 +78,21 @@ export MAIN_DIALOG='
          <input file>/usr/share/icons/Slackware-Commander/deep-water-icon.png</input>
           <label>Slackpkg Upgrade-all</label>
           <action>rm /var/lock/slackpkg.* &</action>
-          <action>kosnole --hold -e /usr/sbin/slackpkg upgrade-all &</action>
+          <action>konsole --hold -e /usr/sbin/slackpkg upgrade-all &</action>
         </button>        
         
         <button>
           <input file>/usr/share/icons/Slackware-Commander/wow-icon.png</input>
           <label>Slackpkg Install-new</label>
           <action>rm /var/lock/slackpkg.* &</action>
-          <action>kosnole --hold -e slackpkg install-new &</action>
+          <action>konsole --hold -e slackpkg install-new &</action>
         </button>
         
         <button>
            <input file>/usr/share/icons/Slackware-Commander/project-work-icon.png</input>
           <label>Slackpkg new-config</label>
            <action>rm /var/lock/slackpkg.* &</action>
-          <action>kosnole --hold -e /usr/sbin/slackpkg new-config &</action>
+          <action>konsole --hold -e /usr/sbin/slackpkg new-config &</action>
         </button>     
      </frame>
    </vbox>   
@@ -106,17 +106,17 @@ export MAIN_DIALOG='
          <button>
           <input file>/usr/share/icons/Slackware-Commander/silence-icon.png</input>
           <label>BLACKLIST </label>
-          <action>kosnole  -e nano /etc/slackpkg/blacklist &</action>
+          <action>konsole -e nano /etc/slackpkg/blacklist &</action>
         </button> 
         <button>
         <input file>/usr/share/icons/Slackware-Commander/business-management-icon.png</input>
           <label>MIRRORS</label>
-          <action>kosnole  -e nano /etc/slackpkg/mirrors &</action>
+          <action>konsole -e nano /etc/slackpkg/mirrors &</action>
         </button> 
         <button>
           <input file>/usr/share/icons/Slackware-Commander/carpenter-tools-icon.png</input>
           <label>Slackpkg.conf</label>
-          <action>kosnole  -e nano /etc/slackpkg/slackpkg.conf &</action>
+          <action>konsole -e nano /etc/slackpkg/slackpkg.conf &</action>
         </button> 
         <button>
           <input file>/usr/share/icons/Slackware-Commander/downtime-arrow-icon.png</input>
@@ -130,7 +130,7 @@ export MAIN_DIALOG='
     <button>
           <input file>/usr/share/icons/Slackware-Commander/diy-do-it-yourself-icon.png</input>
           <label>slackpkg+.conf</label>
-           <action>kosnole  -e nano /etc/slackpkg/slackpkgplus.conf &</action>
+           <action>konsole-e nano /etc/slackpkg/slackpkgplus.conf &</action>
           </button>
     
     
@@ -142,7 +142,7 @@ export MAIN_DIALOG='
        <button>
           <input file>/usr/share/icons/Slackware-Commander/hammer-icon.png</input>
           <label>slackpkg_build</label>
-          <action>kosnole --hold -e slackpkg_build $VAR1 &</action>
+          <action>konsole --hold -e slackpkg_build $VAR1 &</action>
     </button>
     </hbox>
 
@@ -150,25 +150,25 @@ export MAIN_DIALOG='
       <button>
         <label>slackpkg install</label>
         <action>rm /var/lock/slackpkg.* &</action>
-        <action>kosnole --hold -e slackpkg install $VAR1 &</action>
+        <action>konsole --hold -e slackpkg install $VAR1 &</action>
       </button>
       
       <button>
         <label>slackpkg reinstall</label>
         <action>rm /var/lock/slackpkg.* &</action>
-        <action>kosnole --hold -e /usr/sbin/slackpkg reinstall $VAR1 &</action>
+        <action>konsole --hold -e /usr/sbin/slackpkg reinstall $VAR1 &</action>
       </button>
       
       <button>
         <label>slackpkg search</label>
         <action>rm /var/lock/slackpkg.* &</action>
-        <action>kosnole --hold -e slackpkg search $VAR1 &</action>      
+        <action>konsole --hold -e slackpkg search $VAR1 &</action>      
       </button>
       
       <button>
         <label>slackpkg remove</label>
         <action>rm /var/lock/slackpkg.* &</action>
-        <action>kosnole --hold -e slackpkg remove $VAR1 &</action>
+        <action>konsole --hold -e slackpkg remove $VAR1 &</action>
       </button>
     
       <button>
