@@ -9,7 +9,8 @@ https://github.com/rizitis/Slackware-Commander/releases
 ```
 gtkdialog
 yad
-catimg
+catimg (optional)
+cmatrix (optional)
 ```
 
 #### GNOME-KDE-XFCE
