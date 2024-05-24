@@ -56,7 +56,11 @@ export MAIN_DIALOG='
             <input file>/usr/share/icons/Slackware-Commander/slackware_logo_med.png</input>
           </pixmap><text use-markup="true"><label>"<span color='"'white'"' font-family='"'purisa'"' weight='"'bold'"' size='"'large'"'><small>SYSTEM INFORMATIONS </small></span>"</label></text><text use-markup="true"><label>"<span color='"'white'"' font-family='"'purisa'"' weight='"'bold'"' size='"'large'"'><small>and TOOLS </small></span>"</label></text>
 
-
+<button>
+          <input file>/usr/share/icons/Slackware-Commander/speed-test-icon.png</input>
+          <label>Panic button </label>
+<action>konsole --hold -e bash -c "$(ls /usr/local/bin/panic/*.sh | shuf -n 1)"</action>
+        </button>
 
           
       </vbox>
@@ -100,9 +104,9 @@ export MAIN_DIALOG='
         </button>
         
         <button>
-          <input file>/usr/share/icons/Slackware-Commander/speed-test-icon.png</input>
-          <label>Panic button </label>
-          <action>xterm -hold -e fortune &</action>
+          <input file>/usr/share/icons/Slackware-Commander/solution-thinking-icon.png</input>
+          <label>restart-services </label>
+          <action>konsole --hold -e /usr/local/bin/restart-services &</action>
         </button>
 
         
@@ -142,13 +146,13 @@ export MAIN_DIALOG='
         <button>
          <input file>/usr/share/icons/Slackware-Commander/paint-roller-bucket-icon.png</input>
           <label>Services</label>
-          <action>xterm -hold -e /usr/local/bin/rcstatus &</action>
+          <action>konsole --hold -e /usr/local/bin/rcstatus &</action>
           </button>
           
           <button>
             <input file>/usr/share/icons/Slackware-Commander/hashtag-icon.png</input>
           <label>Terminal as root</label>
-          <action>xterm &</action>
+          <action>konsole &</action>
         </button>
 
       </vbox>
@@ -157,14 +161,14 @@ export MAIN_DIALOG='
     <button>
           <input file>/usr/share/icons/Slackware-Commander/flexible-customizable-icon.png</input>
           <label>whoRyou?</label>
-           <action>xterm -hold -e /usr/local/bin/whoRyou &</action>
+           <action>konsole --hold -e /usr/local/bin/whoRyou &</action>
           </button>    
     <hbox>
       <entry><variable>VAR1</variable></entry>
        <button>
           <input file>/usr/share/icons/Slackware-Commander/dimension-3d-icon.png</input>
           <label>Find package`s deps</label>
-          <action>xterm -hold -e curl -sSL https://raw.githubusercontent.com/gapan/slackware-deps/15.0/$VAR1.dep &</action>
+          <action>konsole --hold -e curl -sSL https://raw.githubusercontent.com/gapan/slackware-deps/15.0/$VAR1.dep &</action>
     </button>
     </hbox>
     
@@ -173,21 +177,21 @@ export MAIN_DIALOG='
       <frame System Files>
         <hbox>
           <button><label>'"$FILE1"'</label><action>yad --title='"$FILE1"' --text-info --width 500 --height 400 --filename='"$FILE1"' &</action></button>
-          <button><input file>/usr/share/icons/Slackware-Commander/it-icon.png</input><action>xterm -e nano '"$FILE1"' &</action></button>
+          <button><input file>/usr/share/icons/Slackware-Commander/it-icon.png</input><action>konsole -e nano '"$FILE1"' &</action></button>
         </hbox>
 
         <hbox>
           <button><label>'"$FILE2"'</label><action>yad --title='"$FILE2"' --text-info --width 500 --height 400 --filename='"$FILE2"' &</action></button>
-          <button><input file>/usr/share/icons/Slackware-Commander/service-tools-icon.png</input><action>xterm -e nano '"$FILE2"' &</action></button>
+          <button><input file>/usr/share/icons/Slackware-Commander/service-tools-icon.png</input><action>konsole -e nano '"$FILE2"' &</action></button>
         </hbox>
 
         <hbox>
           <button><label>'"$FILE3"'</label><action>yad --title='"$FILE3"' --text-info --width 500 --height 400 --filename='"$FILE3"' &</action></button>
-          <button><input file>/usr/share/icons/Slackware-Commander/scissor-icon.png</input><action>xterm -e nano '"$FILE3"' &</action></button>
+          <button><input file>/usr/share/icons/Slackware-Commander/scissor-icon.png</input><action>konsole -e nano '"$FILE3"' &</action></button>
         </hbox>
         <hbox>
           <button><label>'"$FILE4"'</label><action>yad --title='"$FILE4"' --text-info --width 500 --height 400 --filename='"$FILE4"' &</action></button>
-          <button><input file>/usr/share/icons/Slackware-Commander/select-area-icon.png</input><action>xterm -e nano '"$FILE4"' &</action></button>
+          <button><input file>/usr/share/icons/Slackware-Commander/select-area-icon.png</input><action>konsole -e nano '"$FILE4"' &</action></button>
         </hbox>
          <hbox>
           <button>
@@ -197,7 +201,7 @@ export MAIN_DIALOG='
 
           <button>
             <input file>/usr/share/icons/Slackware-Commander/myspace-icon.png</input>
-            <action>xterm -e nano '"$FILE10"' &</action>
+            <action>konsole -e nano '"$FILE10"' &</action>
           </button>
         </hbox>
       </frame>
@@ -205,12 +209,12 @@ export MAIN_DIALOG='
       <frame>
         <hbox>
           <button><label>'"$FILE5"'</label><action>yad --title='"$FILE5"' --text-info --width 500 --height 400 --filename='"$FILE5"' &</action></button>
-          <button><input file>/usr/share/icons/Slackware-Commander/drill-icon.png</input><action>xterm -e nano '"$FILE5"' &</action></button>
+          <button><input file>/usr/share/icons/Slackware-Commander/drill-icon.png</input><action>konsole -e nano '"$FILE5"' &</action></button>
         </hbox>
 
         <hbox>
           <button><label>'"$FILE6"'</label><action>yad --title='"$FILE6"' --text-info --width 500 --height 400 --filename='"$FILE6"' &</action></button>
-          <button><input file>/usr/share/icons/Slackware-Commander/green-circle-icon.png</input><action>xterm -e nano '"$FILE6"' &</action></button>
+          <button><input file>/usr/share/icons/Slackware-Commander/green-circle-icon.png</input><action>konsole -e nano '"$FILE6"' &</action></button>
         </hbox>
 
         <hbox>
@@ -221,7 +225,7 @@ export MAIN_DIALOG='
 
           <button>
             <input file>/usr/share/icons/Slackware-Commander/red-circle-icon.png</input>
-            <action>xterm -e nano '"$FILE7"' &</action>
+            <action>konsole -e nano '"$FILE7"' &</action>
           </button>
 
         </hbox>
@@ -234,7 +238,7 @@ export MAIN_DIALOG='
 
           <button>
             <input file>/usr/share/icons/Slackware-Commander/cruelty-free-sign-icon.png</input>
-            <action>xterm -e nano '"$FILE8"' &</action>
+            <action>konsole -e nano '"$FILE8"' &</action>
           </button>
 
         </hbox>
@@ -246,7 +250,7 @@ export MAIN_DIALOG='
 
           <button>
             <input file>/usr/share/icons/Slackware-Commander/share-group-member-icon.png</input>
-            <action>xterm -e nano '"$FILE9"' &</action>
+            <action>konsole -e nano '"$FILE9"' &</action>
           </button>
 
         </hbox>
@@ -255,12 +259,12 @@ export MAIN_DIALOG='
     <button>
          <input file>/usr/share/icons/Slackware-Commander/online-community-icon.png</input>
           <label>slack-revert</label>
-           <action>xterm -hold -e slack-revert &</action>
+           <action>konsole --hold -e slack-revert &</action>
           </button>    
 <button>
          <input file>/usr/share/icons/Slackware-Commander/project-work-icon.png</input>
           <label>SBKS (Slack Buld Kernel Script)</label>
-           <action>xterm -hold -e SBKS &</action>
+           <action>konsole --hold -e SBKS &</action>
           </button>    
     
   </vbox>
