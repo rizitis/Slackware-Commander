@@ -1,7 +1,7 @@
 # Slackware-Commander
 Slackware Commander
 
-## Install
+## Install binary or build and install
 ```
 https://github.com/rizitis/Slackware-Commander/releases
 ```
