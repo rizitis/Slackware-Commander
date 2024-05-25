@@ -20,6 +20,8 @@ cmatrix (optional)
 ##### Uninstall
 ```
 Slackware-Commander-uninstall.sh
+or 
+removepkg Slackware-Commander*.t?z
 ```
 
 
