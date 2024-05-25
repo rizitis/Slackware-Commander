@@ -14,8 +14,8 @@ cmatrix (optional)
 ```
 
 #### GNOME-KDE-XFCE
-![Slackware-Commander](https://raw.githubusercontent.com/rizitis/Slackware-Commander/main/Slackware-Commander-2.0.5.png)
-![Slackware-Commander](https://raw.githubusercontent.com/rizitis/Slackware-Commander/main/Slackware-Commander-dark2.png)
+![Slackware-Commander](https://raw.githubusercontent.com/rizitis/Slackware-Commander/main/Slackware-Commander-3.0.3.png)
+![Slackware-Commander](https://raw.githubusercontent.com/rizitis/Slackware-Commander/main/Slackware-Commander-dark3.0.3.png)
 
 ##### Uninstall
 ```
