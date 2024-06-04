@@ -111,6 +111,37 @@ if [ -z "$package_folder" ]; then
 fi
 
 
+# Λήψη του αρχείου με τα dependencies
+URL="https://raw.githubusercontent.com/gapan/slackware-deps/15.0/$1.dep"
+DEPS=$(curl -sSL $URL | grep -v "^aaa_libraries")
+
+# Έλεγχος αν το αρχείο υπάρχει και δεν είναι κενό
+if [ -z "$DEPS" ]; then
+  echo "NO dependencies found for $1."
+  sleep 3 
+else
+  # Εμφάνιση της λίστας των dependencies και έλεγχος αν είναι εγκατεστημένα
+  echo "Following dependencies required for $1:"
+  for dep in $DEPS; do
+    if ! ls /var/lib/pkgtools/packages | grep -q "$dep"; then
+      echo -e "${RED} $dep is not installed.${RESET}"
+    else
+      echo -e "${GREEN} $dep is already installed.${RESET}"
+    fi
+  done
+  
+  # Ερώτηση για το αν θέλει να συνεχίσει
+  while true; do
+    read -p "Do you want to continue? (y/n): " yn
+    case $yn in
+        [Yy]* ) echo "Continuing..."; break;;
+        [Nn]* ) echo "Exiting..."; exit;;
+        * ) echo "Please type y/n.";;
+    esac
+  done
+fi
+
+
 # well...
 if [[ "$package_folder" == *"/kde/kde/"* ]]; then
   echo -e "${RED}I'm sorry, KDE apps are not supported for separate building.${RESET}"
@@ -188,7 +219,7 @@ echo -e "${BLUE}===================${RESET}\n"
 # Loop until a valid response is provided
 while true; do
 
-    read -p "$(echo -e "${Yellow}Do you want to build or stop? (yes/no):${RESET}")" answer
+    read -p "$(echo -e "Do you want to build or stop? (yes/no):")" answer
 
     # Convert response to lowercase for consistency
     answer=$(echo "$answer" | tr '[:upper:]' '[:lower:]')
