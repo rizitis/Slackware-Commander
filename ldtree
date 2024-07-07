@@ -1,0 +1,25 @@
+#!/bin/sh
+# lddtree
+# List direct library dependencies and their dependencies and so on.
+# Something like ldd, but ldd does not separate direct dependencies.
+# pk 2024-03-16 2024-05-04
+# https://www.linuxquestions.org/questions/slackware-14/requests-for-current-next-15-0-15-1-a-4175706801/page294.html#post6499776
+# Thanks to Petri Kaukasoina
+
+function check {
+  echo NEEDED by "$1":
+  objdump -p "$1"|grep NEEDED|sed 's/ *NEEDED *//;s/$/ /;s/\./\\\./g' > $NEEDED
+  ldd "$1"|grep -f $NEEDED|sed 's/ (.*//'
+  echo
+}
+
+[ $# -ne 1 ] && echo 'Give a binary or a library.' && exit 1
+objdump -p "$1" > /dev/null || exit 1
+NEEDED=$(mktemp)
+trap 'rm $NEEDED' EXIT
+check "$1"
+ldd "$1"|grep -v -e linux-vdso.so.1 -e linux-gate.so.1 -e statically -e 'not found' |\
+sed 's/.*=> //;s/ (.*//' |\
+while read line; do
+  check $line
+done

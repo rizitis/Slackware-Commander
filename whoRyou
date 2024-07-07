@@ -99,6 +99,7 @@ print_info "SERVICE INFORMATION" "" >> "/tmp/whoRyou/$pkgvar.whoRyou"
 	  echo " "  >> "/tmp/whoRyou/$pkgvar.whoRyou"
   # Is it a Library?
   print_info "IS IT A LIBRARY?" >> "/tmp/whoRyou/$pkgvar.whoRyou"
+  print_info "If yes then run: ldtree /path/to/lib.so" >> "/tmp/whoRyou/$pkgvar.whoRyou"
   echo " " >> "/tmp/whoRyou/$pkgvar.whoRyou"
 if [ "$fpkg" = 0 ]; then
     echo " " >> "/tmp/whoRyou/$pkgvar.whoRyou"
