@@ -26,6 +26,9 @@ cmatrix (optional)
 ##### GNUSteps
 ![Slackware-Commander](https://raw.githubusercontent.com/rizitis/Slackware-Commander/main/GNUSteps.png)
 
+#### Sway
+![Slackware-Commander](https://raw.githubusercontent.com/rizitis/Slackware-Commander/main/Sway.png)
+
 
 ##### Uninstall
 ```
