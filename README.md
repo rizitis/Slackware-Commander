@@ -13,7 +13,7 @@ catimg (optional)
 cmatrix (optional)
 ```
 
-#### GNOME-KDE-XFCE
+#### GNOME-KDE-XFCE-WM
 
 ##### DARK
 ![Slackware-Commander](https://raw.githubusercontent.com/rizitis/Slackware-Commander/main/Slackware-Commander-3.0.3.png)
@@ -22,6 +22,10 @@ cmatrix (optional)
 ##### LIGHT
 ![Slackware-Commander](https://raw.githubusercontent.com/rizitis/Slackware-Commander/main/2scl1.png)
 ![Slackware-Commander](https://github.com/rizitis/Slackware-Commander/blob/main/1scl1.png)
+
+##### GNUSteps
+![Slackware-Commander](https://raw.githubusercontent.com/rizitis/Slackware-Commander/main/GNUSteps.png)
+
 
 ##### Uninstall
 ```
