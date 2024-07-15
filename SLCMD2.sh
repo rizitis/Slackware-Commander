@@ -164,7 +164,11 @@ export MAIN_DIALOG='
            <action>konsole --hold -e /usr/local/bin/whoRyou &</action>
           </button>    
     <hbox>
-      <entry><variable>VAR1</variable></entry>
+    <button>
+    <label>Package`s slack-desc</label>
+    <action>konsole --hold -e grep -h $VAR1: /var/lib/pkgtools/packages/* &</action>
+    </button>
+         <entry><variable>VAR1</variable></entry>
        <button>
           <input file>/usr/share/icons/Slackware-Commander/dimension-3d-icon.png</input>
           <label>Find package`s deps</label>
