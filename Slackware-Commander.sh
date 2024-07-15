@@ -175,6 +175,11 @@ export MAIN_DIALOG='
         <label>Help</label>
         <action>$VAR1 --help | yad --text-info --width=600 --height=600 --title $"Help" &</action>
       </button>
+      
+      <button>
+       <label>Slackpkg info</label>
+       <action>konsole --hold -e slackpkg info $VAR1 &</action>
+      </button>
 
       <button>
         <label>Whereis</label>
