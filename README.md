@@ -11,6 +11,7 @@ gtkdialog
 yad
 catimg (optional)
 cmatrix (optional)
+figlet (optional)
 ```
 
 #### GNOME-KDE-XFCE-WM
