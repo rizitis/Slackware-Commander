@@ -1,4 +1,7 @@
 #!/bin/bash
+#
+# inxifetch-2024.07.190
+
 
 . /etc/inxifetch/inxifetch.conf
 
