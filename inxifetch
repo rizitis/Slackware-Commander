@@ -1,0 +1,38 @@
+#!/bin/bash
+
+. /etc/inxifetch/inxifetch.conf
+
+full=$(inxi -S | grep -m 1 "Distro" | sed 's/^.*Distro:\s*//;s/\s*$//' | xargs)
+just=$(inxi -S | grep -m 1 "Distro" | sed 's/^.*Distro:\s*//;s/\s*$//' | awk '{print $1}')
+
+if [[ $distro_name == full_distro_name_version ]]; then
+ fgl="$(figlet -f $FontType $full)"
+ echo -e "$colorF$fgl\e[0m"
+elif
+[[ $distro_name == just_distro_name ]]; then
+ fgl="$(figlet -f $FontType $just)"
+ echo -e "$colorF$fgl\e[0m"
+else
+echo "There are 2 valid values in /etc/inxifetch/inxifetch.conf"
+echo "full_disrto_name_version and just_distro_name"
+echo "Please correct you file and come back..."
+exit 1
+fi
+
+inxi -c $color -Ib"$1"
+
+if [[ $distro_name == full_distro_name_version ]]; then
+   fglr="$(figlet -f $FontType -Rl $full)"
+   echo -e "$colorF$fglr\e[0m"
+elif
+[[ $distro_name == just_distro_name ]]; then
+   fglr="$(figlet -f $FontType -Rl $just)"
+   echo -e "$colorF$fglr\e[0m"
+else
+   echo "There are 2 valid values in /etc/inxifetch/inxifetch.conf"
+   echo "full_disrto_name_version and just_distro_name"
+   echo "Please correct you file and come back..."
+ exit 1
+fi
+
+
