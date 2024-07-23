@@ -1,2 +1,2 @@
 add isnum
-
+add wttr.in # weather forcast "curl wttr.in"
