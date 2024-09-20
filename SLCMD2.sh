@@ -253,7 +253,7 @@ export MAIN_DIALOG='
 <button>
          <input file>/usr/share/icons/Slackware-Commander/solution-thinking-icon.png</input>
          <label>MORE MORE TOOLS</label>
-         <action>bash SLCMD3.sh &</action>
+         <action>bash /usr/local/bin/SLCMD3.sh &</action>
          </button>
 
   </vbox>
