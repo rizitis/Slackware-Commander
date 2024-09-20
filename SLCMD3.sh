@@ -73,7 +73,7 @@ export MAIN_DIALOG='
     <button>
           <input file>/usr/share/icons/Slackware-Commander/alert-icon.png</input>
           <label>Wheather-Forcast</label>
-           <action>konsole --hold -e /usr/local/bin/wheather-forcast &</action>
+           <action>konsole --hold -e /usr/local/bin/wheather_forcast &</action>
           </button>
     <hbox>
          <entry><variable>VAR1</variable></entry>
