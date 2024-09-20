@@ -1,0 +1,8 @@
+#!/bin/bash
+version=$(grep -oP 'Slackware \K[0-9.]+\+?' /etc/*version*)
+
+if [[ "$version" == *"+" ]]; then
+    echo "Slackware-current"
+else
+    echo "Slackware-$version"
+fi

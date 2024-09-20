@@ -5,7 +5,7 @@
 # rcstatus script is from https://www.linuxquestions.org/questions/slackware-14/how-can-i-check-the-system-running-services-534612/page2.html#post6410525
 # Thank you very much.
 # requires: gtkdialog and yad from SlackBuilds.org
-# I found yad more stable than zenity. 
+# I found yad more stable than zenity.
 # Added GFS-tracker for Slackers with Gnome installation. (https://github.com/rizitis/GFS-tracker) #
 
 # Permission is hereby granted, free of charge, to any person obtaining
@@ -48,13 +48,13 @@ export MAIN_DIALOG='
   <hbox homogeneous="True">
     <frame>
     <hbox homogeneous="True">
-      
+
 
       <vbox homogeneous="True">
-        
+
 <pixmap>
             <input file>/usr/share/icons/Slackware-Commander/slackware_logo_med.png</input>
-          </pixmap><text use-markup="true"><label>"<span color='"'white'"' font-family='"'purisa'"' weight='"'bold'"' size='"'large'"'><small>SYSTEM INFORMATIONS </small></span>"</label></text><text use-markup="true"><label>"<span color='"'white'"' font-family='"'purisa'"' weight='"'bold'"' size='"'large'"'><small>and TOOLS </small></span>"</label></text>
+          </pixmap><text use-markup="true"><label>"<span color='"'blue'"' font-family='"'purisa'"' weight='"'bold'"' size='"'large'"'><small>SYSTEM INFORMATIONS </small></span>"</label></text><text use-markup="true"><label>"<span color='"'blue'"' font-family='"'purisa'"' weight='"'bold'"' size='"'large'"'><small>and TOOLS </small></span>"</label></text>
 
 <button>
           <input file>/usr/share/icons/Slackware-Commander/speed-test-icon.png</input>
@@ -62,16 +62,16 @@ export MAIN_DIALOG='
 <action>konsole --hold -e bash -c "$(ls /usr/local/bin/panic/*.sh | shuf -n 1)"</action>
         </button>
 
-          
+
       </vbox>
     </hbox>
     </frame>
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
     <vbox>
         <button>
           <input file>/usr/share/icons/Slackware-Commander/process-icon.png</input>
@@ -102,22 +102,22 @@ export MAIN_DIALOG='
           <label>inxi </label>
           <action>inxi -v 8 | yad --text-info  --width=700 --height=500 --title $"inxi" &</action>
         </button>
-        
+
         <button>
           <input file>/usr/share/icons/Slackware-Commander/solution-thinking-icon.png</input>
           <label>restart-services </label>
           <action>konsole --hold -e /usr/local/bin/restart-services &</action>
         </button>
 
-        
+
       </vbox>
-    
-   
-    
-    
+
+
+
+
 
     <vbox>
-      
+
         <button>
           <input file>/usr/share/icons/Slackware-Commander/home-improvement-icon.png</input>
           <label> Block devices</label>
@@ -129,14 +129,14 @@ export MAIN_DIALOG='
           <label>PCI devices</label>
           <action>lspci | yad --text-info  --width=700 --height=500 --title $"PCI devices" &</action>
         </button>
-         
+
        <button>
           <input file>/usr/share/icons/Slackware-Commander/alert-icon.png</input>
           <label>View dmesg messages</label>
           <action>dmesg | yad --text-info  --width=900 --height=700 --title $"View kernel messages" &</action>
         </button>
 
-        
+
         <button>
          <input file>/usr/share/icons/Slackware-Commander/pin-line-icon.png</input>
           <label>Loaded modules</label>
@@ -148,7 +148,7 @@ export MAIN_DIALOG='
           <label>Services</label>
           <action>konsole --hold -e /usr/local/bin/rcstatus &</action>
           </button>
-          
+
           <button>
             <input file>/usr/share/icons/Slackware-Commander/hashtag-icon.png</input>
           <label>Terminal as root</label>
@@ -157,21 +157,14 @@ export MAIN_DIALOG='
 
       </vbox>
     </hbox>
-    
+
     <button>
           <input file>/usr/share/icons/Slackware-Commander/flexible-customizable-icon.png</input>
           <label>whoRyou?</label>
            <action>konsole --hold -e /usr/local/bin/whoRyou &</action>
-          </button>    
-    <hbox>
-         <entry><variable>VAR1</variable></entry>
-       <button>
-          <input file>/usr/share/icons/Slackware-Commander/dimension-3d-icon.png</input>
-          <label>Find package`s deps</label>
-          <action>konsole --hold -e curl -sSL https://raw.githubusercontent.com/gapan/slackware-deps/15.0/$VAR1.dep &</action>
-    </button>
-    </hbox>
-    
+          </button>
+
+
 
     <hbox>
       <frame System Files>
@@ -214,7 +207,7 @@ export MAIN_DIALOG='
 
         <hbox>
           <button><label>'"$FILE6"'</label><action>yad --title='"$FILE6"' --text-info --width 500 --height 400 --filename='"$FILE6"' &</action></button>
-          <button><input file>/usr/share/icons/Slackware-Commander/green-circle-icon.png</input><action>konsole -e nano '"$FILE6"' &</action></button>
+          <button><input file>/usr/share/icons/Slackware-Commander/blue-circle-icon.png</input><action>konsole -e nano '"$FILE6"' &</action></button>
         </hbox>
 
         <hbox>
@@ -256,17 +249,13 @@ export MAIN_DIALOG='
         </hbox>
       </frame>
     </hbox>
-    <button>
-         <input file>/usr/share/icons/Slackware-Commander/online-community-icon.png</input>
-          <label>slack-revert</label>
-           <action>konsole --hold -e slack-revert &</action>
-          </button>    
+
 <button>
-         <input file>/usr/share/icons/Slackware-Commander/project-work-icon.png</input>
-          <label>SBKS (Slack Buld Kernel Script)</label>
-           <action>konsole --hold -e SBKS &</action>
-          </button>    
-    
+         <input file>/usr/share/icons/Slackware-Commander/solution-thinking-icon.png</input>
+         <label>MORE MORE TOOLS</label>
+         <action>bash SLCMD3.sh &</action>
+         </button>
+
   </vbox>
   </window>
   '
