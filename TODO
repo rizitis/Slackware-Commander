@@ -1,4 +1,2 @@
-add isnum
-add wttr.in # weather forcast "curl wttr.in"
-check if `disown -a && exit is better`(?)
-add version script
+check if `disown -a && exit is better`(?) # checked and its not :(
+
