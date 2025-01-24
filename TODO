@@ -1,2 +1,3 @@
-check if `disown -a && exit is better`(?) # checked and its not :(
+Write app from scratch, as gtkdialog no building any more.
+Time needed to patch gtkdialog is the same for create a new Qt6 modern GUI...
 

@@ -1,0 +1,23 @@
+QMAKE_CXX.QT_COMPILER_STDCXX = 201703L
+QMAKE_CXX.QMAKE_GCC_MAJOR_VERSION = 14
+QMAKE_CXX.QMAKE_GCC_MINOR_VERSION = 2
+QMAKE_CXX.QMAKE_GCC_PATCH_VERSION = 0
+QMAKE_CXX.COMPILER_MACROS = \
+    QT_COMPILER_STDCXX \
+    QMAKE_GCC_MAJOR_VERSION \
+    QMAKE_GCC_MINOR_VERSION \
+    QMAKE_GCC_PATCH_VERSION
+QMAKE_CXX.INCDIRS = \
+    /usr/include/c++/14.2.0 \
+    /usr/include/c++/14.2.0/x86_64-slackware-linux \
+    /usr/include/c++/14.2.0/backward \
+    /usr/lib64/gcc/x86_64-slackware-linux/14.2.0/include \
+    /usr/local/include \
+    /usr/lib64/gcc/x86_64-slackware-linux/14.2.0/include-fixed \
+    /usr/include
+QMAKE_CXX.LIBDIRS = \
+    /usr/lib64/gcc/x86_64-slackware-linux/14.2.0 \
+    /usr/lib64 \
+    /lib64 \
+    /lib \
+    /usr/lib
