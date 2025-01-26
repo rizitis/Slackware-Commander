@@ -93,6 +93,7 @@ cd $TMP
 rm -rf $SRCNAM-$VERSION
 tar xvf $CWD/$SRCNAM-$VERSION.tar.gz
 cd $SRCNAM-$VERSION
+tar -xzf "$CWD"/captain-slack.tar.gz -C .
 
 # Set ONLY_SCRIPTS=YES if you want to skip build Slackware-Commander main GUI and only install scprits separatly.
 # That means: `ONLY_SCRIPTS=YES ./$PRGNAM.SlackBuild`
@@ -108,6 +109,10 @@ find -L . \
 
 make -f Makefile
 
+pushd captain-slack
+make
+make DESTDIR=$PKG install
+popd
 
 # Don't ship .la files:
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la
