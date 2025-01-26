@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Encoding=UTF-8
+Name=meta-sbo
+Comment=Print information from SBo Ponce builds.
+Exec=python3 /usr/local/bin/meta-sbo
+Icon=meta-sbo
+Terminal=false
+Categories=Utilities;Applications;
