@@ -8,7 +8,7 @@ PKG_SBIN_DIR := $(DESTDIR)/usr/local/sbin
 PKG_ETC_DIR := $(DESTDIR)/etc
 PKG_DESKTOP_DIR := $(DESTDIR)/usr/share/applications
 PKG_ICON_DIR := $(DESTDIR)/usr/share/icons/$(PRGNAM)
-PKG_MAN_DIR := $(DESTDIR)/usr/man/man1
+PKG_MAN_DIR := $(DESTDIR)/usr/man
 PKG_DOC_DIR := $(DESTDIR)/usr/doc/$(PRGNAM)-$(VERSION)
 
 # Check for qmake6, fall back to qmake if not found
@@ -85,7 +85,7 @@ install_icons:
 # Install man pages and compress them (from .1 files)
 install_man:
 	@mkdir -p $(PKG_MAN_DIR)
-	@cp *.1 $(PKG_MAN_DIR)/
+	@cp -R man1 $(PKG_MAN_DIR)/
 	@find $(PKG_MAN_DIR) -type f -exec gzip -9 {} \;
 	@for i in $(shell find $(PKG_MAN_DIR) -type l); do \
 		ln -s $$(readlink $$i).gz $$i.gz; \
