@@ -4,3 +4,6 @@ Time needed to patch gtkdialog is the same for create a new Qt6 modern GUI...
 slack-required is huge. I dont like so many deps must be half of them.
 recheck everything for alternatives.
 
+Check if slack-revert can you cptn batabase for packages or leave it alone...
+
+cptn make-db -a maybe not needed now, as we have soofiles gui. check also.
