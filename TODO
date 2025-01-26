@@ -1,3 +1,6 @@
 Write app from scratch, as gtkdialog no building any more.
 Time needed to patch gtkdialog is the same for create a new Qt6 modern GUI...
 
+slack-required is huge. I dont like so many deps must be half of them.
+recheck everything for alternatives.
+
