@@ -2,7 +2,7 @@
 Type=Application
 Encoding=UTF-8
 Name=Slackware-Commander
-Comment=System files,packages configuration loader
+Comment=System configuration loader
 Exec=SlackwareCommander
 Icon=SlackwareCommander
 Terminal=false
