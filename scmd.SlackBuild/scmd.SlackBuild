@@ -27,7 +27,7 @@
 
 cd $(dirname $0) ; CWD=$(pwd)
 
-PRGNAM=SlackwareCommander
+PRGNAM=scmd
 SRCNAM=Slackware-Commander
 VERSION=${VERSION:-6.0.0}
 BUILD=${BUILD:-1}

@@ -7,3 +7,8 @@ recheck everything for alternatives.
 Check if slack-revert can you cptn batabase for packages or leave it alone...
 
 cptn make-db -a maybe not needed now, as we have soofiles gui. check also.
+
+SlackwareCommander is ugly name for exec... find alternatives
+ - slaco
+ - scom
+ - scmd
