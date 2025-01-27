@@ -95,7 +95,7 @@ tar xvf $CWD/$SRCNAM-$VERSION.tar.gz
 cd $SRCNAM-$VERSION
 tar -xzf "$CWD"/captain-slack.tar.gz -C .
 
-# Set ONLY_SCRIPTS=YES if you want to skip build Slackware-Commander main GUI and only install scprits separatly.
+# Set ONLY_SCRIPTS=YES if you want to skip build Slackware-Commander main GUI and only install scprits separately.
 # That means: `ONLY_SCRIPTS=YES ./$PRGNAM.SlackBuild`
 ONLY_SCRIPTS=${ONLY_SCRIPTS:-}
 
@@ -117,9 +117,6 @@ popd
 # Don't ship .la files:
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la
 
-# Strip binaries and libraries - this can be done with 'make install-strip'
-# in many source trees, and that's usually acceptable if so, but if not,
-# use this:
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
