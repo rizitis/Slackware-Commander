@@ -93,7 +93,6 @@ cd $TMP
 rm -rf $SRCNAM-$VERSION
 tar xvf $CWD/$SRCNAM-$VERSION.tar.gz
 cd $SRCNAM-$VERSION
-tar -xzf "$CWD"/captain-slack.tar.gz -C .
 
 # Set ONLY_SCRIPTS=YES if you want to skip build Slackware-Commander main GUI and only install scprits separately.
 # That means: `ONLY_SCRIPTS=YES ./$PRGNAM.SlackBuild`
