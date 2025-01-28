@@ -1,0 +1,312 @@
+#!/bin/bash
+
+# This is Captain Slack 
+# Born in: https://github.com/rizitis/captain-slack 20/10/2024 first from a Human Brain with help of ChatGPT
+# 
+# This is free and unencumbered software released into the public domain.
+
+# Anyone is free to copy, modify, publish, use, compile, sell, or
+# distribute this software, either in source code form or as a compiled
+# binary, for any purpose, commercial or non-commercial, and by any
+# means.
+
+# In jurisdictions that recognize copyright laws, the author or authors
+# of this software dedicate any and all copyright interest in the
+# software to the public domain. We make this dedication for the benefit
+# of the public at large and to the detriment of our heirs and
+# successors. We intend this dedication to be an overt act of
+# relinquishment in perpetuity of all present and future rights to this
+# software under copyright law.
+
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+# IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+# OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+# ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+# OTHER DEALINGS IN THE SOFTWARE.
+
+# For more info-librmation, please refer to <https://unlicense.org>
+
+# =================== #
+# Also many thanks to:
+# =================== #
+
+# 1. @ethelack for rcstatuss script: https://www.linuxquestions.org/questions/slackware-14/how-can-i-check-the-system-running-servs-534612/page2.html
+
+# 2. @Petri Kaukasoina for ldtree script: https://www.linuxquestions.org/questions/slackware-14/requests-for-current-next-15-0-15-1-a-4175706801/page294.html#post6499776
+
+
+# https://patorjk.com/software/taag/#p=display&c=fortran&w=%20&f=DiamFont&t=Captain%20Slack%20 #
+
+echo -e "\e[1;34m"
+cat << "EOF"
+
+
+!   ▗▄▄▖▗▞▀▜▌▄▄▄▄     ■  ▗▞▀▜▌▄ ▄▄▄▄       ▗▄▄▖█ ▗▞▀▜▌▗▞▀▘█  ▄     
+!  ▐▌   ▝▚▄▟▌█   █ ▗▄▟▙▄▖▝▚▄▟▌▄ █   █     ▐▌   █ ▝▚▄▟▌▝▚▄▖█▄▀      
+!  ▐▌        █▄▄▄▀   ▐▌       █ █   █      ▝▀▚▖█          █ ▀▄     
+!  ▝▚▄▄▖     █       ▐▌       █           ▗▄▄▞▘█          █  █     
+!            ▀       ▐▌                                            
+!                                                                  
+!                                                                  
+
+EOF
+echo -e "\e[0m"
+echo -e "${RESET}"
+
+
+
+# Try to source the configuration file ini and see if it works
+CONFIG_FILE=/etc/captain-slack/cptn-main.ini
+
+# Parse the config file and export variables ;)
+function source_config() {
+    local section=""
+    while IFS="=" read -r key value; do
+        if [[ $key =~ ^\[(.*)\]$ ]]; then
+            section="${BASH_REMATCH[1]}"
+        elif [[ -n $key && -n $value && $key != ";"* && $section != "" ]]; then
+            key=$(echo "$key" | xargs)  # Trim whitespace
+            value=$(echo "$value" | xargs)  # Trim whitespace
+            value=$(eval echo "$value")  # Resolve variables like $APP_HOME
+            export "$key"="$value"  # Export as environment variable
+            #echo "$key = $value"  # Automatically echo the key-value pair for testing not need in real.. 
+        fi
+    done < "$CONFIG_FILE"
+}
+
+# Call the function to source the config
+source_config
+
+mkdir -p /var/log/captain-slack || exit 9
+DATE="$(date)"
+
+
+# Function to execute commands
+execute_command() {
+    echo "Executing: $1"
+    eval "$1"
+}
+
+# Check if at least one argument is provided
+if [ "$#" -lt 1 ]; then
+    echo "Usage: $0 <command> [<package>] [-a] [-p] [-l] [-v] [-1] [-2] ... [-9]"
+    echo "Commands: mirrors, show-servs, restart-serv, serv-status, make-db, info, weather, open-pkgs, open-libs, open-logs, clear-logs"
+    exit 1
+fi
+
+
+# Main command (install, upgrade, remove, etc.)
+command="$1"
+if [ "$1" == info ]; then
+package="$2"
+else
+# Shift to check if the second argument is a package or flag
+shift
+
+# Initialize variables for package and flags
+package=""
+flag_a=false
+flag_p=false
+flag_l=false
+flag_v=false
+number_flag=""
+fi
+# Check if $command is not one of the invalid commands
+if [[ "$1" != -* && "$1" != "" && "$command" != "mirrors" && "$command" != "show-servs" && "$command" != "restart-serv" && "$command" != "serv-status" && "$command" != "make-db" && "$command" != "info" && "$command" != "weather" && "$command" != "open-pkgs" && "$command" != "open-libs" && "$command" != "first-run" && "$command" != "clear-logs" ]]; then
+    package="$1"
+    shift
+fi
+
+# Parse optional flags: -a, -b, -v for non slack-package managers. I mean not needed for cptn exaclty but maybe in future... 
+while getopts "aplv123456789" opt; do
+    case ${opt} in
+        a )
+            flag_a=true
+            ;;
+        p )
+            flag_p=true
+            ;;
+        l )
+            flag_l=true
+            ;;
+        v )
+            flag_v=true
+            ;;
+        [1-9] )
+            number_flag=$opt
+            ;;
+        \? )
+            echo "Invalid option: -$OPTARG"
+            echo "Usage: $0 [-a] [-p] [-l] [-v] [-1] [-2] ... [-9]"
+            exit 1
+            ;;
+    esac
+done
+
+# Example flag behavior after parsing
+if [ "$flag_a" = true ]; then
+    echo "Flag -a (all) is set."
+fi
+
+if [ "$flag_p" = true ]; then
+    echo "Flag -p (packages) is set."
+fi
+
+if [ "$flag_l" = true ]; then
+    echo "Flag -l (libraries) is set."
+fi
+if [ "$flag_v" = true ]; then
+    echo "Flag [-v] validate mode enabled."
+fi
+
+if [ ! -z "$number_flag" ]; then
+    echo "Number flag -$number_flag is set."
+fi
+
+# Handle the main commands
+case "$command" in
+    info)
+    package="$2"
+    echo "$package..."
+        source "$APP_SERV/islib_installed.sh" "$package"
+        source "$APP_SERV/ispkg_installed.sh" "$package"
+        source "$APP_SERV/print_bins.sh" "$package"
+        grep --color=always -rwF "$package" "$APP_SERV"/permissions_report.txt
+        ;;
+
+    serv-status)
+    # Check if the script is being run as root
+    if [ "$EUID" -ne 0 ]; then
+        echo "Please run as root!"
+        exit 1
+    fi
+       package=$1
+       if [ -z "$package" ]; then
+            echo "Error: 'serv-status' command requires a rc.serv_name"
+            exit 1
+        fi
+         bash "/etc/rc.d/$package" status
+        ;;
+
+    make-db)
+    # Check if the script is being run as root
+    if [ "$EUID" -ne 0 ]; then
+      echo "Please run as root!"
+      exit 1
+    fi
+        echo "Creating DataBase"
+        if [ "$flag_a" = true ]; then
+        echo "Creating DataBase for all installed Libraries, Packages and ldd executables in $PATH"
+            sleep 2
+            execute_command "bash $APP_SERV/find_bins.sh"
+            execute_command "bash $APP_SERV/export-installed.sh"
+            execute_command "bash $APP_SERV/create_db.sh"
+            execute_command "bash $APP_SERV/export-tags.sh"
+            execute_command "bash $APP_SERV/validate-tags.sh"
+            execute_command "bash $APP_SERV/ldd-explorer.sh"
+            execute_command "bash $APP_SERV/create_libs_yaml.sh"
+            find /bin /sbin /usr/bin /usr/sbin /usr/local/bin /opt -type f -exec ls -l {} \; > $APP_SERV/permissions_report.txt
+        elif
+            [ "$flag_p" = true ]; then
+        echo "Creating DataBase for all installed Packages in $PATH but not for Libraries."
+            sleep 2
+#            execute_command "bash $APP_SERV/find_bins.sh"
+            execute_command "bash $APP_SERV/export-installed.sh"
+            execute_command "bash $APP_SERV/create_db.sh"
+            execute_command "bash $APP_SERV/export-tags.sh"
+            execute_command "bash $APP_SERV/validate-tags.sh"
+            find /bin /sbin /usr/bin /usr/sbin /usr/local/bin /opt -type f -exec ls -l {} \; > $APP_SERV/permissions_report.txt
+        elif
+            [ "$flag_l" = true ]; then
+        echo "Creating DataBase for all installed Libraries only."
+            sleep 2
+            execute_command "bash $APP_SERV/ldd-explorer.sh"
+            execute_command "bash $APP_SERV/create_libs_yaml.sh"
+        elif
+            [ "$flag_v" = true ]; then
+        echo "Creating DataBase for all installed packages and libraries BUT NOT ldd executables in $PATH"
+            sleep 2
+            execute_command "bash $APP_SERV/export-installed.sh"
+            execute_command "bash $APP_SERV/create_db.sh"
+            execute_command "bash $APP_SERV/export-tags.sh"
+            execute_command "bash $APP_SERV/validate-tags.sh"
+            execute_command "bash $APP_SERV/ldd-explorer.sh"
+            execute_command "bash $APP_SERV/create_libs_yaml.sh"
+            find /bin /sbin /usr/bin /usr/sbin /usr/local/bin /opt -type f -exec ls -l {} \; > $APP_SERV/permissions_report.txt
+        else
+        echo "Error: Invalid command: $command"
+        echo "Usage: $0 make-db [-a] [-p] [-l]"
+        exit 1
+        fi
+        ;;
+        
+    weather)
+        execute_command "curl wttr.in"
+        ;;
+        
+    restart-serv)
+    # Check if the script is being run as root
+    if [ "$EUID" -ne 0 ]; then
+    echo "Please run as root!"
+    exit 1
+    fi
+        execute_command "bash $APP_SERV/restart-services.sh"
+        ;;
+        
+    show-servs)
+    # Check if the script is being run as root
+    if [ "$EUID" -ne 0 ]; then
+    echo "Please run as root!"
+    exit 1
+    fi
+        execute_command "bash $APP_SERV/rcstatus.sh"
+        ;;
+        
+    mirrors)
+    # Check if the script is being run as root
+    if [ "$EUID" -ne 0 ]; then
+    echo "Please run as root!"
+    exit 1
+    fi
+        number_flag="$1"
+        echo "Search for fast Slackware mirrors"
+            source "$APP_SERV/show-mirrors.sh" "$number_flag"
+        ;;
+
+    open-libs)
+            execute_command "xdg-open $PKG_DB/libraries_dependencies.yaml"
+        ;;
+
+    open-pkgs)
+            execute_command "xdg-open $PKG_DB/packages.yaml"
+        ;;
+
+    open-logs)
+            execute_command "xdg-open $CPTN_LOGS"
+        ;;
+
+    first-run)
+    # This is for debug usage. It not touching something in system, we only see if source_config function can read $CONFIG_FILE properly.
+            execute_command "bash $APP_SERV/first-ran.sh"
+        ;;
+
+    clear-logs)
+    # Check if the script is being run as root
+    if [ "$EUID" -ne 0 ]; then
+    echo "Please run as root!"
+    exit 1
+    fi
+            rm "$CPTN_LOGS"/*.log || exit
+            echo "Success. Clear all log files from $CPTN_LOGS"
+        ;;
+        
+    *)
+        echo "Invalid command: $command"
+        echo "Usage: cptn <command> [<package>] [-a] [-p] [-l] [-v] [-1] [-2] ... [-9]"
+        echo "Commands: mirrors, show-servs, restart-serv, serv-status, make-db, info, weather, open-pkgs, open-libs, first-run, open-logs, clear-logs"
+        exit 1
+        ;;
+esac
+
