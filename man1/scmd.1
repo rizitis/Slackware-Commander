@@ -1,18 +1,148 @@
-.\" Man page for Slackware-Commander
-.\" Created by Anagnostakis Ioannis (aka rizitis)
-.TH SLACKWARE-COMMANDER 1 "April 2024" "2.0.4" "Slackware-Commander"
+." Man page for Slackware-Commander
+." Created by Anagnostakis Ioannis (a.k.a rizitis)
+.TH SLACKWARE-COMMANDER 28 "January 2025" "6.0.0" "Slackware-Commander"
 .SH NAME
-Slackware-Commander \- A gtkdialog and yad menu for Slackware system administration.
+Slackware-Commander \- A Qt6 and kdialog-based menu for Slackware system administration.
+
 .SH SYNOPSIS
 .B slackware-commander
+
 .SH DESCRIPTION
-Slackware-Commander opens a gtkdialog box. It provides an interface for common slackpkg commands, allowing you to manage Slackware system packages and files in a user-friendly manner. It includes options for editing slackpkg configuration files, viewing change logs, and accessing additional system tools.
+Slackware-Commander provides a simple Qt6-based GUI for managing Slackware system updates, packages, and configuration files. It acts as a graphical frontend for 'slackpkg(+)' and includes additional system tools.
 
-The 'More Tools' button opens a secondary menu with additional tools, including SBKS (Slack Build Kernel Script), whoRyou (a terminal app for gathering system information), and slackpkg_build, which allows you to download and build packages from the official Slackware repository.
+Features include:
+- Managing Slackware system updates and packages.
+- Editing slackpkg(+) configuration files.
+- Viewing change logs.
+- Accessing additional system tools.
 
-Slackware-Commander is designed to make Slackware system administration easier while keeping the KISS (Keep It Simple, Stupid) philosophy.
+.PP
+.B slackpkg_build
+.br
+A script that allows you to download, edit, and rebuild an official Slackware package using official SlackBuilds. If running on Slackware stable, it provides an unofficial dependency list, that SalixOS offers.
+
+.PP
+.B "More Tools"
+.br
+Opens a secondary menu displaying system information via kdialog, covering:
+- CPU, GPU, and monitors
+- Sound cards and microphones
+- RAM and ZRAM usage
+- Wifi, Ethernet conections
+
+If you have a full build of Slackware-Commander, all features are available. However, if you built it using `ONLY_SCRIPTS=YES ./$PRGNAM.SlackBuild`, the Qt6 GUI is omitted, but scripts remain in `/usr/local/bin/`.
+
+.SH ADDITIONAL TOOLS
+
+.SS Captain-Slack
+A collection of Python and Bash scripts providing detailed system information, including package management, service status, and optional weather forecasts.
+
+Configuration files: `/etc/captain-slack/`
+Log files: `/var/log/captain-slack/`
+Database storage: `/var/lib/captain-slack/`
+
+To use Captain-Slack, run:
+.B cptn <command>
+
+Available commands:
+
+- `make-db` : Create a database for installed packages and libraries.
+  - `-a` : Full database (packages & libraries)
+  - `-p` : Packages only
+  - `-l` : Libraries and dependencies
+  - `-v` : Full database (packages, libraries, and ldd binaries)
+
+- `info <package>` : Display package or library details.
+- `open-libs` : Open the installed libraries YAML file.
+- `open-pkgs` : Open the installed packages YAML file.
+- `open-logs` : View Captain-Slack logs.
+- `clear-logs` : Delete all Captain-Slack log files.
+- `serv-status <service>` : Show the status of a service.
+- `restart-serv` : Restart a service.
+- `show-servs` : List all running services.
+- `mirrors` : Find the fastest Slackware mirrors.
+  - `-1` : Show the fastest mirror.
+  - `-[1..9]` : Show the top N fastest mirrors (default: top 5).
+- `weather` : Display a weather forecast for your location.
+
+Example usage:
+```
+cptn make-db -a  # Create a full database
+cptn info vim     # Show details for vim
+cptn serv-status apache  # Check Apache service status
+cptn mirrors -1   # Get the fastest mirror
+cptn weather      # Show weather forecast
+```
+
+After installation, run:
+`cptn make-db -v` (recommended for Slackware stable)
+For Slackware current, use:
+`cptn make-db -a` (faster than `-v` option)
+
+.SS soviewer
+A Python3 GUI tool for viewing shared object (.so) files in Slackware64-current's ChangeLog. Run from desktop entry or via:
+```
+python3 soviewer
+```
+Enter a package name, hit "Fetch," and view .so files.
+
+.SS slakfinder
+A local GUI version of SlackFinder. It allows searching packages across various repositories but does not download them directly for security reasons.
+
+.SS sbofinder
+An SBo and Ponce repository search tool requiring `slpkg`. It allows reading metadata and downloading SlackBuilds (source included) but does not build/install them.
+
+.SS inxifetch
+A modified `inxi` tool for displaying system information in a `neofetch`-like format. Configurable via `/etc/inxifetch/inxifetch.conf`.
+Usage:
+```
+inxifetch xxrz
+inxifetch A
+inxifetch
+```
+
+.SS isnum
+A simple precompiled FORTRAN script to validate numerical input.
+Usage:
+```
+isnum "$var"
+isnum 1
+isnum b
+```
+
+.SS slack-revert
+A powerful but potentially dangerous rollback tool. It allows creating a "snap" (backup) of installed packages and `/etc` configuration, which can later be restored by downloading historical versions from <https://slackware.uk/cumulative/>.
+
+Usage:
+1. Create a txt file (backup of packages) and a tar (of /etc): `slack-revert`
+2. Restore the system: Select a snapshot to revert to that specific system state.
+
+.SS SBKS (Slack Build Kernel Script)
+A script to build and install custom kernels without affecting the official Slackware kernel. Useful for NVIDIA proprietary driver users:
+
+1. Switch to runlevel 3 and uninstall NVIDIA drivers.
+2. Use SBKS to build and install an older kernel.
+3. Reboot into the custom kernel and reinstall the NVIDIA driver
+```
+sh NVIDIA.run
+```
+4. Reboot into the official kernel and install NVIDIA modules:
+```
+sh NVIDIA.run -K
+```
+5. Or install them without reboot
+```
+sh NVIDIA-Linux-x86-x.x.x.run -K -k official-kernel-name
+```
+6. Keep custom kernel in your system and follow steps 4 or 5 in every official kernel upgrade.
+This setup ensures NVIDIA drivers remain functional even after Slackware kernel updates.
+
+.SH NOTES
+Slackware-Commander aims to simplify Slackware system administration while adhering to the KISS (Keep It Simple, Stupid) philosophy. It is an unofficial project and may contain bugs.
 
 .SH SEE ALSO
-https://github.com/rizitis/Slackware-Commander
+[GitHub Repository](https://github.com/rizitis/Slackware-Commander)
+
 .SH AUTHOR
-Anagnostakis Ioannis (aka rizitis)
+Anagnostakis Ioannis
+

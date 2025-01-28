@@ -23,21 +23,21 @@ public:
         mainLayout->addWidget(titleLabel);
 
         // Slackpkg Package Management Buttons
-        mainLayout->addWidget(createSlackpkgButton("Slackpkg Update", "/usr/bin/konsole --hold -e /usr/sbin/slackpkg update"));
-        mainLayout->addWidget(createSlackpkgButton("Slackpkg Upgrade-all", "/usr/bin/konsole --hold -e /usr/sbin/slackpkg upgrade-all"));
-        mainLayout->addWidget(createSlackpkgButton("Slackpkg Install-new", "/usr/bin/konsole --hold -e /usr/sbin/slackpkg install-new"));
-        mainLayout->addWidget(createSlackpkgButton("Slackpkg new-config", "/usr/bin/konsole --hold -e /usr/sbin/slackpkg new-config"));
+        mainLayout->addWidget(createSlackpkgButton("Slackpkg Update", "/usr/sbin/slackpkg update"));
+        mainLayout->addWidget(createSlackpkgButton("Slackpkg Upgrade-all", "/usr/sbin/slackpkg upgrade-all"));
+        mainLayout->addWidget(createSlackpkgButton("Slackpkg Install-new", "/usr/sbin/slackpkg install-new"));
+        mainLayout->addWidget(createSlackpkgButton("Slackpkg new-config", "/usr/sbin/slackpkg new-config"));
 
         // Slackpkg Setup Section
         QVBoxLayout* setupLayout = new QVBoxLayout();
-        setupLayout->addWidget(createSlackpkgButton("Blacklist", "/usr/bin/konsole -e nano /etc/slackpkg/blacklist"));
-        setupLayout->addWidget(createSlackpkgButton("Mirrors", "/usr/bin/konsole -e nano /etc/slackpkg/mirrors"));
-        setupLayout->addWidget(createSlackpkgButton("Slackpkg.conf", "/usr/bin/konsole -e nano /etc/slackpkg/slackpkg.conf"));
-        setupLayout->addWidget(createSlackpkgButton("ChangeLog", "cat /var/lib/slackpkg/ChangeLog.txt | yad --text-info --width=600 --height=600 --title 'ChangeLog'"));
+        setupLayout->addWidget(createSlackpkgButton("Blacklist", "nano /etc/slackpkg/blacklist"));
+        setupLayout->addWidget(createSlackpkgButton("Mirrors", "nano /etc/slackpkg/mirrors"));
+        setupLayout->addWidget(createSlackpkgButton("Slackpkg.conf", "nano /etc/slackpkg/slackpkg.conf"));
+        setupLayout->addWidget(createSlackpkgButton("ChangeLog", "kdialog --textbox /var/lib/slackpkg/ChangeLog.txt 600 400"));
         mainLayout->addLayout(setupLayout);
 
         // Slackpkg+ Configuration
-        mainLayout->addWidget(createSlackpkgButton("slackpkg+.conf", "/usr/bin/konsole -e nano /etc/slackpkg/slackpkgplus.conf"));
+        mainLayout->addWidget(createSlackpkgButton("slackpkg+.conf", "nano /etc/slackpkg/slackpkgplus.conf"));
 
         // Package Command Section (slackpkg build, install, reinstall, etc.)
         QVBoxLayout* packageLayout = new QVBoxLayout();
@@ -46,17 +46,17 @@ public:
         packageLayout->addWidget(packageEntry);
 
         // Package management buttons
-        packageLayout->addWidget(createPackageCommandButton("slackpkg_build", packageEntry));
+        packageLayout->addWidget(createPackageCommandButton("slackpkg build", packageEntry));
         packageLayout->addWidget(createPackageCommandButton("slackpkg install", packageEntry));
         packageLayout->addWidget(createPackageCommandButton("slackpkg reinstall", packageEntry));
         packageLayout->addWidget(createPackageCommandButton("slackpkg search", packageEntry));
         packageLayout->addWidget(createPackageCommandButton("slackpkg remove", packageEntry));
-        packageLayout->addWidget(createPackageCommandButton("Help", packageEntry));
-        packageLayout->addWidget(createPackageCommandButton("Slackpkg info", packageEntry));
-        packageLayout->addWidget(createPackageCommandButton("Whereis", packageEntry));
-        packageLayout->addWidget(createPackageCommandButton("Which", packageEntry));
-        packageLayout->addWidget(createPackageCommandButton("Version", packageEntry));
-        packageLayout->addWidget(createPackageCommandButton("Manual", packageEntry));
+        packageLayout->addWidget(createPackageCommandButton("--help", packageEntry));
+        packageLayout->addWidget(createPackageCommandButton("slackpkg info", packageEntry));
+        packageLayout->addWidget(createPackageCommandButton("whereis", packageEntry));
+        packageLayout->addWidget(createPackageCommandButton("which", packageEntry));
+        packageLayout->addWidget(createPackageCommandButton("--version", packageEntry));
+        packageLayout->addWidget(createPackageCommandButton("man", packageEntry));
 
         mainLayout->addLayout(packageLayout);
 
@@ -72,8 +72,9 @@ private:
     QPushButton* createSlackpkgButton(const QString& label, const QString& action) {
         QPushButton* button = new QPushButton(label);
         connect(button, &QPushButton::clicked, [action]() {
-            qDebug() << "Executing: " << action;
-            QProcess::startDetached("/bin/sh", QStringList() << "-c" << action);
+            qDebug() << "Executing as root: " << action;
+            // Run the command as root using su -c
+            QProcess::startDetached("/usr/bin/konsole", QStringList() << "--hold" << "-e" << "su" << "-c" << action);
         });
         return button;
     }
@@ -81,15 +82,24 @@ private:
     QPushButton* createPackageCommandButton(const QString& label, QLineEdit* packageEntry) {
         QPushButton* button = new QPushButton(label);
         connect(button, &QPushButton::clicked, [packageEntry, label]() {
-            QString command = label + " " + packageEntry->text();
-            qDebug() << "Executing: " << command;
-            QProcess::startDetached("/bin/sh", QStringList() << "-c" << command);
+            QString command;
+
+            // Special handling for --help or --version commands
+            if (label.startsWith("--")) {  // This handles --help or --version
+                command = packageEntry->text() + " " + label;
+            } else {
+                command = label + " " + packageEntry->text();
+            }
+
+            qDebug() << "Executing as root: " << command;
+            // Run the command as root using su -c
+            QProcess::startDetached("/usr/bin/konsole", QStringList() << "--hold" << "-e" << "su" << "-c" << command);
         });
         return button;
     }
 
     void openMoreTools() {
-        QProcess::startDetached("/bin/sh", QStringList() << "-c" << "bash SLCMD2.sh");
+        QProcess::startDetached("/usr/bin/konsole", QStringList() << "--hold" << "-e" << "/usr/local/sbin/scmd2");
     }
 };
 

@@ -2,9 +2,10 @@
 #include <QWidget>
 #include <QPushButton>
 #include <QVBoxLayout>
-#include <QHBoxLayout>
 #include <QLabel>
 #include <QProcess>
+#include <QFile>
+#include <QDebug>
 
 class scmd : public QWidget {
 public:
@@ -18,27 +19,35 @@ public:
         // Button Layout
         QVBoxLayout *buttonLayout = new QVBoxLayout();
 
-        // Panic Button
-        QPushButton *panicButton = createButton("Panic Button", "konsole --hold -e bash -c \"$(ls /usr/local/bin/panic/*.sh | shuf -n 1)\"");
-        buttonLayout->addWidget(panicButton);
+        // CPU Info
+        buttonLayout->addWidget(createButton("CPU Info", "cat /proc/cpuinfo | kdialog --textbox - --geometry 700x500 --title 'CPU Info'"));
 
-        // CPU Info Button
-        QPushButton *cpuInfoButton = createButton("CPU Infos", "cat /proc/cpuinfo | yad --text-info --width=700 --height=500 --title='CPU infos'");
-        buttonLayout->addWidget(cpuInfoButton);
+        // Memory Info
+        buttonLayout->addWidget(createButton("Memory Info", "free -h | kdialog --textbox - --geometry 700x500 --title 'Memory Info'"));
 
-        // Ethernet Interfaces Button
-        QPushButton *ethernetButton = createButton("Ethernet Interfaces", "ifconfig | yad --text-info --width=700 --height=500 --title='View an ethernet network interface'");
-        buttonLayout->addWidget(ethernetButton);
+        // GPU Info (Supports both X11 & Wayland)
+        buttonLayout->addWidget(createButton("GPU Info", "lspci | grep -i vga | kdialog --textbox - --geometry 700x500 --title 'GPU Info'"));
 
-        // Wireless Interfaces Button
-        QPushButton *wirelessButton = createButton("Wireless Interfaces", "iwconfig | yad --text-info --width=700 --height=500 --title='Current wireless network interface'");
-        buttonLayout->addWidget(wirelessButton);
+        // Ethernet Interfaces
+        buttonLayout->addWidget(createButton("Ethernet Interfaces", "ifconfig 2>/dev/null || ip a | kdialog --textbox - --geometry 700x500 --title 'Ethernet Interfaces'"));
 
-        // USB Devices Button
-        QPushButton *usbButton = createButton("USB Devices", "lsusb | yad --text-info --width=700 --height=500 --title='USB devices'");
-        buttonLayout->addWidget(usbButton);
+        // Wireless Interfaces
+        buttonLayout->addWidget(createButton("Wireless Interfaces", "iwconfig 2>/dev/null || nmcli device show | kdialog --textbox - --geometry 700x500 --title 'Wireless Interfaces'"));
 
-        // Add more buttons as needed...
+        // USB Devices
+        buttonLayout->addWidget(createButton("USB Devices", "lsusb | kdialog --textbox - --geometry 700x500 --title 'USB Devices'"));
+
+        // Sound Cards
+        buttonLayout->addWidget(createButton("Sound Cards", "aplay -l | kdialog --textbox - --geometry 700x500 --title 'Sound Cards'"));
+
+        // Microphones
+        buttonLayout->addWidget(createButton("Microphones", "arecord -l | kdialog --textbox - --geometry 700x500 --title 'Microphones'"));
+
+        // Monitor Detection (Wayland + X11)
+        buttonLayout->addWidget(createButton("Connected Monitors", detectMonitorCommand()));
+
+        // Webcams
+        buttonLayout->addWidget(createButton("Webcams", "ls /dev/video* 2>/dev/null | kdialog --textbox - --geometry 700x500 --title 'Detected Webcams'"));
 
         mainLayout->addLayout(buttonLayout);
         setLayout(mainLayout);
@@ -51,6 +60,18 @@ private:
             QProcess::startDetached("bash", QStringList() << "-c" << action);
         });
         return button;
+    }
+
+    QString detectMonitorCommand() {
+        if (QFile::exists("/usr/bin/xrandr")) {
+            return "xrandr --query | kdialog --textbox - --geometry 700x500 --title 'Connected Monitors'";
+        } else if (QFile::exists("/usr/bin/wlr-randr")) {
+            return "wlr-randr | kdialog --textbox - --geometry 700x500 --title 'Wayland Monitors'";
+        } else if (QFile::exists("/usr/bin/swaymsg")) {
+            return "swaymsg -t get_outputs | kdialog --textbox - --geometry 700x500 --title 'Sway Monitors'";
+        } else {
+            return "echo 'No monitor detection available for this system' | kdialog --error 'Monitor Detection Failed'";
+        }
     }
 };
 

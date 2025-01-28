@@ -31,19 +31,18 @@ build:
 		cd -; \
 	done
 
-# Install binaries (PRGNAM, PRGNAM1, PRGNAM2) from src/
 install_binaries:
 	@mkdir -p $(PKG_SBIN_DIR) $(PKG_BIN_DIR)
 	@for d in $(SRC_DIR)/*/; do \
 		cd $$d; \
 		if [ -f "$(PRGNAM)" ]; then \
 			cp "$(PRGNAM)" "$(PKG_SBIN_DIR)/"; \
-		elif [ -f "$(PRGNAM2)" ]; then \
+		fi; \
+		if [ -f "$(PRGNAM2)" ]; then \
 			cp "$(PRGNAM2)" "$(PKG_SBIN_DIR)/"; \
-		elif [ -f "$(PRGNAM3)" ]; then \
+		fi; \
+		if [ -f "$(PRGNAM3)" ]; then \
 			cp "$(PRGNAM3)" "$(PKG_SBIN_DIR)/"; \
-		else \
-			echo "No binary found in $$d"; \
 		fi; \
 		cd -; \
 	done
