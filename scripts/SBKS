@@ -2,8 +2,8 @@
 
 # Slackware bash script named SBKS (Slack-Build-Kernel-Script)
 # For Slackware64 and Slackware based distros.
-# Anagnostakis Ioannis Greece 2022-2023 rizitis@gmail.com
-# REQUIRES="yad"
+# Anagnostakis Ioannis Greece 2022-2025 rizitis@gmail.com
+# REQUIRES="kdialog"
 #
 # Redistribution and use of this script, with or without modification, is
 # permitted provided that the following conditions are met:
@@ -22,115 +22,103 @@
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 if [ "$EUID" -ne 0 ];then
-    yad --error \
+    kdialog --error \
        --title "Error Message" \
        --width 500 \
        --height 100 \
-       --text "Permission denied. Please run SBKS as root user"
+       --text "Permission denied. Please run SBKS as root user (no sudo)"
     exit 1
 fi
 
-if [ -x /usr/bin/yad ];
-then 
-echo "yad found"
-else 
-echo "************************************"
-echo "yad not found. Plz install yad"
-echo "************************************"
-exit 1
+if [ -x /usr/bin/kdialog ]; then
+    echo "kdialog found"
+else
+    echo "************************************"
+    echo "kdialog not found. Please install kdialog"
+    echo "************************************"
+    exit 1
 fi
 
-
 # ADD Linux Kernel version you want to build here
-KERNEL_VERSION=$(yad --entry \
-       --width 500 \
-       --title "Welcome to SBKS" \
-       --text "Enter here kernel version you want to build.Example: 6.2.8"); echo "$KERNEL_VERSION"
-       
-# If your oldconfig was builded by u and your old kernel`s name is taged by you asume: "6.0.13-tag" 
-# then add your TAG in VERSION2. Example VERSION2=6.0.14-TAG else script will fail using oldconfig.       
-VERSION2=$(yad --entry \
-       --width 500 \
-       --height 200 \
-       --title "One more time please" \
-       --text "Enter kernel version again. If your current kernel version is 6.x.x-TAG then add it here. Example: 6.2.8-rtz"); echo "$VERSION2"
+KERNEL_VERSION=$(kdialog --inputbox "Enter the kernel version you want to build. Example: 6.2.8")
+echo "Kernel version selected: $KERNEL_VERSION"  # Echo to terminal
 
-# script ask for current bootloader. 
-BOOTLOADER=$(yad --entry \
-       --width 500 \
-       --title "Bootloader in current system" \
-       --text "Enter THE NUMBER of your bootloader.Example: Elilo=5 Lilo=0 Grub=7 myown=100"); echo "$BOOTLOADER"
-       
+# If your oldconfig was built by u and your old kernel’s name is tagged by you assume: "6.0.13-tag"
+# then add your TAG in VERSION2. Example VERSION2=6.0.14-TAG else script will fail using oldconfig.
+VERSION2=$(kdialog --inputbox "Enter kernel version again. If your current kernel version custom with TAG, then add it here also. Example: 6.2.8-rtz")
+echo "Kernel version again if tag also: $VERSION2"  # Echo to terminal
+
+# script asks for current bootloader
+BOOTLOADER=$(kdialog --inputbox "Enter the number of your bootloader. Example: Elilo=5 Lilo=0 Grub=7 myown=100")
+echo "Bootloader number: $BOOTLOADER"  # Echo to terminal
+
 set -e
-yad --question --title="SBKS Question?" --text="Check your inputs in terminal.Should we Proceed?" --no-wrap --ok-label "Yes" --cancel-label "No"
+kdialog --yesno "Check your inputs in terminal. Should we proceed?" --title "SBKS Question?"
+if [ $? -ne 0 ]; then
+    echo "User canceled. Exiting..."
+    exit 1
+fi
+
 set +e
 
-# Normal wont need edit next lines exept if you want to use "make menuconfig or other make_config" 
-KERNEL_URL=https://cdn.kernel.org/pub/linux/kernel/v6.x  # dont change if we are still in 6.x.x kernel (NAME = Hurr durr I'ma ninja sloth)
+# Normal wont need to edit the next lines except if you want to use "make menuconfig or other make_config"
+KERNEL_URL=https://cdn.kernel.org/pub/linux/kernel/v6.x  # Don't change if we are still in 6.x.x kernel
 PRGNAM=linux
 GPG=gpg2
 WGET=wget
 JOBS=-j$(getconf _NPROCESSORS_ONLN)
 
-
-
 cd /usr/src/
 # Check if BOTH kernel version AND signature file exist
 $WGET -c --spider $KERNEL_URL/linux-"$KERNEL_VERSION".tar.{sign,xz}
-if [ $? ]
-then
- ($WGET -c $KERNEL_URL/linux-"$KERNEL_VERSION".tar.{xz,sign})| sed -u 's/.* \([0-9]\+%\)\ \+\([0-9.]\+.\) \(.*\)/\1\n# Downloading at \2\/s, ETA \3/' | yad --progress --title="Downloading Files..." --percentage=1 --pulsate --time-remaining --auto-kill --auto-close \
- --width 800 \
- --height 50
+if [ $? ]; then
+    ($WGET -c $KERNEL_URL/linux-"$KERNEL_VERSION".tar.{xz,sign}) | sed -u 's/.* \([0-9]\+%\)\ \+\([0-9.]\+.\) \(.*\)/\1\n# Downloading at \2\/s, ETA \3/' | kdialog --progressbar "Downloading Files..." --percentage=1 --pulsate --time-remaining --auto-kill --auto-close \
+    --width 800 \
+    --height 50
+    echo "Kernel and signature files downloaded."  # Echo to terminal
 fi
 
-
 # Using GnuPG to verify kernel signatures
-# Not working with all kernels every time,sorry , thats why set -e starting after this step.
+# Not working with all kernels every time, sorry, that's why set -e starts after this step.
 unxz linux-"$KERNEL_VERSION".tar.xz
 $GPG --verify linux-"$KERNEL_VERSION".tar.sign
 xz -cd "$KERNEL_VERSION".tar.xz | gpg2 --verify linux-"$KERNEL_VERSION".tar.sign -
+echo "Kernel signature verified."  # Echo to terminal
 
 set -e
-yad --question --title="SBKS Proceed?" --text="Please check your terminal if RSA keys are the same" --no-wrap --ok-label "Yes" --cancel-label "No"
+kdialog --yesno "Please check your terminal if RSA keys are the same. Should we proceed?" --title "SBKS Proceed?"
+if [ $? -ne 0 ]; then
+    echo "User canceled. Exiting..."
+    exit 1
+fi
 
 # Just in case...
-if [ "$EUID" -ne 0 ];then
+if [ "$EUID" -ne 0 ]; then
     echo "Please run this script as root"
     exit 1
 fi
-# «κάλλιο γαϊδουρόδενε, παρά γαϊδουρογύρευε» <--Ancient Greek adage from my Grand, grand, grand ...father. The founder of "set -e" 3679 BC
 
-# create a direcory, put kernel tarbal there for the rest of the work
+# create a directory, put the kernel tarball there for the rest of the work
 mkdir -p kernel-"$KERNEL_VERSION"
 cp $PRGNAM-"$KERNEL_VERSION".tar kernel-"$KERNEL_VERSION"/
 cd kernel-"$KERNEL_VERSION"/
-echo "untar Linux-kernel "
+echo "Untarring Linux kernel"
 sleep 2
 tar -xf $PRGNAM-"$KERNEL_VERSION".tar
 echo "cd to Linux-kernel package"
-# My old .config I use has commended
+# My old .config I use has commented
 # CONFIG_SYSTEM_TRUSTED_KEYS
 # CONFIG_SYSTEM_TRUSTED_KEYRING
 sleep 2
 cd $PRGNAM-"$KERNEL_VERSION"/
-zcat /proc/config.gz > .config  
+zcat /proc/config.gz > .config
 make oldconfig
-# commend ^^ (make oldconfig) and uncommend next line if you want make menuconfig 
-#make menuconfig
+# uncomment next line if you want to use make menuconfig
+# make menuconfig
 make "$JOBS"
 make modules_install
-# Put this here after modules installed but before we touch System.map and vmlizuz
-# so if something went wrong with modules mkinitrd wont find them, SBKS will stop before your system break.
-# If everything is ok SBKS will continue and at the right time will execute mkinitrd
-/usr/share/mkinitrd/mkinitrd_command_generator.sh -k "$VERSION2" > /boot/mymkinitrd.sh
-sleep 2
-filename="mymkinitrd.sh"
-Clear="mkinitrd -c"
-NOClear="mkinitrd"
-sed -i "s/$Clear/$NOClear/" /boot/$filename
 
-# fix vmlinuz and System.map. Some things are optional but just in case...not hurt.
+# fix vmlinuz and System.map. Some things are optional but just in case... not hurt.
 cp arch/x86_64/boot/bzImage /boot/vmlinuz-"$VERSION2"
 cp System.map /boot/System.map-"$VERSION2"
 
@@ -138,47 +126,46 @@ cd /boot
 rm System.map
 ln -s System.map-"$VERSION2" System.map
 
-# now its the time, make a generic initrd
-sh $filename
+dracut  --force --kver "$VERSION2" /boot/initramfs-"$VERSION2".img
 sleep 2
 
 # update-bootloader
-if [[ "$BOOTLOADER" == 7 ]] 
-then
-  grub-mkconfig -o /boot/grub/grub.cfg 
-elif
-  [[ "$BOOTLOADER" == 5 ]] 
-then
-  eliloconfig
-elif
- [[ "$BOOTLOADER" == 0 ]] 
-then
-  lilo
+if [[ "$BOOTLOADER" == 7 ]]; then
+    grub-mkconfig -o /boot/grub/grub.cfg
+    echo "Grub configuration updated."  # Echo to terminal
+elif [[ "$BOOTLOADER" == 5 ]]; then
+    eliloconfig
+    echo "Elilo configuration updated."  # Echo to terminal
+elif [[ "$BOOTLOADER" == 0 ]]; then
+    lilo
+    echo "Lilo configuration updated."  # Echo to terminal
 else
- yad --warning \
---text="FAIL UPDATE Bootloader. Please Do it manually"
+    kdialog --warning \
+    --text="Failed to update bootloader. Please do it manually."
+    echo "Bootloader update failed. Please update manually."  # Echo to terminal
 fi
 
-if [[ "$BOOTLOADER" == 100 ]] 
-then
-  yad --warning \
---text="UPDATE Bootloader. Please Do it manually"
+if [[ "$BOOTLOADER" == 100 ]]; then
+    kdialog --warning \
+    --text="Please update the bootloader manually."
+    echo "Bootloader update manually required."  # Echo to terminal
 fi
 
 sleep 2
 set +e
 
-yad --warning \
+kdialog --warning \
        --title "Warning Message" \
        --width 500 \
        --height 100 \
-       --text "Finaly you have  successfully break your system. Congrats"
-       
-if yad --question --title="Do you want to reboot pc?" --text="Reboot?" --no-wrap
-    then
-     /sbin/reboot
-     yad --info --title="Success" --text="System rebooting..." --no-wrap
-    else
-   yad --info --text="OK! SBKS finish its job. Have a nice Slacky Day." --width=500 
-fi
+       --text "Finally, you have successfully broken your system. Congrats!"
+echo "Script has finished execution."  # Echo to terminal
 
+if kdialog --yesno "Do you want to reboot the PC?" --title "Reboot?" --no-wrap; then
+    /sbin/reboot
+    kdialog --msgbox --title "Success" --text="System rebooting..." --no-wrap
+    echo "System is rebooting..."  # Echo to terminal
+else
+    kdialog --msgbox --text="OK! SBKS finished its job. Have a nice Slacky Day." --width=500
+    echo "Script finished. No reboot."  # Echo to terminal
+fi
