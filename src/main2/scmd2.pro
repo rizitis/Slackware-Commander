@@ -1,5 +1,5 @@
 TEMPLATE = app
-TARGET = SlackwareCommander3
+TARGET = scmd2
 QT += core gui widgets
 
 CONFIG += c++11

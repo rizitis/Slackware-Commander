@@ -9,9 +9,9 @@
 #include <QTextEdit>
 #include <QDebug>
 
-class SlackwareCommander : public QWidget {
+class scmd : public QWidget {
 public:
-    SlackwareCommander() {
+    scmd() {
         // Set the window title
         setWindowTitle("Slackware Commander");
 
@@ -62,7 +62,7 @@ public:
 
         // More Tools Button
         QPushButton* moreToolsButton = new QPushButton("MORE TOOLS");
-        connect(moreToolsButton, &QPushButton::clicked, this, &SlackwareCommander::openMoreTools);
+        connect(moreToolsButton, &QPushButton::clicked, this, &scmd::openMoreTools);
         mainLayout->addWidget(moreToolsButton);
 
         setLayout(mainLayout);
@@ -96,7 +96,7 @@ private:
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
 
-    SlackwareCommander window;
+    scmd window;
     window.show();
 
     return app.exec();

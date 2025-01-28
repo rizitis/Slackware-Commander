@@ -7,9 +7,9 @@
 #include <QProcess>
 #include <QLineEdit>
 
-class SlackwareCommander : public QWidget {
+class scmd : public QWidget {
 public:
-    SlackwareCommander() {
+    scmd() {
         QVBoxLayout *mainLayout = new QVBoxLayout(this);
 
         // Title Layout
@@ -65,7 +65,7 @@ private:
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
 
-    SlackwareCommander window;
+    scmd window;
     window.setWindowTitle("Slackware Commander");
     window.show();
 

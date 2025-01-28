@@ -29,7 +29,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=scmd
 SRCNAM=Slackware-Commander
-VERSION=${VERSION:-6.0.0}
+VERSION=${VERSION:-6.0.0_DEV}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -90,9 +90,9 @@ set -e
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf $SRCNAM-$VERSION
-tar xvf $CWD/$SRCNAM-$VERSION.tar.gz
-cd $SRCNAM-$VERSION
+rm -rf $PRGNAM-$VERSION
+tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
+cd $SRCNAM-$PRGNAM-$VERSION
 
 # Set ONLY_SCRIPTS=YES if you want to skip build Slackware-Commander main GUI and only install scprits separately.
 # That means: `ONLY_SCRIPTS=YES ./$PRGNAM.SlackBuild`
