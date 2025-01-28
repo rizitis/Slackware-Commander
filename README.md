@@ -5,8 +5,22 @@ So for now **main** branch is in **DEVELOPER** mode and rest branches EOL.<br>
 
 ---
 
+```
+    |-----handy-ruler------------------------------------------------------|
+scmd: scmd (GUI & scripts helping user Slackware control center)
+scmd:
+scmd: Slackware-Command (scmd) is a colections of scripts and gui apps.
+scmd: Using these tools user can explore and download slakfinder packages,
+scmd: explore SBo/Ponce repositories or search in a easy way for
+scmd: Shared objects (a.k.a. .so files) but only in Slackware64 Current.
+scmd: A lot of cli tools also included in the Cpatain-Slack suite (cptn),
+scmd: as restart services, find fast slack-mirror, pkg infos etc.
+scmd: In /usr/local/bin/ included more scripts as isnum, slackpkg_build...
+scmd:
+scmd: HomePage: https://github.com/rizitis/Slackware-Commander
+```
 
-
+--- 
 Slackware is a trademark of Patrick Volkerding.
 http://www.slackware.com/trademark/trademark.php
 
