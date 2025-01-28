@@ -1,0 +1,154 @@
+#!/usr/bin/python3
+
+# This script is a GUI for slakfinder <https://slackware.nl/slakfinder/index.php>
+# required python-beautifuloup4
+# License MIT Anagnostakis Ioannis 2025 GR
+
+#!/usr/bin/python3
+
+# This script is a GUI for slakfinder <https://slackware.nl/slakfinder/index.php>
+# required python-beautifuloup4
+# License MIT Anagnostakis Ioannis 2025 GR
+
+import sys
+import requests
+from bs4 import BeautifulSoup
+from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QLineEdit, QPushButton, QTableWidget, QTableWidgetItem, QHeaderView
+from PyQt6.QtGui import QDesktopServices, QColor
+from PyQt6.QtCore import QUrl, Qt
+import subprocess
+
+class SlakfinderApp(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Slackware Package Finder")
+        self.setGeometry(200, 200, 1000, 600)
+
+        # Layout and Widgets
+        layout = QVBoxLayout()
+        self.search_bar = QLineEdit(self)
+        self.search_bar.setPlaceholderText("Enter package name...")
+        self.search_button = QPushButton("Search", self)
+        self.search_button.clicked.connect(self.search_packages)
+
+        # Add Slakfinder Home button
+        self.home_button = QPushButton("Slakfinder Web", self)
+        self.home_button.clicked.connect(self.open_slakfinder_home)
+
+        # Connect Enter key press event for the search bar
+        self.search_bar.returnPressed.connect(self.search_packages)
+
+        self.table = QTableWidget()
+        self.table.setColumnCount(8)  # Updated to 8 columns to include Download
+        self.table.setHorizontalHeaderLabels(["Rank", "Package", "Version", "Arch", "Distro", "Repository", "Location", "Download"])
+        self.table.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
+        self.table.cellDoubleClicked.connect(self.open_link)
+
+        layout.addWidget(self.search_bar)
+        layout.addWidget(self.search_button)
+        layout.addWidget(self.home_button)  # Add the Slakfinder Home button to layout
+        layout.addWidget(self.table)
+        self.setLayout(layout)
+
+    def search_packages(self):
+        query = self.search_bar.text().strip()
+        if not query:
+            return
+
+        # Clear table before displaying new results
+        self.table.setRowCount(0)
+
+        # Perform the search
+        url = "https://slackware.nl/slakfinder/"
+        params = {
+            'act': 'search',
+            'name': query,
+            'repo': 0
+        }
+        response = requests.get(url, params=params)
+        soup = BeautifulSoup(response.text, 'html.parser')
+
+        # Find the table with class 'results' (if it exists)
+        results = []
+        result_table = soup.find('table', {'class': 'results'})
+
+        if result_table:
+            rows = result_table.find_all('tr')[1:]  # Skip the header row
+            for row in rows:
+                cols = row.find_all('td')
+                if len(cols) > 6:
+                    rank = cols[0].text.strip()
+                    package = cols[1].text.strip()
+                    version = cols[2].text.strip()
+                    arch = cols[3].text.strip()
+                    distro = cols[4].text.strip()
+                    repository = cols[5].text.strip()
+                    location = cols[6].text.strip()
+
+                    # Download link extraction
+                    download_link = None
+                    download_tag = cols[6].find('a', href=True)
+                    if download_tag:
+                        download_link = download_tag['href']
+
+                    # Append the result tuple
+                    results.append((rank, package, version, arch, distro, repository, location, download_link))
+
+        if results:
+            self.table.setRowCount(len(results))
+            for row, (rank, package, version, arch, distro, repository, location, download_url) in enumerate(results):
+                self.table.setItem(row, 0, QTableWidgetItem(rank))
+                self.table.setItem(row, 1, QTableWidgetItem(package))
+                self.table.setItem(row, 2, QTableWidgetItem(version))
+                self.table.setItem(row, 3, QTableWidgetItem(arch))
+                self.table.setItem(row, 4, QTableWidgetItem(distro))
+                self.table.setItem(row, 5, QTableWidgetItem(repository))
+                self.table.setItem(row, 6, QTableWidgetItem(location))
+
+                # Make only the Download column clickable and non-editable
+                if download_url:
+                    download_item = self.create_clickable_item(download_url)
+                    self.table.setItem(row, 7, download_item)
+                else:
+                    self.table.setItem(row, 7, QTableWidgetItem("No download"))
+
+        else:
+            print("No results found for your query.")
+
+    def create_clickable_item(self, text):
+        item = QTableWidgetItem(text)
+        item.setForeground(QColor(0, 0, 255))  # Set the color to blue to look like a link
+        item.setTextAlignment(4)  # Center alignment
+        item.setFlags(item.flags() & ~Qt.ItemFlag.ItemIsEditable)  # Make item non-editable
+        item.setFlags(item.flags() | Qt.ItemFlag.ItemIsSelectable | Qt.ItemFlag.ItemIsEnabled)  # Make item selectable and enabled
+        return item
+
+    def open_link(self, row, column):
+        # Clicking on the "Download" (column 7) will open a link
+        if column == 7:  # Only the "Download" column should be clickable
+            link = self.table.item(row, column).text()
+            if link and link != "No download":
+                # Open the link using xdg-open (Linux) or QDesktopServices (cross-platform)
+                subprocess.run(['xdg-open', link])  # Linux-specific, opens URL in default browser
+
+    def open_slakfinder_home(self):
+        # Open the Slakfinder homepage in the default browser
+        QDesktopServices.openUrl(QUrl("https://slackware.nl/slakfinder/index.php"))
+
+    def keyPressEvent(self, event):
+        # Make sure the Enter key doesn't trigger a reload or refresh
+        if event.key() == Qt.Key.Key_Return:  # Check if the Enter key is pressed
+            row = self.table.currentRow()
+            col = self.table.currentColumn()
+            if col == 7:  # Only if the Download column is selected
+                link = self.table.item(row, col).text()
+                if link and link != "No download":
+                    subprocess.run(['xdg-open', link])  # Open link in the browser
+            event.accept()  # Prevent default behavior of the Enter key (which might be editing)
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    window = SlakfinderApp()
+    window.show()
+    sys.exit(app.exec())
+
