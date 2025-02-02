@@ -1,0 +1,148 @@
+#!/usr/bin/python3
+
+import sys
+import re
+import requests
+from PyQt6.QtCore import QThread, pyqtSignal
+from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QLineEdit, QListWidget, QLabel
+from urllib.parse import urljoin
+
+# Worker thread for downloading packages
+class DownloadThread(QThread):
+    finished = pyqtSignal(str)
+
+    def __init__(self, url):
+        super().__init__()
+        self.url = url
+
+    def run(self):
+        try:
+            response = requests.get(self.url)
+            if response.status_code == 200:
+                file_path = "/tmp/" + self.url.split("/")[-1]
+                with open(file_path, 'wb') as f:
+                    f.write(response.content)
+                self.finished.emit(f"Downloaded: {file_path}")
+            else:
+                self.finished.emit(f"Failed to download: {self.url}")
+        except Exception as e:
+            self.finished.emit(f"Error: {str(e)}")
+
+# Main application
+class PackageSearchApp(QWidget):
+    def __init__(self):
+        super().__init__()
+
+        self.setWindowTitle("Slackware Package Search")
+        self.setGeometry(200, 200, 600, 400)
+
+        layout = QVBoxLayout()
+
+        self.search_label = QLabel("Search Package:")
+        layout.addWidget(self.search_label)
+
+        self.search_bar = QLineEdit()
+        self.search_bar.setPlaceholderText("Type package name...")
+        layout.addWidget(self.search_bar)
+
+        self.package_list = QListWidget()
+        layout.addWidget(self.package_list)
+
+        self.setLayout(layout)
+
+        self.load_package_data()
+
+        self.search_bar.textChanged.connect(self.filter_packages)
+        self.package_list.itemDoubleClicked.connect(self.download_package)
+
+        self.threads = []  # List to store running threads
+
+    def load_package_data(self):
+        """Load and parse package data."""
+        self.packages = []
+        url = "https://slackers.it/repository/slackware64-current/PACKAGES.TXT"
+        package_data = requests.get(url).text
+
+        package_blocks = re.findall(
+            r"PACKAGE NAME:\s+(.+?)\n.*?PACKAGE MIRROR:\s+(.+?)\n.*?PACKAGE LOCATION:\s+(.+?)\n.*?PACKAGE REQUIRED:\s*(.*?)\n",
+            package_data, re.DOTALL
+        )
+
+        for block in package_blocks:
+            name, mirror, location, required = block
+            required_list = [dep.strip() for dep in required.split(",") if dep.strip()]
+            self.packages.append({
+                'name': name.strip(),
+                'mirror': mirror.strip(),
+                'location': location.strip(),
+                'required': required_list
+            })
+
+        self.update_package_list()
+
+    def update_package_list(self):
+        """Update package list in UI."""
+        self.package_list.clear()
+        for package in self.packages:
+            self.package_list.addItem(package['name'])
+
+    def filter_packages(self):
+        """Filter package list based on search."""
+        search_term = self.search_bar.text().lower()
+        filtered_packages = [pkg['name'] for pkg in self.packages if search_term in pkg['name'].lower()]
+        self.package_list.clear()
+        self.package_list.addItems(filtered_packages)
+
+    def download_package(self, item):
+        """Handle double-click event to download a package and its dependencies."""
+        package_name = item.text()
+        selected_package = next(pkg for pkg in self.packages if pkg['name'] == package_name)
+        package_url = self.get_package_url(selected_package)
+
+        print(f"Attempting to download: {package_url}")
+        self.start_download(package_url)
+
+        # Download required dependencies
+        for req_pkg in selected_package['required']:
+            required_url = self.get_package_url_from_name(req_pkg)
+            if required_url:
+                print(f"Downloading dependency: {required_url}")
+                self.start_download(required_url)
+            else:
+                print(f"Warning: Dependency '{req_pkg}' not found in the repository.")
+
+    def start_download(self, url):
+        """Start a new download thread and store it to prevent premature destruction."""
+        thread = DownloadThread(url)
+        thread.finished.connect(self.on_download_finished)
+        self.threads.append(thread)  # Store thread so it doesn't get destroyed
+        thread.start()
+
+    def on_download_finished(self, message):
+        """Handle download completion."""
+        print(message)
+
+    def get_package_url(self, package):
+        """Construct the full package download URL."""
+        mirror_url = package['mirror']
+        location = package['location'].lstrip('./')
+        package_name = package['name']
+
+        return urljoin(mirror_url, f"{location}/{package_name}")
+
+    def get_package_url_from_name(self, package_name):
+        """Find and return the full URL of a required package."""
+        matching_packages = [pkg for pkg in self.packages if pkg['name'].startswith(package_name)]
+
+        if not matching_packages:
+            return None
+
+        return self.get_package_url(matching_packages[0])
+
+
+# Run the application
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    window = PackageSearchApp()
+    window.show()
+    sys.exit(app.exec())

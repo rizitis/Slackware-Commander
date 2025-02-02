@@ -122,19 +122,15 @@ A script to build and install custom kernels without affecting the official Slac
 
 1. Switch to runlevel 3 and uninstall NVIDIA drivers.
 2. Use SBKS to build and install an older kernel.
-3. Reboot into the custom kernel and reinstall the NVIDIA driver
+3. Reboot into the custom kernel and install the NVIDIA driver
 ```
 sh NVIDIA.run
 ```
-4. Reboot into the official kernel and install NVIDIA modules:
+4. Reboot into the official kernel and install NVIDIA modules only:
 ```
 sh NVIDIA.run -K
 ```
-5. Or install them without reboot
-```
-sh NVIDIA-Linux-x86-x.x.x.run -K -k official-kernel-name
-```
-6. Keep custom kernel in your system and follow steps 4 or 5 in every official kernel upgrade.
+5. Keep custom kernel in your system and follow steps 3 or 4 in every official kernel upgrade.
 This setup ensures NVIDIA drivers remain functional even after Slackware kernel updates.
 
 .SH NOTES
