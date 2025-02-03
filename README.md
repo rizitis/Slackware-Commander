@@ -3,6 +3,8 @@ Start writting from scratch app in a modern but *KISS* Qt6 gui<br>
 
 So for now **main** branch is in **DEVELOPER** mode and rest branches EOL.<br>
 
+![DEVELOPER](./DEV_MODE.png)
+
 ---
 
 ```
