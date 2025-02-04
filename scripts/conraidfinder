@@ -3,13 +3,23 @@
 import sys
 import re
 import requests
-from PyQt6.QtCore import QThread, pyqtSignal
+from PyQt6.QtCore import QThread, pyqtSignal, QCoreApplication, QTimer
 from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QLineEdit, QListWidget, QLabel
 from urllib.parse import urljoin
+import signal
+
+def handle_interrupt(self, signum, frame):
+    """Handle Ctrl+C gracefully."""
+    print("\nCtrl+C detected. Stopping threads and exiting...")
+    for thread in self.threads:
+        thread.stop()  # Stop any active threads not work but leave it here...
+    QCoreApplication.quit()  # Quit application
+
 
 # Worker thread for downloading packages
 class DownloadThread(QThread):
     finished = pyqtSignal(str)
+    should_stop = False  # Flag to control thread stopping not work but leave it here...also
 
     def __init__(self, url):
         super().__init__()
@@ -27,6 +37,11 @@ class DownloadThread(QThread):
                 self.finished.emit(f"Failed to download: {self.url}")
         except Exception as e:
             self.finished.emit(f"Error: {str(e)}")
+
+    def stop(self):
+        """Stop the download thread."""
+        self.should_stop = True
+        self.quit()  # Signal the thread to stop, bulshits...Qt6 not Stopping!
 
 # Main application
 class PackageSearchApp(QWidget):
@@ -57,6 +72,9 @@ class PackageSearchApp(QWidget):
 
         self.threads = []  # List to store running threads
 
+        # Set up signal handler to catch Ctrl+C (KeyboardInterrupt), not work ether!!!
+        signal.signal(signal.SIGINT, self.handle_interrupt)
+
     def load_package_data(self):
         """Load and parse package data."""
         self.packages = []
@@ -70,7 +88,9 @@ class PackageSearchApp(QWidget):
 
         for block in package_blocks:
             name, mirror, location, required = block
-            required_list = [dep.strip() for dep in required.split(",") if dep.strip()]
+            required_list = [
+                dep.strip() for dep in required.split(",") if dep.strip() and "CONFLICTS" not in dep.upper()
+            ]
             self.packages.append({
                 'name': name.strip(),
                 'mirror': mirror.strip(),
@@ -139,10 +159,27 @@ class PackageSearchApp(QWidget):
 
         return self.get_package_url(matching_packages[0])
 
+    def handle_interrupt(self, signum, frame):
+        """Handle Ctrl+C gracefully."""
+        print("\nCtrl+C detected. Stopping threads and exiting...")
+        for thread in self.threads:
+            thread.stop()  # Stop any active threads
+        QApplication.quit()  # Gracefully quit the application
+
 
 # Run the application
 if __name__ == "__main__":
     app = QApplication(sys.argv)
+
+    # Ensure Ctrl+C works, THATS THE ONLY WORKED!
+    signal.signal(signal.SIGINT, lambda *args: app.quit())
+
     window = PackageSearchApp()
     window.show()
+
+    # Use a QTimer to periodically process events and allow SIGINT handling
+    timer = QTimer()
+    timer.timeout.connect(lambda: None)  # Dummy function to keep event loop alive
+    timer.start(100)  # Runs every 100ms
+
     sys.exit(app.exec())

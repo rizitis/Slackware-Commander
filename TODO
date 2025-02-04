@@ -3,4 +3,5 @@ recheck everything for alternatives.
 
 check SBKS if works with dracut
 
-python scripts what deps needed?
+passed;
+python scripts what deps needed? - check working all. deps not checked.Tue Feb-2 9:03:20pm to check deps for pip need clean system VBOX>>>
