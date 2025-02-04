@@ -161,11 +161,12 @@ kdialog --warning \
        --text "Finally, you have successfully broken your system. Congrats!"
 echo "Script has finished execution."  # Echo to terminal
 
-if kdialog --yesno "Do you want to reboot the PC?" --title "Reboot?" --no-wrap; then
-    /sbin/reboot
-    kdialog --msgbox --title "Success" --text="System rebooting..." --no-wrap
+if kdialog --yesno "Do you want to reboot the PC?" --title "Reboot?"; then
+    kdialog --msgbox "System rebooting..." --title "Success"
     echo "System is rebooting..."  # Echo to terminal
+    /sbin/reboot
 else
-    kdialog --msgbox --text="OK! SBKS finished its job. Have a nice Slacky Day." --width=500
+    kdialog --msgbox "OK! SBKS finished its job. Have a nice Slacky Day." --title "Goodbye"
     echo "Script finished. No reboot."  # Echo to terminal
 fi
+

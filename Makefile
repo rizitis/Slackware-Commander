@@ -7,7 +7,7 @@ PKG_BIN_DIR := $(DESTDIR)/usr/local/bin
 PKG_SBIN_DIR := $(DESTDIR)/usr/local/sbin
 PKG_ETC_DIR := $(DESTDIR)/etc
 PKG_DESKTOP_DIR := $(DESTDIR)/usr/share/applications
-PKG_ICON_DIR := $(DESTDIR)/usr/share/icons/$(PRGNAM)
+PKG_ICON_DIR := $(DESTDIR)/usr/share/icons
 PKG_MAN_DIR := $(DESTDIR)/usr/man
 PKG_DOC_DIR := $(DESTDIR)/usr/doc/$(PRGNAM)-$(VERSION)
 
@@ -78,8 +78,9 @@ install_icons:
 	@cp -R icons/hicolor $(DESTDIR)/usr/share/icons/
 
 	# Install application-specific icons
-	@mkdir -p $(PKG_ICON_DIR)
-	@cp icons/$(PRGNAM)/* $(PKG_ICON_DIR)/
+	@mkdir -p $(DESTDIR)/usr/share/icons
+	@cp -R icons/Slackware-Commander $(DESTDIR)/usr/share/icons/
+	@cp -R icons/logos $(DESTDIR)/usr/share/icons/
 
 # Install man pages and compress them (from .1 files)
 install_man:
