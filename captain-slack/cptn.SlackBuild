@@ -1,0 +1,85 @@
+#!/bin/bash
+# shellcheck disable=SC2140,SC2046,SC2086
+# Slackware build script for Captain-Slack
+
+#
+# Redistribution and use of this script, with or without modification, is
+# permitted provided that the following conditions are met:
+#
+# 1. Redistributions of this script must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+#
+#  THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR IMPLIED
+#  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+#  MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO
+#  EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+#  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+#  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+#  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+#  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+#  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+#  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
+cd $(dirname $0) ; CWD=$(pwd)
+
+PRGNAM=cptn
+VERSION=${VERSION:-2.3.3}
+BUILD=${BUILD:-1}
+TAG=${TAG:-_rtz}
+PKGTYPE=${PKGTYPE:-tlz}
+
+if [ -z "$ARCH" ]; then
+  case "$( uname -m )" in
+    i?86) ARCH=i586 ;;
+    aarch*) ARCH=aarch64 ;;
+       *) ARCH=$( uname -m ) ;;
+  esac
+fi
+
+if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
+  echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
+  exit 0
+fi
+
+OUTPUT="/tmp"
+PKG=/tmp/package-"$PRGNAM"
+set -e
+rm -rf "$PKG"
+
+mkdir -p "$PKG"/usr/local/bin/captain-slack/ "$PKG"/etc/captain-slack "$PKG"/var/lib/captain-slack/{mirror-db,system-db} "$PKG"/var/log/captain-slack "$PKG"/usr/share/captain-slack
+
+cd "$PKG"
+pushd $CWD
+
+cp cptn-main.ini "$PKG"/etc/captain-slack/
+cp cptn "$PKG"/usr/local/bin/
+chmod +x "$PKG"/usr/local/bin/cptn
+cp *.sh "$PKG"/usr/local/bin/captain-slack/
+chmod +x "$PKG"/usr/local/bin/captain-slack/*.sh
+
+mkdir -p "$PKG"/install
+cat <<EOL > "$PKG"/install/slack-desc
+    |-----handy-ruler------------------------------------------------------|
+cptn: cptn (Captain-Slack scripts collection for Slackware systems)
+cptn:
+cptn: Captain-Slack is a collection of scripts helping users maintain a
+cptn: Slackware system.
+cptn: It create Packages and Libraries database in yaml format,
+cptn: print which services running and theirs status and more...
+cptn: It also print infos about installed packages, libs, their, TAGS and
+cptn: finally print weather infos in terminal.
+cptn:
+cptn: Captain-Slack (cptn)
+cptn: https://github.com/rizitis/captain-slack
+EOL
+
+mkdir -p "$PKG"/usr/doc/"$PRGNAM-$VERSION"
+cp -a README* \
+  "$PKG"/usr/doc/"$PRGNAM-$VERSION"
+cat $PRGNAM.SlackBuild > "$PKG"/usr/doc/"$PRGNAM-$VERSION"/"$PRGNAM".SlackBuild
+echo "chafa" > "$PKG"/usr/doc/"$PRGNAM-$VERSION"/slack-required
+echo "jq" >> "$PKG"/usr/doc/"$PRGNAM-$VERSION"/slack-required
+echo "yq" >> "$PKG"/usr/doc/"$PRGNAM-$VERSION"/slack-required
+popd
+/sbin/makepkg -l y -c n "$OUTPUT"/"$PRGNAM-$VERSION"-"$ARCH"-"$BUILD""$TAG"."$PKGTYPE"

@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# This is Captain Slack 
+# This is Captain Slack
 # Born in: https://github.com/rizitis/captain-slack 20/10/2024 first from a Human Brain with help of ChatGPT
-# 
+#
 # This is free and unencumbered software released into the public domain.
 
 # Anyone is free to copy, modify, publish, use, compile, sell, or
@@ -43,13 +43,13 @@ echo -e "\e[1;34m"
 cat << "EOF"
 
 
-!   ▗▄▄▖▗▞▀▜▌▄▄▄▄     ■  ▗▞▀▜▌▄ ▄▄▄▄       ▗▄▄▖█ ▗▞▀▜▌▗▞▀▘█  ▄     
-!  ▐▌   ▝▚▄▟▌█   █ ▗▄▟▙▄▖▝▚▄▟▌▄ █   █     ▐▌   █ ▝▚▄▟▌▝▚▄▖█▄▀      
-!  ▐▌        █▄▄▄▀   ▐▌       █ █   █      ▝▀▚▖█          █ ▀▄     
-!  ▝▚▄▄▖     █       ▐▌       █           ▗▄▄▞▘█          █  █     
-!            ▀       ▐▌                                            
-!                                                                  
-!                                                                  
+!   ▗▄▄▖▗▞▀▜▌▄▄▄▄     ■  ▗▞▀▜▌▄ ▄▄▄▄       ▗▄▄▖█ ▗▞▀▜▌▗▞▀▘█  ▄
+!  ▐▌   ▝▚▄▟▌█   █ ▗▄▟▙▄▖▝▚▄▟▌▄ █   █     ▐▌   █ ▝▚▄▟▌▝▚▄▖█▄▀
+!  ▐▌        █▄▄▄▀   ▐▌       █ █   █      ▝▀▚▖█          █ ▀▄
+!  ▝▚▄▄▖     █       ▐▌       █           ▗▄▄▞▘█          █  █
+!            ▀       ▐▌
+!
+!
 
 EOF
 echo -e "\e[0m"
@@ -71,7 +71,7 @@ function source_config() {
             value=$(echo "$value" | xargs)  # Trim whitespace
             value=$(eval echo "$value")  # Resolve variables like $APP_HOME
             export "$key"="$value"  # Export as environment variable
-            #echo "$key = $value"  # Automatically echo the key-value pair for testing not need in real.. 
+            #echo "$key = $value"  # Automatically echo the key-value pair for testing not need in real..
         fi
     done < "$CONFIG_FILE"
 }
@@ -160,7 +160,7 @@ if [[ "$1" != -* && "$1" != "" && "$command" != "mirrors" && "$command" != "show
     shift
 fi
 
-# Parse optional flags: -a, -b, -v for non slack-package managers. I mean not needed for cptn exaclty but maybe in future... 
+# Parse optional flags: -a, -b, -v for non slack-package managers. I mean not needed for cptn exaclty but maybe in future...
 while getopts "aplv123456789" opt; do
     case ${opt} in
         a )
@@ -282,11 +282,11 @@ case "$command" in
         exit 1
         fi
         ;;
-        
+
     weather)
         execute_command "curl wttr.in"
         ;;
-        
+
     restart-serv)
     # Check if the script is being run as root
     if [ "$EUID" -ne 0 ]; then
@@ -295,7 +295,7 @@ case "$command" in
     fi
         execute_command "bash $APP_SERV/restart-services.sh"
         ;;
-        
+
     show-servs)
     # Check if the script is being run as root
     if [ "$EUID" -ne 0 ]; then
@@ -304,7 +304,7 @@ case "$command" in
     fi
         execute_command "bash $APP_SERV/rcstatus.sh"
         ;;
-        
+
     mirrors)
     # Check if the script is being run as root
     if [ "$EUID" -ne 0 ]; then
@@ -342,7 +342,7 @@ case "$command" in
             rm "$CPTN_LOGS"/*.log || exit
             echo "Success. Clear all log files from $CPTN_LOGS"
         ;;
-        
+
     *)
         echo "Invalid command: $command"
         echo "Usage: cptn <command> [<package>] [-a] [-p] [-l] [-v] [-1] [-2] ... [-9]"

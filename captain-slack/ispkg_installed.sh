@@ -67,9 +67,16 @@ for i in $(ls /var/lib/pkgtools/packages/ | grep "^$package_name-[0-9]\+"); do
 done
 done
 print_heading "------------------"
-echo -e  "${BOLD}https://github.com/gapan/slackware-deps/tree/15.0/$1.dep:${RESET}"
-curl -sSL https://raw.githubusercontent.com/gapan/slackware-deps/15.0/$1.dep | grep -v "^aaa_libraries" || true
-
+#echo -e  "${BOLD}https://github.com/gapan/slackware-deps/tree/15.0/$1.dep:${RESET}"
+#curl -sSL https://raw.githubusercontent.com/gapan/slackware-deps/15.0/$1.dep | grep -v "^aaa_libraries" || true
+for i in $(ls /var/lib/pkgtools/packages/ | grep "^$package_name-[0-9]\+"); do
+    echo -e "${BLUE}$package_name.so file if exist:${RESET}"
+    cat /usr/doc/"$package_name"-*/$package_name.so-file 2>/dev/null | while IFS= read -r line; do
+    # Add color to the output
+    echo -e "\033[1;33m${line}\033[0m"  # Yellow color
+done
+done
+curl --fail --silent https://raw.githubusercontent.com/rizitis/Slackware64-Current-sofiles/refs/heads/main/$package.so-file 2>/dev/null || echo " "
 print_heading "------------------"
 echo ""
     # Loop through possible image extensions and find the first matching file

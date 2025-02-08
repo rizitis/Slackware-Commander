@@ -1,5 +1,5 @@
 #!/bin/bash
-
+# shellcheck disable=SC2140,SC2046,SC2086,SC2034
 # Slackware build script for Slackware-Commander
 
 # 2024 Anagnostakis Ioannis (a.k.a rizitis) Hellas.
@@ -29,7 +29,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=scmd
 SRCNAM=Slackware-Commander
-VERSION=${VERSION:-6.0.1_DEV}
+VERSION=${VERSION:-6.0.1-1_DEV}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -94,9 +94,6 @@ rm -rf $PRGNAM-$VERSION
 tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
 cd $SRCNAM-$PRGNAM-$VERSION
 
-# Set ONLY_SCRIPTS=YES if you want to skip build Slackware-Commander main GUI and only install scprits separately.
-# That means: `ONLY_SCRIPTS=YES ./$PRGNAM.SlackBuild`
-ONLY_SCRIPTS=${ONLY_SCRIPTS:-}
 
 chown -R root:root .
 find -L . \
@@ -105,13 +102,100 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
+SRC_DIR=src
+QMAKE=qmake6
+PKG_SBIN_DIR="$PKG/usr/local/sbin"
+PKG_BIN_DIR="$PKG/usr/local/bin"
+PKG_ETC_DIR="$PKG/etc"
+PKG_DESKTOP_DIR="$PKG/usr/share/applications"
+PKG_ICON_DIR="$PKG/usr/share/icons"
+PKG_MAN_DIR="$PKG/usr/man"
+PKG_DOC_DIR="/usr/doc"
 
-make -f Makefile
 
-pushd captain-slack
-make
-make DESTDIR=$PKG install
-popd
+for d in "$SRC_DIR"/*/; do
+		cd $d &&
+		$QMAKE &&
+		make &&
+		cd -
+	done
+
+
+mkdir -p "$PKG_SBIN_DIR"
+for d in "$SRC_DIR"/*/; do
+		cd $d &&
+		if [ -f "$PRGNAM" ]; then
+			cp "$PRGNAM" "$PKG_SBIN_DIR/"
+		fi
+		if [ -f "$PRGNAM"2 ]; then
+			cp "$PRGNAM"2 "$PKG_SBIN_DIR/"
+		fi
+		cd -
+    done
+
+
+	mkdir -p "$PKG_BIN_DIR"
+	for i in scripts/*; do
+		if [ -f $i ]; then
+			cp $i "$PKG_BIN_DIR"/
+		fi
+	done
+	chmod +x $PKG_BIN_DIR/*
+
+	mkdir -p $PKG_ETC_DIR
+	cp -R ENV/* $PKK_ETC_DIR/
+
+	mkdir -p $PKG_DESKTOP_DIR
+	for desktop in desktops/*; do
+		if [ -f $desktop ] && [[ $desktop == *.desktop ]]; then
+			cp "$desktop" "$PKG_DESKTOP_DIR"/
+		fi
+	done
+
+	mkdir -p "$PKG_ICON_DIR"
+	cp -R icons/hicolor "$PKG_ICON_DIR"/
+	cp -R icons/Slackware-Commander "$PKG_ICON_DIR"/
+
+	mkdir -p $PKG_MAN_DIR
+	cp -R man1 "$PKG_MAN_DI"R/
+
+	mkdir -p $PKG_DOC_DIR
+	cp docs/* "$PKG_DOC_DIR"/"$PRGNAM-$VERSION"/
+    cp UNLICENSE "$PKG_DOC_DIR"/"$PRGNAM-$VERSION"/
+    cat $CWD/"$PRGNAM".SlackBuild > "$PKG_DOC_DIR"/"$PRGNAM-$VERSION"/
+
+
+SUB_PKG=captain-slack
+SUB_PRGNAM=cptn
+
+pushd "$SUB_PKG" || exit
+dirs=(
+    "$PKG_BIN_DIR"/"$SUB_PKG"/
+    "$PKG_ETC_DIR"/"$SUB_PKG"
+    "$PKG"/var/lib/"$SUB_PKG"/mirror-db
+    "$PKG"/var/lib/"$SUB_PKG"/system-db
+    "$PKG"/var/log/"$SUB_PKG"
+    "$PKG"/usr/share/"$SUB_PKG"
+)
+
+install -d "${dirs[@]}"
+
+
+BIN_DIR="$PKG_BIN_DIR"/"$SUB_PKG"
+ETC_DIR="$PKG_ETC_DIR"/"$SUB_PKG"
+DOC_DIR="$PKG_DOC_DIR"/"$SUB_PKG"-2.3.3
+
+install -d "$BIN_DIR" "$ETC_DIR" "$DOC_DIR"
+
+install -m 644 "$SUB_PRGNAM"-main.ini "$ETC_DIR"/
+
+install -m 755 "$SUB_PRGNAM" "$PKG_BIN_DIR"/
+
+install -m 755 *.sh "$BIN_DIR"/
+
+install -m 644 README* "$SUB_PRGNAM".SlackBuild UNLICENSE "$DOC_DIR"/
+
+popd || exit
 
 # Don't ship .la files:
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la
