@@ -29,10 +29,10 @@ public:
         buttonLayout->addWidget(createButton("GPU Info", "lspci | grep -i vga | kdialog --textbox - --geometry 700x500 --title 'GPU Info'"));
 
         // Ethernet Interfaces
-        buttonLayout->addWidget(createButton("Ethernet Interfaces", "ifconfig 2>/dev/null || ip a | kdialog --textbox - --geometry 700x500 --title 'Ethernet Interfaces'"));
+        buttonLayout->addWidget(createButton("Ethernet Interfaces", "ip a | kdialog --textbox - --geometry 700x500 --title 'Ethernet Interfaces'"));
 
         // Wireless Interfaces
-        buttonLayout->addWidget(createButton("Wireless Interfaces", "iwconfig 2>/dev/null || nmcli device show | kdialog --textbox - --geometry 700x500 --title 'Wireless Interfaces'"));
+        buttonLayout->addWidget(createButton("Wireless Interfaces", "nmcli device show | kdialog --textbox - --geometry 700x500 --title 'Wireless Interfaces'"));
 
         // USB Devices
         buttonLayout->addWidget(createButton("USB Devices", "lsusb | kdialog --textbox - --geometry 700x500 --title 'USB Devices'"));

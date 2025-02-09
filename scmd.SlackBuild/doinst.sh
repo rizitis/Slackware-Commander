@@ -29,8 +29,8 @@ update_config() {
     fi
 }
 
-update_config "etc/inxifetch/inxifetch.conf" "etc/inxifetch/inxifetch.conf.new"
-update_config "etc/captain-slack/cptn-main.ini" "etc/captain-slack/cptn-main.ini.new"
+update_config "/etc/inxifetch/inxifetch.conf" "/etc/inxifetch/inxifetch.conf.new"
+update_config "/etc/captain-slack/cptn-main.ini" "/etc/captain-slack/cptn-main.ini.new"
 
 
 if [ -x /usr/bin/update-desktop-database ]; then
