@@ -1,40 +1,26 @@
 # Fri Jan 24 14:15:13 EET 2025
 Start writting from scratch app in a modern but *KISS* Qt6 gui<br>
 
-So for now **main** branch is in **RC** mode and rest branches EOL.<br>
 
-IF you want to be a **tester** Please:
-- Install requires from SBo/Ponce: `slpkg -i yq 
+### Installation
+Please Install requires from SBo/Ponce<br>
+- Assume you use slpkg:
+`slpkg -i yq 
 jq 
 chafa 
 figlet`
-- clone repo `git clone https://github.com/rizitis/Slackware-Commander.git` or download [zip](https://github.com/rizitis/Slackware-Commander/archive/refs/heads/main.zip)<br> 
-- cd to `scmd.SlackBuild` folder and command `pip install -r requirements.txt` and `sudo bash scmd.SlackBuild`
-- Binary will be in /tmp as usual for installpkg
+- `wget -c https://github.com/rizitis/Slackware-Commander/releases/download/scmd-6.1.0/scmd.SlackBuild.tar.gz`
+- `tar -xf scmd.SlackBuild.tar.gz && cd scmd.SlackBuild || exit`
+- `wget -c https://github.com/rizitis/Slackware-Commander/archive/refs/tags/scmd-6.1.0.tar.gz`
+- `pip install -r requirements.txt && sudo bash scmd.SlackBuild`
+- `upgradepkg --install-new --reinstall /tmp/scmd-6.1.0-x86_64-1_SC.tgz`
 
-Usage: please `man scmd` for details...<br>
+### Usage: 
+Please `man scmd` for details...<br>
+*For first time installtion to create a database command `cptn make-db -a` need some time...*
 
 GUI APPs  desktop entries are:<br>
 ![GUI APPS](./Slackware-Commander-GuiApps.png)
----
-![DEVELOPER](./DEV_MODE.png)
-
----
-
-```
-    |-----handy-ruler------------------------------------------------------|
-scmd: scmd (GUI & scripts helping user Slackware control center)
-scmd:
-scmd: Slackware-Commander (scmd) is a colection of scripts and gui apps.
-scmd: Using these tools user can explore and download slakfinder packages,
-scmd: explore SBo/Ponce repositories or search in a easy way for
-scmd: Shared objects (a.k.a. .so files) but only in Slackware64 Current.
-scmd: A lot of cli tools also included in the Cpatain-Slack suite (cptn),
-scmd: as restart services, find fast slack-mirror, pkg infos etc.
-scmd: In /usr/local/bin/ included more scripts as isnum, slackpkg_build...
-scmd:
-scmd: HomePage: https://github.com/rizitis/Slackware-Commander
-```
 
 --- 
 Slackware is a trademark of Patrick Volkerding.
