@@ -12,7 +12,7 @@ figlet`
 - cd to `scmd.SlackBuild` folder and command `pip install -r requirements.txt` and `sudo bash scmd.SlackBuild`
 - Binary will be in /tmp as usual for installpkg
 
-Please `man scmd` for details...<br>
+Usage: please `man scmd` for details...<br>
 
 GUI APPs  desktop entries are:<br>
 ![GUI APPS](./Slackware-Commander-GuiApps.png)
