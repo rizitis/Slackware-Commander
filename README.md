@@ -7,8 +7,8 @@ IF you want to be a **tester** Please:
 - Install requires: `yq 
 jq 
 chafa 
-figlet 
-beautifulsoup4`
+figlet`
+- `pip install ttkbootstrap BeautifulSoup4 PyQt6`
 - clone repo `git clone https://github.com/rizitis/Slackware-Commander.git` or download [zip](https://github.com/rizitis/Slackware-Commander/archive/refs/heads/main.zip)<br> 
 - cd to `scmd.SlackBuild` folder and command `sudo bash scmd.SlackBuild`
 - Binary will be in /tmp as usual for installpkg
