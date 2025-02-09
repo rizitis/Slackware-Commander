@@ -4,7 +4,7 @@ import sys
 import re
 import requests
 from PyQt6.QtCore import QThread, pyqtSignal, QCoreApplication, QTimer
-from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QLineEdit, QListWidget, QLabel
+from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QLineEdit, QListWidget, QLabel, QProgressBar, QTextEdit
 from urllib.parse import urljoin
 import signal
 
@@ -19,6 +19,8 @@ def handle_interrupt(self, signum, frame):
 # Worker thread for downloading packages
 class DownloadThread(QThread):
     finished = pyqtSignal(str)
+    progress = pyqtSignal(int)  # Signal to send progress updates
+    output = pyqtSignal(str)  # Signal to send messages to the GUI
     should_stop = False  # Flag to control thread stopping not work but leave it here...also
 
     def __init__(self, url):
@@ -27,14 +29,26 @@ class DownloadThread(QThread):
 
     def run(self):
         try:
-            response = requests.get(self.url)
-            if response.status_code == 200:
-                file_path = "/tmp/" + self.url.split("/")[-1]
-                with open(file_path, 'wb') as f:
-                    f.write(response.content)
-                self.finished.emit(f"Downloaded: {file_path}")
-            else:
-                self.finished.emit(f"Failed to download: {self.url}")
+            response = requests.get(self.url, stream=True)
+            total_size = int(response.headers.get('Content-Length', 0))
+            downloaded_size = 0
+
+            if total_size == 0:
+                self.finished.emit(f"Failed to download: {self.url} (No content length)")
+                return
+
+            file_path = "/tmp/" + self.url.split("/")[-1]
+            self.output.emit(f"Attempting to download: {self.url}")
+            with open(file_path, 'wb') as f:
+                for data in response.iter_content(chunk_size=1024):
+                    if self.should_stop:
+                        return  # Stop downloading if flagged
+                    f.write(data)
+                    downloaded_size += len(data)
+                    progress_percent = int((downloaded_size / total_size) * 100)
+                    self.progress.emit(progress_percent)  # Emit progress update
+
+            self.finished.emit(f"Downloaded: {file_path}")
         except Exception as e:
             self.finished.emit(f"Error: {str(e)}")
 
@@ -43,17 +57,18 @@ class DownloadThread(QThread):
         self.should_stop = True
         self.quit()  # Signal the thread to stop, bulshits...Qt6 not Stopping!
 
+
 # Main application
 class PackageSearchApp(QWidget):
     def __init__(self):
         super().__init__()
 
-        self.setWindowTitle("Slackware Package Search")
+        self.setWindowTitle("Conraid Package Search")
         self.setGeometry(200, 200, 600, 400)
 
         layout = QVBoxLayout()
 
-        self.search_label = QLabel("Search Package:")
+        self.search_label = QLabel("Search Package:  (if double click will download it with its dependencies)")
         layout.addWidget(self.search_label)
 
         self.search_bar = QLineEdit()
@@ -62,6 +77,19 @@ class PackageSearchApp(QWidget):
 
         self.package_list = QListWidget()
         layout.addWidget(self.package_list)
+
+        self.progress_label = QLabel("Download Progress:")
+        layout.addWidget(self.progress_label)
+
+        # Progress bar for downloads
+        self.progress_bar = QProgressBar()
+        self.progress_bar.setRange(0, 100)
+        layout.addWidget(self.progress_bar)
+
+        # QTextEdit for showing terminal output in the GUI
+        self.output_text = QTextEdit()
+        self.output_text.setReadOnly(True)  # Make it read-only
+        layout.addWidget(self.output_text)
 
         self.setLayout(layout)
 
@@ -119,28 +147,30 @@ class PackageSearchApp(QWidget):
         selected_package = next(pkg for pkg in self.packages if pkg['name'] == package_name)
         package_url = self.get_package_url(selected_package)
 
-        print(f"Attempting to download: {package_url}")
+        self.output_text.append(f"Attempting to download: {package_url}")
         self.start_download(package_url)
 
         # Download required dependencies
         for req_pkg in selected_package['required']:
             required_url = self.get_package_url_from_name(req_pkg)
             if required_url:
-                print(f"Downloading dependency: {required_url}")
+                self.output_text.append(f"Downloading dependency: {required_url}")
                 self.start_download(required_url)
             else:
-                print(f"Warning: Dependency '{req_pkg}' not found in the repository.")
+                self.output_text.append(f"Warning: Dependency '{req_pkg}' not found in the repository.")
 
     def start_download(self, url):
         """Start a new download thread and store it to prevent premature destruction."""
         thread = DownloadThread(url)
         thread.finished.connect(self.on_download_finished)
+        thread.progress.connect(self.update_progress)  # Connect progress signal to update GUI
+        thread.output.connect(self.update_output)  # Connect output signal to display in QTextEdit
         self.threads.append(thread)  # Store thread so it doesn't get destroyed
         thread.start()
 
     def on_download_finished(self, message):
         """Handle download completion."""
-        print(message)
+        self.output_text.append(message)
 
     def get_package_url(self, package):
         """Construct the full package download URL."""
@@ -165,6 +195,14 @@ class PackageSearchApp(QWidget):
         for thread in self.threads:
             thread.stop()  # Stop any active threads
         QApplication.quit()  # Gracefully quit the application
+
+    def update_progress(self, value):
+        """Update the progress bar value."""
+        self.progress_bar.setValue(value)
+
+    def update_output(self, message):
+        """Update the QTextEdit with messages."""
+        self.output_text.append(message)
 
 
 # Run the application
