@@ -43,7 +43,8 @@ GUI APPs  desktop entries are:<br>
 ![cptn-help](./cptn-help.png)
 ---
 ![asciicast](https://asciinema.org/a/5tMTWMcjqFDPoFgMhXQI6DuHi.svg)<br>
-https://asciinema.org/a/5tMTWMcjqFDPoFgMhXQI6DuHi
+https://asciinema.org/a/5tMTWMcjqFDPoFgMhXQI6DuHi <br>
+https://asciinema.org/a/5ncBnzP5Z0grVP2xigJNF2IDJ
 
 
 ---
