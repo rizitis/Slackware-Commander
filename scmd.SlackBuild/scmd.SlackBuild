@@ -110,7 +110,7 @@ PKG_ETC_DIR="$PKG/etc"
 PKG_DESKTOP_DIR="$PKG/usr/share/applications"
 PKG_ICON_DIR="$PKG/usr/share/icons"
 PKG_MAN_DIR="$PKG/usr/man"
-PKG_DOC_DIR="$PKG/usr/doc"
+PKG_DOC_DIR="$PKG/usr/doc/$PRGNAM-$VERSION"
 
 
 for d in "$SRC_DIR"/*/; do
