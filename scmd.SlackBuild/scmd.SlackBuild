@@ -29,9 +29,9 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=scmd
 SRCNAM=Slackware-Commander
-VERSION=6.1.0-RC
-BUILD=${BUILD:-2}
-TAG=${TAG:-_SBo}
+VERSION=6.1.0-RC2
+BUILD=${BUILD:-1}
+TAG=${TAG:-_SC}
 PKGTYPE=${PKGTYPE:-tgz}
 
 if [ -z "$ARCH" ]; then
@@ -49,7 +49,7 @@ if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   exit 0
 fi
 
-TMP=${TMP:-/tmp/SBo}
+TMP=${TMP:-/tmp/SC}
 PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
 

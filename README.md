@@ -1,8 +1,18 @@
 # Fri Jan 24 14:15:13 EET 2025
 Start writting from scratch app in a modern but *KISS* Qt6 gui<br>
 
-So for now **main** branch is in **DEVELOPER** mode and rest branches EOL.<br>
+So for now **main** branch is in **RC** mode and rest branches EOL.<br>
 
+IF you want to be a **tester** Please:
+- clone repo `git clone https://github.com/rizitis/Slackware-Commander.git` or download [zip](https://github.com/rizitis/Slackware-Commander/archive/refs/heads/main.zip)<br> 
+- cd to `scmd.SlackBuild` and command `sudo bash scmd.SlackBuild`.
+- Binary will be in /tmp as usual for installpkg
+
+Please `man scmd` for details...<br>
+
+GUI APPs  desktop entries are:<br>
+![GUI APPS](./Slackware-Commander-GuiApps.png)
+---
 ![DEVELOPER](./DEV_MODE.png)
 
 ---
