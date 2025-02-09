@@ -110,7 +110,7 @@ PKG_ETC_DIR="$PKG/etc"
 PKG_DESKTOP_DIR="$PKG/usr/share/applications"
 PKG_ICON_DIR="$PKG/usr/share/icons"
 PKG_MAN_DIR="$PKG/usr/man"
-PKG_DOC_DIR="/usr/doc"
+PKG_DOC_DIR="$PKG/usr/doc"
 
 
 for d in "$SRC_DIR"/*/; do
@@ -158,6 +158,9 @@ for d in "$SRC_DIR"/*/; do
 
 	mkdir -p $PKG_MAN_DIR
 	cp -R man1 "$PKG_MAN_DIR"/
+
+	mkdir -p $PKG_DOC_DIR
+	cp docs/* "$PKG_DOC_DIR"/
 
 
 

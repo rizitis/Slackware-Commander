@@ -1,0 +1,93 @@
+SLACKWARE-COMMANDER
+NAME
+SYNOPSIS
+DESCRIPTION
+ADDITIONAL TOOLS
+Captain-Slack
+soviewer
+slakfinder
+sbofinder
+inxifetch
+isnum
+slack-revert
+SBKS (Slack Build Kernel Script)
+NOTES
+SEE ALSO
+AUTHOR
+NAME
+
+Slackware-Commander − A Qt6 and kdialog-based menu for Slackware system administration.
+SYNOPSIS
+
+slackware-commander
+DESCRIPTION
+
+Slackware-Commander provides a simple Qt6-based GUI for managing Slackware system updates, packages, and configuration files. It acts as a graphical frontend for ’slackpkg(+)’ and includes additional system tools.
+
+Features include: - Managing Slackware system updates and packages. - Editing slackpkg(+) configuration files. - Viewing change logs. - Accessing additional system tools.
+
+slackpkg_build
+A script that allows you to download, edit, and rebuild an official Slackware package using official SlackBuilds. If running on Slackware stable, it provides an unofficial dependency list, that SalixOS offers.
+
+More Tools
+Opens a secondary menu displaying system information via kdialog, covering: - CPU, GPU, and monitors - Sound cards and microphones - RAM and ZRAM usage - Wifi, Ethernet conections
+
+If you have a full build of Slackware-Commander, all features are available. However, if you built it using ‘ONLY_SCRIPTS=YES ./$PRGNAM.SlackBuild‘, the Qt6 GUI is omitted, but scripts remain in ‘/usr/local/bin/‘.
+ADDITIONAL TOOLS
+Captain-Slack
+
+A collection of Python and Bash scripts providing detailed system information, including package management, service status, and optional weather forecasts.
+
+Configuration files: ‘/etc/captain-slack/‘ Log files: ‘/var/log/captain-slack/‘ Database storage: ‘/var/lib/captain-slack/‘
+
+To use Captain-Slack, run: cptn <command>
+
+Available commands:
+
+- ‘make-db‘ : Create a database for installed packages and libraries.
+- ‘-a‘ : Full database (packages & libraries)
+- ‘-p‘ : Packages only
+- ‘-l‘ : Libraries and dependencies
+- ‘-v‘ : Full database (packages, libraries, and ldd binaries)
+
+- ‘info <package>‘ : Display package or library details. - ‘open-libs‘ : Open the installed libraries YAML file. - ‘open-pkgs‘ : Open the installed packages YAML file. - ‘open-logs‘ : View Captain-Slack logs. - ‘clear-logs‘ : Delete all Captain-Slack log files. - ‘serv-status <service>‘ : Show the status of a service. - ‘restart-serv‘ : Restart a service. - ‘show-servs‘ : List all running services. - ‘mirrors‘ : Find the fastest Slackware mirrors.
+- ‘-1‘ : Show the fastest mirror.
+- ‘-[1..9]‘ : Show the top N fastest mirrors (default: top 5). - ‘weather‘ : Display a weather forecast for your location.
+
+Example usage: ‘‘‘ cptn make-db -a # Create a full database cptn info vim # Show details for vim cptn serv-status apache # Check Apache service status cptn mirrors -1 # Get the fastest mirror cptn weather # Show weather forecast ‘‘‘
+
+After installation, run: ‘cptn make-db -v‘ (recommended for Slackware stable) For Slackware current, use: ‘cptn make-db -a‘ (faster than ‘-v‘ option)
+soviewer
+
+A Python3 GUI tool for viewing shared object (.so) files in Slackware64-current’s ChangeLog. Run from desktop entry or via: ‘‘‘ python3 soviewer ‘‘‘ Enter a package name, hit "Fetch," and view .so files.
+slakfinder
+
+A local GUI version of SlackFinder. It allows searching packages across various repositories but does not download them directly for security reasons.
+sbofinder
+
+An SBo and Ponce repository search tool requiring ‘slpkg‘. It allows reading metadata and downloading SlackBuilds (source included) but does not build/install them.
+inxifetch
+
+A modified ‘inxi‘ tool for displaying system information in a ‘neofetch‘-like format. Configurable via ‘/etc/inxifetch/inxifetch.conf‘. Usage: ‘‘‘ inxifetch xxrz inxifetch A inxifetch ‘‘‘
+isnum
+
+A simple precompiled FORTRAN script to validate numerical input. Usage: ‘‘‘ isnum "$var" isnum 1 isnum b ‘‘‘
+slack-revert
+
+A powerful but potentially dangerous rollback tool. It allows creating a "snap" (backup) of installed packages and ‘/etc‘ configuration, which can later be restored by downloading historical versions from <https://slackware.uk/cumulative/>.
+
+Usage: 1. Create a txt file (backup of packages) and a tar (of /etc): ‘slack-revert‘ 2. Restore the system: Select a snapshot to revert to that specific system state.
+SBKS (Slack Build Kernel Script)
+
+A script to build and install custom kernels without affecting the official Slackware kernel. Useful for NVIDIA proprietary driver users:
+
+1. Switch to runlevel 3 and uninstall NVIDIA drivers. 2. Use SBKS to build and install an older kernel. 3. Reboot into the custom kernel and install the NVIDIA driver ‘‘‘ sh NVIDIA.run ‘‘‘ 4. Reboot into the official kernel and install NVIDIA modules only: ‘‘‘ sh NVIDIA.run -K ‘‘‘ 5. Keep custom kernel in your system and follow steps 3 or 4 in every official kernel upgrade. This setup ensures NVIDIA drivers remain functional even after Slackware kernel updates.
+NOTES
+
+Slackware-Commander aims to simplify Slackware system administration while adhering to the KISS (Keep It Simple, Stupid) philosophy. It is an unofficial project and may contain bugs.
+SEE ALSO
+
+[GitHub Repository](https://github.com/rizitis/Slackware-Commander)
+AUTHOR
+
+Anagnostakis Ioannis
