@@ -99,8 +99,8 @@ private:
     }
 
     void openMoreTools() {
-        QProcess::startDetached("/usr/bin/konsole", QStringList() << "--hold" << "-e" << "/usr/local/sbin/scmd2");
-    }
+    QProcess::startDetached("/usr/local/sbin/scmd2");
+}
 };
 
 int main(int argc, char *argv[]) {

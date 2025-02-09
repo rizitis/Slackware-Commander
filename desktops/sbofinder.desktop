@@ -2,7 +2,7 @@
 Type=Application
 Encoding=UTF-8
 Name=SBo-Finder
-Comment=Print information from SBo Ponce builds.
+Comment=Print information from SBo Ponce SlackBuilds.
 Exec=python3 /usr/local/bin/sbofinder
 Icon=sbofinder
 Terminal=false

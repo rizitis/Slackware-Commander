@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Encoding=UTF-8
+Name=Conraid-Finder
+Comment=Search in Conraid repo for current
+Exec=python3 /usr/local/bin/conraidfinder
+Icon=conraidfinder
+Terminal=false
+Categories=Settings;HardwareSettings;
