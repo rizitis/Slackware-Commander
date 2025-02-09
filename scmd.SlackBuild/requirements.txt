@@ -1,0 +1,3 @@
+ttkbootstrap
+BeautifulSoup4
+PyQt6

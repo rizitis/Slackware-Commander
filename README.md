@@ -4,13 +4,12 @@ Start writting from scratch app in a modern but *KISS* Qt6 gui<br>
 So for now **main** branch is in **RC** mode and rest branches EOL.<br>
 
 IF you want to be a **tester** Please:
-- Install requires: `yq 
+- Install requires from SBo/Ponce: `slpkg -i yq 
 jq 
 chafa 
 figlet`
-- `pip install ttkbootstrap BeautifulSoup4 PyQt6`
 - clone repo `git clone https://github.com/rizitis/Slackware-Commander.git` or download [zip](https://github.com/rizitis/Slackware-Commander/archive/refs/heads/main.zip)<br> 
-- cd to `scmd.SlackBuild` folder and command `sudo bash scmd.SlackBuild`
+- cd to `scmd.SlackBuild` folder and command `pip install -r requirements.txt` and `sudo bash scmd.SlackBuild`
 - Binary will be in /tmp as usual for installpkg
 
 Please `man scmd` for details...<br>
