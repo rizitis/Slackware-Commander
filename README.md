@@ -36,10 +36,12 @@ scmd: HomePage: https://github.com/rizitis/Slackware-Commander
 Slackware is a trademark of Patrick Volkerding.
 http://www.slackware.com/trademark/trademark.php
 
-All icons are from [uxwing](https://uxwing.com/license/)
+Icons are from:<br>
+[uxwing](https://uxwing.com/license/)<br>
+![](https://uxwing.com/wp-content/themes/uxwing/images/logo.svg)<br>
+https://uxwing.com/ <br>
 
-![](https://uxwing.com/wp-content/themes/uxwing/images/logo.svg)
+And [DALL·E](https://chatgpt.com/g/g-2fkFE8rbu-dall-e)
 
-https://uxwing.com/
 
 Thank you, thank you, thank you!
