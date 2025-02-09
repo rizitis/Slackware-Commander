@@ -227,7 +227,7 @@ def execute_pkexec_command():
     if pkg_name:
         try:
             # Using pkexec to execute the command with elevated privileges
-            command = f"pkexec slpkg -fm {pkg_name}"
+            command = f"pkexec /usr/sbin/slpkg -fm {pkg_name}"
             result = subprocess.run(command, shell=True, text=True, capture_output=True)
 
             # Output the result (stdout) and error (stderr) to the terminal view (Text widget)
@@ -253,7 +253,7 @@ def execute_slpkg_eE_command():
         if repo_option:  # Ensure the repository option is valid
             try:
                 # Using pkexec to execute the 'slpkg -eE' command with elevated privileges
-                command = f"pkexec slpkg -eE {pkg_name} {repo_option}"
+                command = f"pkexec /usr/sbin/slpkg -eE {pkg_name} {repo_option}"
                 result = subprocess.run(command, shell=True, text=True, capture_output=True)
 
                 # Output the result (stdout) and error (stderr) to the terminal view (Text widget)
@@ -281,7 +281,7 @@ def execute_slpkg_w_command():
         if repo_option:  # Ensure the repository option is valid
             try:
                 # Using subprocess to execute the 'slpkg -w' command with elevated privileges
-                command = f"pkexec slpkg -w {pkg_name} {repo_option}"
+                command = f"pkexec /usr/sbin/slpkg -w {pkg_name} {repo_option}"
                 result = subprocess.run(command, shell=True, text=True, capture_output=True)
 
                 # Output the result (stdout) and error (stderr) to the terminal view (Text widget)
@@ -309,7 +309,7 @@ def execute_slpkg_d_command():
         if repo_option:  # Ensure the repository option is valid
             try:
                 # Using subprocess to execute the 'slpkg -d' command with elevated privileges
-                command = f"pkexec slpkg -dy {pkg_name} {repo_option}"
+                command = f"pkexec /usr/sbin/slpkg -dy {pkg_name} {repo_option}"
                 result = subprocess.run(command, shell=True, text=True, capture_output=True)
 
                 # Output the result (stdout) and error (stderr) to the terminal view (Text widget)
