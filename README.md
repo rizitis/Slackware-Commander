@@ -5,7 +5,7 @@ So for now **main** branch is in **RC** mode and rest branches EOL.<br>
 
 IF you want to be a **tester** Please:
 - clone repo `git clone https://github.com/rizitis/Slackware-Commander.git` or download [zip](https://github.com/rizitis/Slackware-Commander/archive/refs/heads/main.zip)<br> 
-- cd to `scmd.SlackBuild` folder and command `sudo bash scmd.SlackBuild`.
+- cd to `scmd.SlackBuild` folder and command `sudo bash scmd.SlackBuild`
 - Binary will be in /tmp as usual for installpkg
 
 Please `man scmd` for details...<br>
