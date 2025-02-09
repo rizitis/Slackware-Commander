@@ -42,7 +42,8 @@ GUI APPs  desktop entries are:<br>
 **cptn**<br>
 ![cptn-help](./cptn-help.png)
 <br>
-![Video](https://asciinema.org/a/5tMTWMcjqFDPoFgMhXQI6DuHi)
+[![asciicast](https://asciinema.org/a/5tMTWMcjqFDPoFgMhXQI6DuHi.svg)](https://asciinema.org/a/5tMTWMcjqFDPoFgMhXQI6DuHi)
+
 ---
 Slackware is a trademark of Patrick Volkerding.
 http://www.slackware.com/trademark/trademark.php
