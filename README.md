@@ -4,7 +4,7 @@ Start writting from scratch app in a modern but *KISS* Qt6 gui<br>
 
 ### Installation
 Please Install requires from SBo/Ponce<br>
-- Assume you have a full Slackware installtion and you use slpkg:
+- Assume you have a full Slackware installation and you use slpkg:
 `slpkg -i yq 
 jq 
 chafa 
