@@ -29,7 +29,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=scmd
 SRCNAM=Slackware-Commander
-VERSION=${VERSION:-6.0.1-1_DEV}
+VERSION=${VERSION:-6.0.2_DEV}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -157,12 +157,8 @@ for d in "$SRC_DIR"/*/; do
 	cp -R icons/Slackware-Commander "$PKG_ICON_DIR"/
 
 	mkdir -p $PKG_MAN_DIR
-	cp -R man1 "$PKG_MAN_DI"R/
+	cp -R man1 "$PKG_MAN_DIR"/
 
-	mkdir -p $PKG_DOC_DIR
-	cp docs/* "$PKG_DOC_DIR"/"$PRGNAM-$VERSION"/
-    cp UNLICENSE "$PKG_DOC_DIR"/"$PRGNAM-$VERSION"/
-    cat $CWD/"$PRGNAM".SlackBuild > "$PKG_DOC_DIR"/"$PRGNAM-$VERSION"/
 
 
 SUB_PKG=captain-slack
@@ -202,6 +198,9 @@ rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
+
+find $PKG/usr/man -type f -exec gzip -9 {} \;
+for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
 
 
 mkdir -p $PKG/install

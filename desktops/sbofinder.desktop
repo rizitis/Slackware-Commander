@@ -1,9 +1,9 @@
 [Desktop Entry]
 Type=Application
 Encoding=UTF-8
-Name=SBoFinder
+Name=SBo-Finder
 Comment=Print information from SBo Ponce builds.
 Exec=python3 /usr/local/bin/sbofinder
-Icon=meta-sbo
+Icon=sbofinder
 Terminal=false
 Categories=Utilities;Applications;

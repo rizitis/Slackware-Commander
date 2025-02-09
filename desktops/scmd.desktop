@@ -1,9 +1,9 @@
 [Desktop Entry]
 Type=Application
 Encoding=UTF-8
-Name=Slackware-Commander
+Name=scmd
 Comment=System configuration loader
-Exec=SlackwareCommander
-Icon=SlackwareCommander
+Exec=scmd
+Icon=scmd
 Terminal=false
 Categories=Settings;HardwareSettings;

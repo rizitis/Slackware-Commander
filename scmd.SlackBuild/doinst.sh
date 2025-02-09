@@ -12,7 +12,6 @@ if [ -d "$MAN_DIR" ]; then
   fi
 fi
 
-mandb
 
 update_config() {
     config_file="$1"
