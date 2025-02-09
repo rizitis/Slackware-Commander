@@ -39,6 +39,11 @@ GUI APPs  desktop entries are:<br>
 **soviewer**
 ![soviewer](./soviewer.png)
 ---
+**cptn**<br>
+![cptn-help](./cptn-help.png)
+<br>
+![Video](https://asciinema.org/a/5tMTWMcjqFDPoFgMhXQI6DuHi)
+---
 Slackware is a trademark of Patrick Volkerding.
 http://www.slackware.com/trademark/trademark.php
 
