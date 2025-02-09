@@ -23,6 +23,22 @@ GUI APPs  desktop entries are:<br>
 ![GUI APPS](./Slackware-Commander-GuiApps.png)
 
 --- 
+**scmd**
+![scmd](./scmd.png)
+![scmd2](./scmd2.png)
+---
+**sbofinder**
+![sbofinder](./sbofinder.png)
+---
+**slakfinder**
+![slakfinder](./slakfinder.png)
+---
+**conraidfinder**
+![conraidfinder](./conraidfinder.png)
+---
+**soviewer**
+![soviewer](./soviewer.png)
+---
 Slackware is a trademark of Patrick Volkerding.
 http://www.slackware.com/trademark/trademark.php
 
