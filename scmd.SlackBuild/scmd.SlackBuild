@@ -166,6 +166,7 @@ for d in "$SRC_DIR"/*/; do
 
 SUB_PKG=captain-slack
 SUB_PRGNAM=cptn
+SUB_VERSION=2.3.3
 
 pushd "$SUB_PKG" || exit
 dirs=(
@@ -182,7 +183,7 @@ install -d "${dirs[@]}"
 
 BIN_DIR="$PKG_BIN_DIR"/"$SUB_PKG"
 ETC_DIR="$PKG_ETC_DIR"/"$SUB_PKG"
-DOC_DIR="$PKG_DOC_DIR"/"$SUB_PKG"-2.3.3
+DOC_DIR=/usr/doc/"$SUB_PKG"-"$SUB_VERSION"
 
 install -d "$BIN_DIR" "$ETC_DIR" "$DOC_DIR"
 
@@ -192,7 +193,7 @@ install -m 755 "$SUB_PRGNAM" "$PKG_BIN_DIR"/
 
 install -m 755 *.sh "$BIN_DIR"/
 
-install -m 644 README* "$SUB_PRGNAM".SlackBuild UNLICENSE "$DOC_DIR"/
+install -m 644 README* "$SUB_PRGNAM".SlackBuild UNLICENSE slack-required "$DOC_DIR"/
 
 popd || exit
 
