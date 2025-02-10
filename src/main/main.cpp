@@ -46,7 +46,7 @@ public:
         packageLayout->addWidget(packageEntry);
 
         // Package management buttons
-        packageLayout->addWidget(createPackageCommandButton("slackpkg build", packageEntry));
+        packageLayout->addWidget(createPackageCommandButton("slackpkg_build", packageEntry));
         packageLayout->addWidget(createPackageCommandButton("slackpkg install", packageEntry));
         packageLayout->addWidget(createPackageCommandButton("slackpkg reinstall", packageEntry));
         packageLayout->addWidget(createPackageCommandButton("slackpkg search", packageEntry));
