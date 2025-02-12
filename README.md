@@ -1,5 +1,4 @@
-# Fri Jan 24 14:15:13 EET 2025
-Start writting from scratch app in a modern but *KISS* Qt6 gui<br>
+**App is written from scratch in a modern but *KISS* Qt6 gui**<br>
 
 
 ### Installation
