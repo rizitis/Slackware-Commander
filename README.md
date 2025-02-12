@@ -3,7 +3,7 @@
 
 ### Installation
 Please Install requires from SBo/Ponce<br>
-- Assume you have a full Slackware installation and you use slpkg:
+- **Assume** you have a **full Slackware installation** and you use **slpkg**:
 `slpkg -i yq 
 jq 
 chafa 
@@ -13,6 +13,7 @@ figlet`
 - `wget -c https://github.com/rizitis/Slackware-Commander/archive/refs/tags/scmd-6.1.1.tar.gz`
 - `pip install -r requirements.txt && sudo bash scmd.SlackBuild`
 - `upgradepkg --install-new --reinstall /tmp/scmd-6.1.1-x86_64-1_SC.tgz`
+Note: *Slackware-Commander* has *slpkg* as dependency in some tools. 
 
 ### Usage: 
 Please `man scmd` for details...<br>
