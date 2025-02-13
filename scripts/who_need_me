@@ -1,0 +1,54 @@
+#!/bin/bash
+# shellcheck disable=SC2188
+
+# This script helps (Slackware64 current) identify which shared object files (.so files) contain a specified string.
+# It is useful for determining which .so files reference a specific library or function in a given collection of shared objects.
+# Ensure a search string is provided
+if [ -z "$1" ]; then
+    echo "Usage: $0 <search_string>"
+    exit 1
+fi
+
+search_string="$1"
+output_file="/tmp/who_need_me.txt"
+
+# Clear output file before writing
+> "$output_file"
+
+# Fetch AALL_FILES.md
+md_url="https://raw.githubusercontent.com/rizitis/Slackware64-Current-sofiles/main/AALL_FILES.md"
+file_list=$(curl -s "$md_url" | grep -oP '(?<=\().*?\.so-file(?=\))')
+
+# Debug: Check if file_list is empty
+if [ -z "$file_list" ]; then
+    echo "Error: No .so-file URLs found in AALL_FILES.md"
+    exit 1
+fi
+
+# Loop through each file URL and search for the string
+for file in $file_list; do
+    # Convert GitHub webpage link to raw file URL
+    raw_url="https://raw.githubusercontent.com/rizitis/Slackware64-Current-sofiles/main/$(basename "$file")"
+
+    base_name=$(basename "$file")  # Extract only the file name
+
+    echo "Checking file: $base_name"
+
+    # Fetch file content
+    file_content=$(curl -sL "$raw_url")  # Use -L to follow redirects
+
+    # Debug: Show first 10 lines to confirm correct file content
+    echo "=== Content of $base_name ==="
+    echo "$file_content" | head -n 10
+    echo "============================="
+
+    # Search for the string
+    if echo "$file_content" | grep -q "$search_string"; then
+        echo "$base_name" >> "$output_file"
+        echo "✅ Match found in: $base_name"
+    else
+        echo "❌ No match in: $base_name"
+    fi
+done
+
+echo "Results saved to $output_file"

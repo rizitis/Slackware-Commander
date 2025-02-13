@@ -1,0 +1,16 @@
+audacious-plugins.so-file
+audacious.so-file
+cmake.so-file
+fcitx5-qt.so-file
+gpgme.so-file
+gst-plugins-good.so-file
+mlt.so-file
+opencv.so-file
+phonon.so-file
+pinentry.so-file
+poppler.so-file
+qalculate-qt.so-file
+qt6.so-file
+qtkeychain.so-file
+v4l-utils.so-file
+xaos.so-file

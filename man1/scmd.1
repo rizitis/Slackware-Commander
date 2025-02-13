@@ -110,6 +110,18 @@ isnum 1
 isnum b
 ```
 
+.SS who_need_me
+A bashscript that helps identify which shared object files (.so files) contain a specified string. It is useful for determining which .so files reference a specific library or function in a given collection of shared objects.
+Usage:
+```
+who_need_me "libc.so"
+who_need_me "libc"
+who_need_me "libFLAC"
+who_need_me "Qt6Core"
+who_need_me "libQt6Core"
+```
+Output will be after few minutes in "/tmp/who_need_me.txt".
+
 .SS slack-revert
 A powerful but potentially dangerous rollback tool. It allows creating a "snap" (backup) of installed packages and `/etc` configuration, which can later be restored by downloading historical versions from <https://slackware.uk/cumulative/>.
 
