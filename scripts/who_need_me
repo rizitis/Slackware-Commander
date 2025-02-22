@@ -52,3 +52,4 @@ for file in $file_list; do
 done
 
 echo "Results saved to $output_file"
+cat "$output_file"
