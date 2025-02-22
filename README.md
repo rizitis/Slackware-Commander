@@ -1,4 +1,5 @@
 **App is written from scratch in a modern but *KISS* Qt6 gui**<br>
+Preferred system for Slackware-Commander is `Slackware64-Current`.
 
 
 ### Installation
@@ -8,11 +9,11 @@ Please Install requires from SBo/Ponce<br>
 jq 
 chafa 
 figlet`
-- `wget -c https://github.com/rizitis/Slackware-Commander/releases/download/scmd-6.1.1/scmd.SlackBuild.tar.gz`
+- `wget -c https://github.com/rizitis/Slackware-Commander/releases/download/scmd-6.2.0/scmd.SlackBuild.tar.gz`
 - `tar -xf scmd.SlackBuild.tar.gz && cd scmd.SlackBuild || exit`
-- `wget -c https://github.com/rizitis/Slackware-Commander/archive/refs/tags/scmd-6.1.1.tar.gz`
+- `wget -c https://github.com/rizitis/Slackware-Commander/archive/refs/tags/scmd-6.2.0.tar.gz`
 - `pip install -r requirements.txt && sudo bash scmd.SlackBuild`
-- `upgradepkg --install-new --reinstall /tmp/scmd-6.1.1-x86_64-1_SC.tgz`
+- `upgradepkg --install-new --reinstall /tmp/scmd-6.2.0-x86_64-1_SC.tgz`
 <br>Note: *Slackware-Commander* has `slpkg` as dependency for **sbofinder**. `yq  jq  chafa` for **cptn**. `figlet` for **inxifetch**.   
 
 ### Usage: 
