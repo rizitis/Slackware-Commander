@@ -24,7 +24,7 @@ GUI APPs  desktop entries are:<br>
 ![GUI APPS](./Slackware-Commander-GuiApps.png)
 
 --- 
-**scmd**
+**scmd** <br>
 ![scmd](./scmd.png)
 ---
 ![scmd2](./scmd2.png)
