@@ -26,7 +26,9 @@ GUI APPs  desktop entries are:<br>
 --- 
 **scmd**
 ![scmd](./scmd.png)
+---
 ![scmd2](./scmd2.png)
+---
 ![scmd3](./scmd3.png)
 ---
 **sbofinder**
