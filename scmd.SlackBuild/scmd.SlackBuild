@@ -29,7 +29,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=scmd
 SRCNAM=Slackware-Commander
-VERSION=6.2.0
+VERSION=6.3.0
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SC}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -129,6 +129,9 @@ for d in "$SRC_DIR"/*/; do
 		fi
 		if [ -f "$PRGNAM"2 ]; then
 			cp "$PRGNAM"2 "$PKG_SBIN_DIR/"
+		fi
+		if [ -f "$PRGNAM"3 ]; then
+			cp "$PRGNAM"3 "$PKG_SBIN_DIR/"
 		fi
 		cd -
     done

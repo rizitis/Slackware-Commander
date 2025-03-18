@@ -4,12 +4,6 @@
 # required python-beautifuloup4
 # License MIT Anagnostakis Ioannis 2025 GR
 
-#!/usr/bin/python3
-
-# This script is a GUI for slakfinder <https://slackware.nl/slakfinder/index.php>
-# required python-beautifuloup4
-# License MIT Anagnostakis Ioannis 2025 GR
-
 import sys
 import requests
 from bs4 import BeautifulSoup

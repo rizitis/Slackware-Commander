@@ -37,7 +37,7 @@ public:
         mainLayout->addLayout(setupLayout);
 
         // Slackpkg+ Configuration
-        mainLayout->addWidget(createSlackpkgButton("slackpkg+.conf", "nano /etc/slackpkg/slackpkgplus.conf"));
+        mainLayout->addWidget(createSlackpkgButton("whitelist", "nano /etc/slackpkg/whitelist"));
 
         // Package Command Section (slackpkg build, install, reinstall, etc.)
         QVBoxLayout* packageLayout = new QVBoxLayout();
@@ -64,6 +64,13 @@ public:
         QPushButton* moreToolsButton = new QPushButton("MORE TOOLS");
         connect(moreToolsButton, &QPushButton::clicked, this, &scmd::openMoreTools);
         mainLayout->addWidget(moreToolsButton);
+
+        setLayout(mainLayout);
+
+        // Slackpkg+ setup Button
+        QPushButton* slackpkgplussButton = new QPushButton("slackpkg+ SetUp");
+        connect(slackpkgplussButton, &QPushButton::clicked, this, &scmd::openslackpkgpluss);
+        mainLayout->addWidget(slackpkgplussButton);
 
         setLayout(mainLayout);
     }
@@ -100,6 +107,9 @@ private:
 
     void openMoreTools() {
     QProcess::startDetached("/usr/local/sbin/scmd2");
+}
+    void openslackpkgpluss() {
+    QProcess::startDetached("/usr/local/sbin/scmd3");
 }
 };
 
