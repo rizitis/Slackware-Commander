@@ -12,42 +12,37 @@
 class scmd : public QWidget {
 public:
     scmd() {
-        // Set the window title
         setWindowTitle("Slackware Commander");
 
-        // Create main layout
         QVBoxLayout* mainLayout = new QVBoxLayout(this);
 
-        // Title Section
         QLabel* titleLabel = new QLabel("<span style='font-family: purisa; font-weight: bold; font-size: large;'>SYSTEM UPDATE</span>");
         titleLabel->setTextFormat(Qt::RichText);
         mainLayout->addWidget(titleLabel);
 
-        // Slackpkg Package Management Buttons
+        // Main visible buttons
         mainLayout->addWidget(createSlackpkgButton("Slackpkg Update", "/usr/sbin/slackpkg update"));
         mainLayout->addWidget(createSlackpkgButton("Slackpkg Upgrade-all", "/usr/sbin/slackpkg upgrade-all"));
         mainLayout->addWidget(createSlackpkgButton("Slackpkg Install-new", "/usr/sbin/slackpkg install-new"));
         mainLayout->addWidget(createSlackpkgButton("Slackpkg new-config", "/usr/sbin/slackpkg new-config"));
+        mainLayout->addWidget(createSlackpkgButton("Slackpkg Full Update", "bash -c '/usr/sbin/slackpkg update; /usr/sbin/slackpkg install-new; /usr/sbin/slackpkg upgrade-all'"));
 
-        // Slackpkg Setup Section
-        QVBoxLayout* setupLayout = new QVBoxLayout();
-        setupLayout->addWidget(createSlackpkgButton("Blacklist", "nano /etc/slackpkg/blacklist"));
-        setupLayout->addWidget(createSlackpkgButton("Mirrors", "nano /etc/slackpkg/mirrors"));
-        setupLayout->addWidget(createSlackpkgButton("Slackpkg.conf", "nano /etc/slackpkg/slackpkg.conf"));
-        setupLayout->addWidget(createSlackpkgButton("ChangeLog", "kdialog --textbox /var/lib/slackpkg/ChangeLog.txt 600 400"));
-        mainLayout->addLayout(setupLayout);
-
-        // Slackpkg+ Configuration
-        mainLayout->addWidget(createSlackpkgButton("whitelist", "nano /etc/slackpkg/whitelist"));
-
-        // Collapsible Section Toggle
+        // Toggle Button
         QPushButton* toggleButton = new QPushButton("▶ SHOW HIDDEN TOOLS");
         mainLayout->addWidget(toggleButton);
 
-        // Collapsible Widget for Package Section
+        // Collapsible Widget
         QWidget* packageWidget = new QWidget();
         QVBoxLayout* packageLayout = new QVBoxLayout(packageWidget);
 
+        // Hidden Config Buttons
+        packageLayout->addWidget(createSlackpkgButton("Blacklist", "nano /etc/slackpkg/blacklist"));
+        packageLayout->addWidget(createSlackpkgButton("Mirrors", "nano /etc/slackpkg/mirrors"));
+        packageLayout->addWidget(createSlackpkgButton("Slackpkg.conf", "nano /etc/slackpkg/slackpkg.conf"));
+        packageLayout->addWidget(createSlackpkgButton("ChangeLog", "kdialog --textbox /var/lib/slackpkg/ChangeLog.txt 600 400"));
+        packageLayout->addWidget(createSlackpkgButton("whitelist", "nano /etc/slackpkg/whitelist"));
+
+        // Hidden Package Entry Section
         QLineEdit* packageEntry = new QLineEdit();
         packageLayout->addWidget(new QLabel("Package:"));
         packageLayout->addWidget(packageEntry);
@@ -61,18 +56,18 @@ public:
         packageLayout->addWidget(createPackageCommandButton("slackpkg info", packageEntry));
         packageLayout->addWidget(createPackageCommandButton("whereis", packageEntry));
         packageLayout->addWidget(createPackageCommandButton("which", packageEntry));
-        packageLayout->addWidget(createPackageCommandButton("--version", packageEntry));
-        packageLayout->addWidget(createPackageCommandButton("man", packageEntry));
+        //packageLayout->addWidget(createPackageCommandButton("--version", packageEntry));
+        //packageLayout->addWidget(createPackageCommandButton("man", packageEntry));
 
-        packageWidget->setVisible(false);  // Initially hidden
+        packageWidget->setVisible(false);
         mainLayout->addWidget(packageWidget);
 
-        // Toggle logic with auto-resize
+        // Toggle logic
         connect(toggleButton, &QPushButton::clicked, [this, toggleButton, packageWidget]() {
             bool isVisible = packageWidget->isVisible();
             packageWidget->setVisible(!isVisible);
             toggleButton->setText(isVisible ? "▶ Show Hidden Tools" : "▼ Hide Again Tools");
-            this->adjustSize(); // Auto-resize the window
+            this->adjustSize();
         });
 
         // More Tools Button
@@ -101,13 +96,9 @@ private:
     QPushButton* createPackageCommandButton(const QString& label, QLineEdit* packageEntry) {
         QPushButton* button = new QPushButton(label);
         connect(button, &QPushButton::clicked, [packageEntry, label]() {
-            QString command;
-
-            if (label.startsWith("--")) {
-                command = packageEntry->text() + " " + label;
-            } else {
-                command = label + " " + packageEntry->text();
-            }
+            QString command = label.startsWith("--")
+                ? packageEntry->text() + " " + label
+                : label + " " + packageEntry->text();
 
             qDebug() << "Executing as root: " << command;
             QProcess::startDetached("/usr/bin/konsole", QStringList() << "--hold" << "-e" << "su" << "-c" << command);
@@ -129,7 +120,7 @@ int main(int argc, char *argv[]) {
 
     scmd window;
     window.show();
-    window.adjustSize(); // Ensure initial sizing is tight
+    window.adjustSize();
 
     return app.exec();
 }
