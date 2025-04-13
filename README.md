@@ -12,7 +12,8 @@ figlet`
 - `wget -c https://github.com/rizitis/Slackware-Commander/releases/download/scmd-6.4.0/scmd.SlackBuild.tar.gz`
 - `tar -xf scmd.SlackBuild.tar.gz && cd scmd.SlackBuild || exit`
 - `wget -c https://github.com/rizitis/Slackware-Commander/archive/refs/tags/scmd-6.4.0.tar.gz`
-- `pip install -r requirements.txt && sudo bash scmd.SlackBuild`
+- `pip install -r requirements.txt`
+- ` su -c "bash scmd.SlackBuild"`
 - `upgradepkg --install-new --reinstall /tmp/scmd-6.4.0-x86_64-1_SC.tgz`
 <br>Note: *Slackware-Commander* has `slpkg` as dependency for **sbofinder**. `yq  jq  chafa` for **cptn**. `figlet` for **inxifetch**.   
 
