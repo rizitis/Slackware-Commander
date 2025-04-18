@@ -55,8 +55,7 @@ GUI APPs  desktop entries are:<br>
 
 
 ---
-Slackware is a trademark of Patrick Volkerding.
-http://www.slackware.com/trademark/trademark.php
+Slackware™ is a [trademark](http://www.slackware.com/trademark/trademark.php) of Patrick Volkerding. 
 
 Icons are from:<br>
 [uxwing](https://uxwing.com/license/)<br>
