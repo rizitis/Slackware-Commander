@@ -1,4 +1,4 @@
-![scmd](./scmd.gif)
+![scmd](./scmd1.gif)
 
 **App is written from scratch in a modern but *KISS* Qt6 gui**<br>
 Preferred system for Slackware-Commander is `Slackware64-Current and qmake6`.
