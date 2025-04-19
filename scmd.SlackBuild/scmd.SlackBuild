@@ -30,7 +30,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=scmd
 SRCNAM=Slackware-Commander
-VERSION=7.0.0pre2
+VERSION=7.0.0
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SC}
 PKGTYPE=${PKGTYPE:-tgz}
