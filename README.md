@@ -54,7 +54,7 @@ https://github.com/user-attachments/assets/318980c2-5aed-4a37-9723-5937e4d44cf1
 
 ---
 
-## ![image](./conraidfinder.png)
+## ![image](./sbofinder.png)
 
 ---
 
