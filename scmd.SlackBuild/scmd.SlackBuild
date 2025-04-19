@@ -191,7 +191,7 @@ install -d "${dirs[@]}"
 
 BIN_DIR="$PKG_BIN_DIR"/"$SUB_PKG"
 ETC_DIR="$PKG_ETC_DIR"/"$SUB_PKG"
-DOC_DIR=/usr/doc/"$SUB_PKG"-"$SUB_VERSION"
+DOC_DIR="$PKG"/usr/doc/"$SUB_PKG"-"$SUB_VERSION"
 
 install -d "$BIN_DIR" "$ETC_DIR" "$DOC_DIR"
 
