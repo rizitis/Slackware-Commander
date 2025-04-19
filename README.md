@@ -1,72 +1,60 @@
-![scmd](./scmd1.gif)
+**In the year 2025, everything was written from scratch, a minimal and *KISS*
+Qt6 gui is now what we have** 
 
-**2025 everything was written from scratch in a modern but *KISS* Qt6 gui**<br>
-Preferred system for Slackware-Commander is `Slackware64-Current with QT6 and qmake6`.
+That means prefferent OS for Slackware-Commander is `Slackware(64)-Current with QT6 and qmake6`
 
+##  Installation
 
-### Installation
-Please Install all requires from SBo/Ponce<br>
-- **Assume** you have a **full Slackware installation** and you use **slpkg**:
-1. `slpkg -i yq jq chafa figlet BeautifulSoup4 ttkbootstrap`
-2.  Download the latest `scdm-version.tar.gz` release from [here](https://github.com/rizitis/Slackware-Commander/releases)
-3. Extract scmd*.tar.gz and cd in `scmd.SlackBuild` folder
-4. open a terminal and command:
+> Install all required from Ponce/SBo<br>
+> Assume you have a full Slackware installation and you use `slpkg`:
+
+1.  `slpkg -i yq jq chafa figlet BeautifulSoup4 ttkbootstrap`
+2.  Download latest `scdm-version.tar.gz` release from [here](https://github.com/rizitis/Slackware-Commander/releases)
+3.  Extract tarball and cd in `scmd.SlackBuild` folder.
+4.  Open terminal and command:
 - `pip install -r requirements.txt`
 - ` su -c "bash scmd.SlackBuild"`
-5. Install/Upgrade package.
+5.  When SlackBuild finish install output package using `upgradepkg --install-new...`
+
+- - -
+**Note**: Slackware-Commander has only runtime dependencies in a full Slackware64-current installation:
+- `slpkg` slpkg as dependency for sbofinder.
+- `yq  jq  chafa` for cptn.
+- `figlet` for inxifetch.
+- `PyQt6` *(pip install)*, `BeautifulSoup4, ttkbootstrap` for some of the python scripts.
+
+So if you dont need or like some of SLackware-Commander tools then you dont need their deps also.
+
+- - -
+## Usage:
+`man scmd` and `cptn -h` will help you.
+
+- `cptn make-db -a` is a very importand command for create a database that will be used by cptn tools.
+
+
+![Image](https://github.com/user-attachments/assets/38488f3b-e0d7-4be1-93e0-d6179095752d)
+
+- - -
+ ![image](./Slackware-Commander-GuiApps.png)
+
+- - -
+https://github.com/user-attachments/assets/67420fc8-a792-4012-b104-6584577a3508
 
 ---
 
-**Note:** *Slackware-Commander* has only runtime deps in a full Slackware64-current installation.
-- `slpkg` as dependency for **sbofinder**. 
-- `yq  jq  chafa` for **cptn**. 
-- `figlet` for **inxifetch**.
-- `PyQt6` (pip install) `BeautifulSoup4 ttkbootstrap` for some of the python scripts.
-So if you dont need or like some of SLackware-Commander tools then you dont need their deps also. 
+##  ![image](./slakfinder.png)
 
 ---
 
-### Usage: 
-Please `man scmd` for details...<br>
-
-**Examples**:<br>
-HowTo use cptn: `cptn -h`<br>
-For start use cptn, must create a packages database that cptn tools will read:<br>
-- command: `cptn make-db -a` need some time...<br>
-
-
-GUI APPs  desktop entries are:<br>
-![GUI APPS](./Slackware-Commander-GuiApps.png)
-
---- 
-**scmd** <br>
-![scmd](./scmd.png)
----
-![scmd2](./scmd2.png)
----
-![scmd3](./scmd3.png)
----
-**sbofinder**
-![sbofinder](./sbofinder.png)
----
-**slakfinder**
-![slakfinder](./slakfinder.png)
----
-**conraidfinder**
-![conraidfinder](./conraidfinder.png)
----
-**soviewer**
-![soviewer](./soviewer.png)
----
-**cptn**<br>
-![cptn-help](./cptn-help.png)
----
-![asciicast](https://asciinema.org/a/5tMTWMcjqFDPoFgMhXQI6DuHi.svg)<br>
-[Video1 asciicast](https://asciinema.org/a/5tMTWMcjqFDPoFgMhXQI6DuHi) <br>
-[Video2 asciicast](https://asciinema.org/a/5ncBnzP5Z0grVP2xigJNF2IDJ)
-
+https://github.com/user-attachments/assets/445239df-40c3-4221-a04e-105bb2da6fc3
 
 ---
+
+https://github.com/user-attachments/assets/318980c2-5aed-4a37-9723-5937e4d44cf1
+
+---
+
+
 Slackware™ is a [trademark](http://www.slackware.com/trademark/trademark.php) of Patrick Volkerding. 
 
 Icons are from:<br>
@@ -79,10 +67,8 @@ And [DALL·E](https://chatgpt.com/g/g-2fkFE8rbu-dall-e)
 
 Thank you, thank you, thank you!
 
----
 
-[CURRENT.WARNING](http://ftp.slackware.com/pub/slackware/slackware64-current/CURRENT.WARNING)
-
+- - -
 ```
 Standard disclaimer follows... putting this back since some folks forgot ;-)
 
@@ -129,5 +115,6 @@ Enjoy! :)
 
 ---
 Patrick J. Volkerding
-volkerdi@slackware.com
+# volkerdi@slackware.com
 ```
+

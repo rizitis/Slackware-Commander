@@ -1,5 +1,5 @@
 #!/bin/bash
-# shellcheck disable=SC2140,SC2046,SC2086,SC2034
+# shellcheck disable=SC2140,SC2046,SC2086,SC2034,SC2035
 
 # Slackware build script for Slackware-Commander
 
@@ -89,16 +89,18 @@ set -e
 
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
-#cd $TMP
-#rm -rf $PRGNAM-$VERSION
-#tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
-cd ..
+SOURCE_DIR=../
+cd $SOURCE_DIR
 if [ -d "scmd.SlackBuild" ]; then
   echo ""
 else
-  echo "Something went wrong, wrong path. Exit."
+  echo "Something went wrong. Exit."
   exit 1
 fi
+
+cp -R * "$TMP"/
+cd "$TMP"
+
 
 chown -R root:root .
 find -L . \
