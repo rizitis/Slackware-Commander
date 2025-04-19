@@ -1,10 +1,11 @@
 #!/bin/bash
 # shellcheck disable=SC2140,SC2046,SC2086,SC2034
+
 # Slackware build script for Slackware-Commander
 
 # 2024 Anagnostakis Ioannis (a.k.a rizitis) Hellas.
 # Updated 2025
-# All rights reserved.
+
 #
 # Redistribution and use of this script, with or without modification, is
 # permitted provided that the following conditions are met:
@@ -37,8 +38,7 @@ PKGTYPE=${PKGTYPE:-tgz}
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
     i?86) ARCH=i586 ;;
-    arm*) ARCH=arm ;;
-    # Unless $ARCH is already set, use uname -m for all other archs:
+    aarch64) ARCH=aarch64 ;;
        *) ARCH=$( uname -m ) ;;
   esac
 fi
@@ -89,11 +89,10 @@ set -e
 
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
-cd $TMP
-rm -rf $PRGNAM-$VERSION
-tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
-cd $SRCNAM-$PRGNAM-$VERSION
-
+#cd $TMP
+#rm -rf $PRGNAM-$VERSION
+#tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
+cd ../$SRCNAM
 
 chown -R root:root .
 find -L . \
@@ -200,7 +199,6 @@ install -m 644 README* "$SUB_PRGNAM".SlackBuild UNLICENSE slack-required "$DOC_D
 
 popd || exit
 
-# Don't ship .la files:
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \

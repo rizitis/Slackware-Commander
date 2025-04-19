@@ -1,27 +1,39 @@
 ![scmd](./scmd1.gif)
 
-**App is written from scratch in a modern but *KISS* Qt6 gui**<br>
-Preferred system for Slackware-Commander is `Slackware64-Current and qmake6`.
+**2025 everything was written from scratch in a modern but *KISS* Qt6 gui**<br>
+Preferred system for Slackware-Commander is `Slackware64-Current with QT6 and qmake6`.
 
 
 ### Installation
-Please Install requires from SBo/Ponce<br>
+Please Install all requires from SBo/Ponce<br>
 - **Assume** you have a **full Slackware installation** and you use **slpkg**:
-`slpkg -i yq 
-jq 
-chafa 
-figlet`
-- `wget -c https://github.com/rizitis/Slackware-Commander/releases/download/scmd-6.4.0/scmd.SlackBuild.tar.gz`
-- `tar -xf scmd.SlackBuild.tar.gz && cd scmd.SlackBuild || exit`
-- `wget -c https://github.com/rizitis/Slackware-Commander/archive/refs/tags/scmd-6.4.0.tar.gz`
+1. `slpkg -i yq jq chafa figlet BeautifulSoup4 ttkbootstrap`
+2.  Download the latest `scdm-version.tar.gz` release from [here](https://github.com/rizitis/Slackware-Commander/releases)
+3. Extract scmd*.tar.gz and cd in `scmd.SlackBuild` folder
+4. open a terminal and command:
 - `pip install -r requirements.txt`
 - ` su -c "bash scmd.SlackBuild"`
-- `su -c "upgradepkg --install-new --reinstall /tmp/scmd-6.4.0-x86_64-1_SC.tgz"`
-<br>Note: *Slackware-Commander* has `slpkg` as dependency for **sbofinder**. `yq  jq  chafa` for **cptn**. `figlet` for **inxifetch**.   
+5. Install/Upgrade package.
+
+---
+
+**Note:** *Slackware-Commander* has only runtime deps in a full Slackware64-current installation.
+- `slpkg` as dependency for **sbofinder**. 
+- `yq  jq  chafa` for **cptn**. 
+- `figlet` for **inxifetch**.
+- `PyQt6` (pip install) `BeautifulSoup4 ttkbootstrap` for some of the python scripts.
+So if you dont need or like some of SLackware-Commander tools then you dont need their deps also. 
+
+---
 
 ### Usage: 
 Please `man scmd` for details...<br>
-*For first time installtion to create a database command `cptn make-db -a` need some time...*
+
+**Examples**:<br>
+HowTo use cptn: `cptn -h`<br>
+For start use cptn, must create a packages database that cptn tools will read:<br>
+- command: `cptn make-db -a` need some time...<br>
+
 
 GUI APPs  desktop entries are:<br>
 ![GUI APPS](./Slackware-Commander-GuiApps.png)
