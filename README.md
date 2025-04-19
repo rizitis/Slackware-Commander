@@ -4,8 +4,8 @@ Qt6 gui is now what we have**
 That means prefferent OS for Slackware-Commander is `Slackware(64)-Current with QT6 and qmake6`
 
 > Note: Slackware-Commander can support my patched version of [slackpkg](https://github.com/rizitis/slackpkg-new)<br>
->      This slackpkg version can support whitelist. That mean if you have in blacklist a set of official slackware packages,<br>
-> assume kde/ , then you can list in whitelist package names from any blacklisted set that will escape blacklist and will follow official updates.<br>
+>      This slackpkg version can support whitelist. That mean if you have in blacklist a set of official slackware packages,assume kde/ ,<br>
+>  then you can list in whitelist package names from any blacklisted set that will escape blacklist and will follow official updates.<br>
 > slackpkg+ works fine with this patched slackpkg version ;)
 
 ##  Installation
