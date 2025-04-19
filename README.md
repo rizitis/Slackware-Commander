@@ -14,14 +14,14 @@ That means prefferent OS for Slackware-Commander is `Slackware(64)-Current with 
 4.  Open terminal and command:
 - `pip install -r requirements.txt`
 - ` su -c "bash scmd.SlackBuild"`
-5.  When SlackBuild finish install output package using `upgradepkg --install-new...`
+5.  When SlackBuild finish, you may install output package using `upgradepkg --install-new...`
 
 - - -
 **Note**: Slackware-Commander has only runtime dependencies in a full Slackware64-current installation:
-- `slpkg` slpkg as dependency for sbofinder.
-- `yq  jq  chafa` for cptn.
-- `figlet` for inxifetch.
-- `PyQt6` *(pip install)*, `BeautifulSoup4, ttkbootstrap` for some of the python scripts.
+- `slpkg` as dependency for **sbofinder**.
+- `yq  jq  chafa` as dependencies for **cptn**.
+- `figlet` as dependency for **inxifetch**.
+- `PyQt6` *(pip install)*, `BeautifulSoup4, ttkbootstrap` as dependencies for some of the python scripts.
 
 So if you dont need or like some of SLackware-Commander tools then you dont need their deps also.
 
@@ -54,6 +54,9 @@ https://github.com/user-attachments/assets/318980c2-5aed-4a37-9723-5937e4d44cf1
 
 ---
 
+## ![image](./conraidfinder.png)
+
+---
 
 Slackware™ is a [trademark](http://www.slackware.com/trademark/trademark.php) of Patrick Volkerding. 
 
