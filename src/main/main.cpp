@@ -7,6 +7,7 @@
 #include <QProcess>
 #include <QLineEdit>
 #include <QTextEdit>
+#include <QGroupBox>
 #include <QDebug>
 
 class scmd : public QWidget {
@@ -14,71 +15,97 @@ public:
     scmd() {
         setWindowTitle("Slackware Commander");
 
+        // Set the window to always stay on top
+        setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
+
+
         QVBoxLayout* mainLayout = new QVBoxLayout(this);
 
         QLabel* titleLabel = new QLabel("<span style='font-family: purisa; font-weight: bold; font-size: large;'>SYSTEM UPDATE</span>");
         titleLabel->setTextFormat(Qt::RichText);
         mainLayout->addWidget(titleLabel);
 
-        // Main visible buttons
-        mainLayout->addWidget(createSlackpkgButton("Slackpkg Update", "/usr/sbin/slackpkg update"));
-        mainLayout->addWidget(createSlackpkgButton("Slackpkg Upgrade-all", "/usr/sbin/slackpkg upgrade-all"));
-        mainLayout->addWidget(createSlackpkgButton("Slackpkg Install-new", "/usr/sbin/slackpkg install-new"));
-        mainLayout->addWidget(createSlackpkgButton("Slackpkg new-config", "/usr/sbin/slackpkg new-config"));
-        mainLayout->addWidget(createSlackpkgButton("Slackpkg Full Update", "bash -c '/usr/sbin/slackpkg update; /usr/sbin/slackpkg install-new; /usr/sbin/slackpkg upgrade-all'"));
+        // ── Group: System Updates ────────────────────────
+        QGroupBox* updateGroup = new QGroupBox("");
+        QVBoxLayout* updateLayout = new QVBoxLayout();
 
-        // Toggle Button
-        QPushButton* toggleButton = new QPushButton("▶ SHOW HIDDEN TOOLS");
+        QPushButton* fullUpdateBtn = createSlackpkgButton("Slackpkg Full Update", "bash -c '/usr/sbin/slackpkg update; /usr/sbin/slackpkg install-new; /usr/sbin/slackpkg upgrade-all'");
+        fullUpdateBtn->setStyleSheet("background-color: #B22222; color: white; font-weight: bold;");
+        updateLayout->addWidget(fullUpdateBtn);
+
+        updateLayout->addWidget(createSlackpkgButton("Slackpkg Update", "/usr/sbin/slackpkg update"));
+        updateLayout->addWidget(createSlackpkgButton("Slackpkg Upgrade-all", "/usr/sbin/slackpkg upgrade-all"));
+        updateLayout->addWidget(createSlackpkgButton("Slackpkg Install-new", "/usr/sbin/slackpkg install-new"));
+        updateLayout->addWidget(createSlackpkgButton("Slackpkg new-config", "/usr/sbin/slackpkg new-config"));
+
+        updateGroup->setLayout(updateLayout);
+        mainLayout->addWidget(updateGroup);
+
+        // ── Toggle Hidden Tools ──────────────────────────
+        QPushButton* toggleButton = new QPushButton("▶ SHOW HIDDEN");
+        toggleButton->setStyleSheet("background-color: #0057b7; color: white; font-weight: bold; border-radius: 5px; padding: 4px;");
         mainLayout->addWidget(toggleButton);
 
-        // Collapsible Widget
+        // ── Group: Hidden Package Tools ──────────────────
         QWidget* packageWidget = new QWidget();
         QVBoxLayout* packageLayout = new QVBoxLayout(packageWidget);
 
-        // Hidden Config Buttons
-        packageLayout->addWidget(createSlackpkgButton("Blacklist", "nano /etc/slackpkg/blacklist"));
-        packageLayout->addWidget(createSlackpkgButton("Mirrors", "nano /etc/slackpkg/mirrors"));
-        packageLayout->addWidget(createSlackpkgButton("Slackpkg.conf", "nano /etc/slackpkg/slackpkg.conf"));
-        packageLayout->addWidget(createSlackpkgButton("ChangeLog", "kdialog --textbox /var/lib/slackpkg/ChangeLog.txt 600 400"));
-        packageLayout->addWidget(createSlackpkgButton("whitelist", "nano /etc/slackpkg/whitelist"));
+        QGroupBox* configGroup = new QGroupBox("Config Files");
+        QVBoxLayout* configLayout = new QVBoxLayout();
+        configLayout->addWidget(createSlackpkgButton("Blacklist", "nano /etc/slackpkg/blacklist"));
+        configLayout->addWidget(createSlackpkgButton("Mirrors", "nano /etc/slackpkg/mirrors"));
+        configLayout->addWidget(createSlackpkgButton("Slackpkg.conf", "nano /etc/slackpkg/slackpkg.conf"));
+        configLayout->addWidget(createSlackpkgButton("ChangeLog", "kdialog --textbox /var/lib/slackpkg/ChangeLog.txt 600 400"));
+        configLayout->addWidget(createSlackpkgButton("whitelist", "nano /etc/slackpkg/whitelist"));
+        configGroup->setLayout(configLayout);
+        packageLayout->addWidget(configGroup);
 
-        // Hidden Package Entry Section
+        QGroupBox* pkgActionsGroup = new QGroupBox("Package Commands:");
+        QVBoxLayout* pkgActionLayout = new QVBoxLayout();
+
         QLineEdit* packageEntry = new QLineEdit();
-        packageLayout->addWidget(new QLabel("Package:"));
-        packageLayout->addWidget(packageEntry);
+        // pkgActionLayout->addWidget(new QLabel("Package:"));
+        pkgActionLayout->addWidget(packageEntry);
 
-        packageLayout->addWidget(createPackageCommandButton("slackpkg_build", packageEntry));
-        packageLayout->addWidget(createPackageCommandButton("slackpkg install", packageEntry));
-        packageLayout->addWidget(createPackageCommandButton("slackpkg reinstall", packageEntry));
-        packageLayout->addWidget(createPackageCommandButton("slackpkg search", packageEntry));
-        packageLayout->addWidget(createPackageCommandButton("slackpkg remove", packageEntry));
-        packageLayout->addWidget(createPackageCommandButton("--help", packageEntry));
-        packageLayout->addWidget(createPackageCommandButton("slackpkg info", packageEntry));
-        packageLayout->addWidget(createPackageCommandButton("whereis", packageEntry));
-        packageLayout->addWidget(createPackageCommandButton("which", packageEntry));
-        //packageLayout->addWidget(createPackageCommandButton("--version", packageEntry));
-        //packageLayout->addWidget(createPackageCommandButton("man", packageEntry));
+        pkgActionLayout->addWidget(createPackageCommandButton("slackpkg_build", packageEntry));
+        pkgActionLayout->addWidget(createPackageCommandButton("slackpkg install", packageEntry));
+        pkgActionLayout->addWidget(createPackageCommandButton("slackpkg reinstall", packageEntry));
+        pkgActionLayout->addWidget(createPackageCommandButton("slackpkg search", packageEntry));
+        pkgActionLayout->addWidget(createPackageCommandButton("slackpkg remove", packageEntry));
+        // pkgActionLayout->addWidget(createPackageCommandButton("--help", packageEntry));
+        pkgActionLayout->addWidget(createPackageCommandButton("slackpkg info", packageEntry));
+        // pkgActionLayout->addWidget(createPackageCommandButton("whereis", packageEntry));
+        // pkgActionLayout->addWidget(createPackageCommandButton("which", packageEntry));
+
+        pkgActionsGroup->setLayout(pkgActionLayout);
+        packageLayout->addWidget(pkgActionsGroup);
 
         packageWidget->setVisible(false);
         mainLayout->addWidget(packageWidget);
 
-        // Toggle logic
         connect(toggleButton, &QPushButton::clicked, [this, toggleButton, packageWidget]() {
             bool isVisible = packageWidget->isVisible();
             packageWidget->setVisible(!isVisible);
-            toggleButton->setText(isVisible ? "▶ Show Hidden Tools" : "▼ Hide Again Tools");
+            toggleButton->setText(isVisible ? "▶ Show Hidden" : "▼ Hide Again");
             this->adjustSize();
         });
 
-        // More Tools Button
-        QPushButton* moreToolsButton = new QPushButton("MORE TOOLS");
-        connect(moreToolsButton, &QPushButton::clicked, this, &scmd::openMoreTools);
-        mainLayout->addWidget(moreToolsButton);
+        // ── Group: Utilities ─────────────────────────────
+        QGroupBox* utilGroup = new QGroupBox("Extra Utilities");
+        QVBoxLayout* utilLayout = new QVBoxLayout();
 
-        // Slackpkg+ setup Button
+        QPushButton* moreToolsButton = new QPushButton("MORE TOOLS");
+        moreToolsButton->setStyleSheet("background-color: #228B22; color: white; font-weight: bold; border-radius: 5px; padding: 4px;");
+        connect(moreToolsButton, &QPushButton::clicked, this, &scmd::openMoreTools);
+        utilLayout->addWidget(moreToolsButton);
+
         QPushButton* slackpkgplussButton = new QPushButton("slackpkg+ SetUp");
+        slackpkgplussButton->setStyleSheet("background-color: #FF8C00; color: white; font-weight: bold; border-radius: 5px; padding: 4px;");
         connect(slackpkgplussButton, &QPushButton::clicked, this, &scmd::openslackpkgpluss);
-        mainLayout->addWidget(slackpkgplussButton);
+        utilLayout->addWidget(slackpkgplussButton);
+
+        utilGroup->setLayout(utilLayout);
+        mainLayout->addWidget(utilGroup);
 
         setLayout(mainLayout);
     }
@@ -99,7 +126,6 @@ private:
             QString command = label.startsWith("--")
                 ? packageEntry->text() + " " + label
                 : label + " " + packageEntry->text();
-
             qDebug() << "Executing as root: " << command;
             QProcess::startDetached("/usr/bin/konsole", QStringList() << "--hold" << "-e" << "su" << "-c" << command);
         });

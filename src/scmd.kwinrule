@@ -1,0 +1,13 @@
+[scmd]
+Description=Always on Top - Slackware Commander
+clientmachine=
+noborder=false
+noborderrule=0
+skiptaskbar=false
+skiptaskbarrule=0
+type=2
+typeRule=0
+keepabove=true
+keepaboverule=2
+wmclass=scmd
+wmclassmatch=1
