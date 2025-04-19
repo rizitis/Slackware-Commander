@@ -39,18 +39,26 @@ else
     exit 1
 fi
 
-# ADD Linux Kernel version you want to build here
-KERNEL_VERSION=$(kdialog --inputbox "Enter the kernel version you want to build. Example: 6.2.8")
-echo "Kernel version selected: $KERNEL_VERSION"  # Echo to terminal
+# This script uses dracut...
+if ! command -v dracut &> /dev/null; then
+    kdialog --error "dracut is not installed. Exiting."
+    exit 1
+fi
 
-# If your oldconfig was built by u and your old kernel’s name is tagged by you assume: "6.0.13-tag"
-# then add your TAG in VERSION2. Example VERSION2=6.0.14-TAG else script will fail using oldconfig.
-VERSION2=$(kdialog --inputbox "Enter kernel version again. If your current kernel version custom with TAG, then add it here also. Example: 6.2.8-rtz")
-echo "Kernel version again if tag also: $VERSION2"  # Echo to terminal
+# Ask for the base Linux Kernel version to build
+KERNEL_VERSION=$(kdialog --inputbox "Enter the base Linux kernel version you want to build.\n\nExamples:\n  • 6.9\n  • 6.9.1")
+echo "Kernel version selected: $KERNEL_VERSION"
 
-# script asks for current bootloader
-BOOTLOADER=$(kdialog --inputbox "Enter the number of your bootloader. Example: Elilo=5 Lilo=0 Grub=7 myown=100")
-echo "Bootloader number: $BOOTLOADER"  # Echo to terminal
+# Ask for the full version if using a custom tag (e.g. from a previous oldconfig build)
+VERSION2=$(kdialog --inputbox "Enter the full kernel version including any custom tag (if used).\n\nThis is required if you're using an oldconfig from a previous custom build.\n\nExamples:\n  • 6.9.0\n  • 6.9.1\n  • 6.9.1-rtz (for custom-tagged kernels)")
+echo "Full kernel version with tag (if any): $VERSION2"
+
+
+# Ask user to specify their current bootloader number
+BOOTLOADER=$(kdialog --inputbox "Enter the number corresponding to your current bootloader.\n\nExamples:\n  • Elilo = 5\n  • Lilo  = 0\n  • Grub  = 7\n  • Custom bootloader = 100")
+
+echo "Bootloader number selected: $BOOTLOADER"
+
 
 set -e
 kdialog --yesno "Check your inputs in terminal. Should we proceed?" --title "SBKS Question?"

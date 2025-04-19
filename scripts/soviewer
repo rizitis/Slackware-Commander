@@ -2,7 +2,7 @@
 
 # This script is a GUI for viewing and searching Slackware64 Current Shared Object files
 # It fetches package names from my GitHub repository, so its Un-Official tool...
-# License MIT Anagnostakis Ioannis 2025 GR
+# License MIT Anagnostakis Ioannis 2025 GR and ChatGPT
 
 
 import os

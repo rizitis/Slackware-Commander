@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 
 # This script is a GUI for slakfinder <https://slackware.nl/slakfinder/index.php>
-# required python-beautifuloup4
-# License MIT Anagnostakis Ioannis 2025 GR
+# required python-beautifuloup4 PyQt6
+# License MIT Anagnostakis Ioannis 2025 GR and ChatGPT
 
 import sys
 import requests

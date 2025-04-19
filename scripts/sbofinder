@@ -2,7 +2,7 @@
 
 # This script is a GUI for viewing and searching SBo/ponce SlackBuild.
 # required slpkg to has as default repo SBo or Ponce (current)
-# License MIT Anagnostakis Ioannis 2025 GR
+# License MIT Anagnostakis Ioannis 2025 GR and ChatGPT
 
 import tkinter as tk
 from tkinter import ttk

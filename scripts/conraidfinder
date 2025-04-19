@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+# Required PyQt6
 import sys
 import re
 import requests
