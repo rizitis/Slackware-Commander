@@ -30,7 +30,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=scmd
 SRCNAM=Slackware-Commander
-VERSION=7.0.0
+VERSION=7.0.0pre
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SC}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -92,7 +92,13 @@ mkdir -p $TMP $PKG $OUTPUT
 #cd $TMP
 #rm -rf $PRGNAM-$VERSION
 #tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
-cd ../$SRCNAM
+cd ..
+if [ -d "scmd.SlackBuild" ]; then
+  echo ""
+else
+  echo "Something went wrong, wrong path. Exit."
+  exit 1
+fi
 
 chown -R root:root .
 find -L . \
