@@ -18,7 +18,7 @@ That means prefferent OS for Slackware-Commander is `Slackware(64)-Current with 
 3.  Extract tarball and cd in `scmd.SlackBuild` folder.
 4.  Open terminal and command:
 - `pip install -r requirements.txt`
-- ` su -c "bash scmd.SlackBuild"`
+- ` su - root -c "bash scmd.SlackBuild"`
 5.  When SlackBuild finish, you may install output package using `upgradepkg --install-new...`
 
 - - -
