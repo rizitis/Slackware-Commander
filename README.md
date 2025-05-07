@@ -77,7 +77,8 @@ Thank you, thank you, thank you!
 
 
 - - -
-```
+Standard Slackware-current disclaimer follows...
+<details>
 Standard disclaimer follows... putting this back since some folks forgot ;-)
 
 Welcome to Slackware-current!
@@ -121,8 +122,6 @@ work just fine... BUT DON'T COUNT ON IT)
 
 Enjoy! :)
 
----
 Patrick J. Volkerding
-# volkerdi@slackware.com
-```
-
+`volkerdi@slackware.com`
+</details>
