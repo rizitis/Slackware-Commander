@@ -1,0 +1,119 @@
+#!/usr/bin/python3
+
+# Ioannis Anagnostakis 05/2025 GR
+# Unlicense: https://unlicense.org
+
+import requests
+import sys
+import threading
+import itertools
+import time
+from bs4 import BeautifulSoup
+
+BASE_URL = "https://packages.slackware.com/"
+
+# Simple ANSI coloring (works in most terminals)
+GREEN = "\033[92m"
+YELLOW = "\033[93m"
+RESET = "\033[0m"
+
+# Spinner thread (non-blocking)
+def spinner():
+    for c in itertools.cycle(['|', '/', '-', '\\']):
+        if not spinning:
+            break
+        sys.stdout.write(f'\r{YELLOW}Searching packages.slackware.com {c} Please be patient...{RESET}')
+        sys.stdout.flush()
+        time.sleep(0.1)
+
+def search_files(query):
+    releases = ['slackware64-current', 'slackware64-15.0']
+    all_results = []
+
+    for release in releases:
+        params = {
+            'search': query,
+            'release': release,
+            'mode': 'content',
+            'result': '10',
+            'extra': 'on',
+            'patches': 'on',
+            'slackware': 'on'
+        }
+
+        resp = requests.get(BASE_URL, params=params)
+        resp.raise_for_status()
+        soup = BeautifulSoup(resp.text, 'html.parser')
+
+        tables = soup.find_all('table')
+        target_table = None
+        for table in tables:
+            header = table.find('tr')
+            if not header:
+                continue
+            headers = [th.get_text(strip=True) for th in header.find_all(['th', 'td'])]
+            if all(h in headers for h in ['Nr', 'Location', 'Package', 'Content']):
+                target_table = table
+                break
+
+        if not target_table:
+            continue
+
+        rows = target_table.find_all('tr')[1:]
+        for row in rows:
+            cols = row.find_all('td')
+            if len(cols) < 4:
+                continue
+
+            nr = cols[0].text.strip()
+            location = cols[1].text.strip()
+            package_link = cols[2].find('a')
+            package_name = package_link.text.strip() if package_link else ''
+            package_href = package_link['href'] if package_link else ''
+            content_file = cols[3].text.strip()
+
+            all_results.append({
+                'nr': nr,
+                'location': location,
+                'package_name': package_name,
+                'package_href': package_href,
+                'file': content_file,
+                'release': release
+            })
+
+    return all_results
+
+if __name__ == "__main__":
+    if len(sys.argv) < 2:
+        print("Usage: python search_slackware.py <search-term>")
+        sys.exit(1)
+
+    query = sys.argv[1]
+
+    # Start spinner
+    spinning = True
+    spin_thread = threading.Thread(target=spinner)
+    spin_thread.start()
+
+    try:
+        matches = search_files(query)
+    except requests.HTTPError as e:
+        spinning = False
+        spin_thread.join()
+        print(f"\n{YELLOW}HTTP error:{RESET} {e}")
+        sys.exit(1)
+
+    spinning = False
+    spin_thread.join()
+    print("\r" + " " * 80 + "\r", end="")  # clear spinner line
+
+    if not matches:
+        print(f"{YELLOW}No matching .txz packages found for '{query}'.{RESET}")
+    else:
+        for match in matches:
+            print(f"{GREEN}Release:{RESET} {match['release']}")
+            print(f"{GREEN}Package:{RESET} {match['package_name']}")
+            print(f"{GREEN}Location:{RESET} {match['location']}")
+            print(f"{GREEN}File:{RESET} {match['file']}")
+            print(f"{GREEN}Link:{RESET} https://packages.slackware.com/{match['package_href']}")
+            print("-" * 50)
