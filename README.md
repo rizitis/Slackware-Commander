@@ -28,7 +28,7 @@ That means prefferent OS for Slackware-Commander is `Slackware(64)-Current with 
 - `figlet` as dependency for **inxifetch**.
 - `PyQt6` *(pip install)*, `BeautifulSoup4, ttkbootstrap` as dependencies for some of the python scripts.
 
-So if you dont need or like some of SLackware-Commander tools then you dont need their deps also.
+So if you dont need or like some of Slackware-Commander tools then you dont need their deps also.
 
 - - -
 ## Usage:
@@ -60,6 +60,12 @@ https://github.com/user-attachments/assets/318980c2-5aed-4a37-9723-5937e4d44cf1
 ---
 
 ## ![image](./sbofinder.png)
+
+---
+
+## pkg_search
+
+[![asciicast](https://asciinema.org/a/cuMxLeX7XKPe6fXPIQ0HSa9f1.svg)](https://asciinema.org/a/cuMxLeX7XKPe6fXPIQ0HSa9f1)
 
 ---
 
