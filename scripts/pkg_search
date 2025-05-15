@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-# Ioannis Anagnostakis 05/2025 GR
+# Ioannis Anagnostakis 05/2025 GR + ChatGPT
 # Unlicense: https://unlicense.org
 
 import requests
