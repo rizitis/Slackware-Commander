@@ -1,54 +1,65 @@
 #!/bin/bash
-# shellcheck disable=SC2188
 
-# This script helps (Slackware64 current) identify which shared object files (.so files) contain a specified string.
-# It is useful for determining which .so files reference a specific library or function in a given collection of shared objects.
-# Ensure a search string is provided
+# Check at least one search string is provided
 if [ -z "$1" ]; then
-    echo "Usage: $0 <search_string>"
+    echo "Usage: $0 <search_string1> [search_string2 ... search_string7]"
     exit 1
 fi
 
-search_string="$1"
-output_file="/tmp/who_need_me.txt"
+# Collect all search strings into an array
+search_strings=("$@")  # $@ automatically handles all positional arguments
 
-# Clear output file before writing
+output_file="/tmp/who_need_me.txt"
+repo_path="$HOME/GITHUB/Slackware64-Current-sofiles"
+md_file="$repo_path/AALL_FILES.md"
+
+# Ensure repo and markdown file exist
+if [ ! -d "$repo_path" ]; then
+    echo "Error: Directory $repo_path not found"
+    exit 1
+fi
+
+if [ ! -f "$md_file" ]; then
+    echo "Error: $md_file not found"
+    exit 1
+fi
+
 > "$output_file"
 
-# Fetch AALL_FILES.md
-md_url="https://raw.githubusercontent.com/rizitis/Slackware64-Current-sofiles/main/AALL_FILES.md"
-file_list=$(curl -s "$md_url" | grep -oP '(?<=\().*?\.so-file(?=\))')
+# Extract .so-file paths
+file_list=$(grep -oP '(?<=\().*?\.so-file(?=\))' "$md_file")
 
-# Debug: Check if file_list is empty
 if [ -z "$file_list" ]; then
-    echo "Error: No .so-file URLs found in AALL_FILES.md"
+    echo "Error: No .so-file entries found in $md_file"
     exit 1
 fi
 
-# Loop through each file URL and search for the string
+# Loop through files
 for file in $file_list; do
-    # Convert GitHub webpage link to raw file URL
-    raw_url="https://raw.githubusercontent.com/rizitis/Slackware64-Current-sofiles/main/$(basename "$file")"
-
-    base_name=$(basename "$file")  # Extract only the file name
+    base_name=$(basename "$file")
+    local_path="$repo_path/$base_name"
 
     echo "Checking file: $base_name"
 
-    # Fetch file content
-    file_content=$(curl -sL "$raw_url")  # Use -L to follow redirects
+    if [ ! -f "$local_path" ]; then
+        echo "⚠️ File not found locally: $local_path"
+        continue
+    fi
 
-    # Debug: Show first 10 lines to confirm correct file content
+    # Optional debug
     echo "=== Content of $base_name ==="
-    echo "$file_content" | head -n 10
+    head -n 10 "$local_path"
     echo "============================="
 
-    # Search for the string
-    if echo "$file_content" | grep -q "$search_string"; then
-        echo "$base_name" >> "$output_file"
-        echo "✅ Match found in: $base_name"
-    else
-        echo "❌ No match in: $base_name"
-    fi
+    # Loop through all search strings
+    for s in "${search_strings[@]}"; do
+        if grep -Fq "$s" "$local_path"; then
+            echo "$base_name : $s" >> "$output_file"
+            echo "✅ Match found: '$s' in $base_name"
+        else
+            echo "❌ No match for '$s' in $base_name"
+        fi
+    done
 done
 
 echo "Results saved to $output_file"
