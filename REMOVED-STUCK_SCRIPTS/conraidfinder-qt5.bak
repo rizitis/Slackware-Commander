@@ -4,11 +4,9 @@ import re
 import requests
 import signal
 import os
-import shutil
-from PyQt6.QtCore import QThread, pyqtSignal, QTimer, Qt
-from PyQt6.QtWidgets import (QApplication, QWidget, QVBoxLayout, QLineEdit,
-                              QListWidget, QLabel, QProgressBar, QTextEdit,
-                              QPushButton, QHBoxLayout)
+import shutil  # Για πλήρη διαγραφή φακέλων / For full folder deletion / Per la cancellazione completa delle cartelle
+from PyQt5.QtCore import QThread, pyqtSignal, QTimer, Qt
+from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QLineEdit, QListWidget, QLabel, QProgressBar, QTextEdit, QPushButton, QHBoxLayout
 from urllib.parse import urljoin
 
 class DownloadThread(QThread):
@@ -218,4 +216,4 @@ if __name__ == "__main__":
     timer = QTimer(); timer.start(200); timer.timeout.connect(lambda: None)
     win = PackageSearchApp()
     win.show()
-    sys.exit(app.exec())
+    sys.exit(app.exec_())

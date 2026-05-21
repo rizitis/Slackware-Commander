@@ -1,9 +1,8 @@
 [Desktop Entry]
 Type=Application
-Encoding=UTF-8
 Name=slakfinder
 Comment=Search in slakfinder WebPage
 Exec=python3 /usr/local/bin/slakfinder
 Icon=slakfinder
 Terminal=false
-Categories=Utilities;Applications;
+Categories=Utility;

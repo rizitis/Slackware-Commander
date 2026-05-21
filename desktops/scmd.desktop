@@ -1,9 +1,8 @@
 [Desktop Entry]
 Type=Application
-Encoding=UTF-8
 Name=scmd
 Comment=System configuration loader
 Exec=scmd
 Icon=scmd
 Terminal=false
-Categories=Settings;HardwareSettings;
+Categories=System;Utility;

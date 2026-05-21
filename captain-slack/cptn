@@ -131,7 +131,7 @@ if [[ "$1" == "-h" || "$1" == "help" || "$1" == "--help" ]]; then
     echo "Examples:"
     echo "  cptn make-db -a          # Create a full database of installed packages and libraries"
     echo "  cptn info vim             # Display information about the vim package"
-    echo "  cptn serv-status apache   # Show the status of the apache service"
+    echo "  cptn serv-status elogind  # Show the status of the rc.elogind service"
     echo "  cptn mirrors -1           # Show the fastest mirror"
     echo "  cptn weather              # Display weather forecast for your location"
     exit 0
@@ -225,10 +225,10 @@ case "$command" in
     fi
        package=$1
        if [ -z "$package" ]; then
-            echo "Error: 'serv-status' command requires a rc.serv_name"
+            echo "Error: 'serv-status' command requires a serv_name"
             exit 1
         fi
-         bash "/etc/rc.d/$package" status
+         execute_command "bash $APP_SERV/rcstatus.sh $package"
         ;;
 
     make-db)

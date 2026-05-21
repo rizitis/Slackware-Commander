@@ -5,6 +5,7 @@
 
 # 2024 Anagnostakis Ioannis (a.k.a rizitis) Hellas.
 # Updated 2025
+# Updated 2026
 
 #
 # Redistribution and use of this script, with or without modification, is
@@ -30,10 +31,10 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=scmd
 SRCNAM=Slackware-Commander
-VERSION=7.0.0
+VERSION=8.0.0
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SC}
-PKGTYPE=${PKGTYPE:-tgz}
+PKGTYPE=${PKGTYPE:-txz}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -89,13 +90,17 @@ set -e
 
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
-SOURCE_DIR=../
-cd $SOURCE_DIR
-if [ -d "scmd.SlackBuild" ]; then
-  echo ""
+# SOURCE_DIR=../
+# cd $SOURCE_DIR
+if [ -d "captain-slack" ]; then
+  echo "$CWD"
 else
-  echo "Something went wrong. Exit."
+  echo "Something is wrong. Exit."
   exit 1
+fi
+
+if [ -n "$(ls -A "$TMP" 2>/dev/null)" ]; then
+  rm -rf "${TMP:?}"/*
 fi
 
 cp -R * "$TMP"/
@@ -103,14 +108,15 @@ cd "$TMP"
 
 
 chown -R root:root .
-find -L . \
- \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
-  -o -perm 511 \) -exec chmod 755 {} \; -o \
- \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
-  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+find . -type f \( -perm -4000 -o -perm -2000 \) -exec chmod -s {} +
+find . ! -type l -type d ! -perm 755 -exec chmod -f 755 {} +
+find . ! -type l -type f -perm /111 ! -perm 755 -exec chmod -f 755 {} +
+find . ! -type l -type f ! -perm /111 ! -perm 644 -exec chmod -f 644 {} +
+
+# -- scmd ---
 
 SRC_DIR=src
-QMAKE=qmake6
+QMAKE=${QMAKE:-qmake6}
 PKG_SBIN_DIR="$PKG/usr/local/sbin"
 PKG_BIN_DIR="$PKG/usr/local/bin"
 PKG_ETC_DIR="$PKG/etc"
@@ -171,8 +177,9 @@ for d in "$SRC_DIR"/*/; do
 
 	mkdir -p $PKG_DOC_DIR
 	cp docs/* "$PKG_DOC_DIR"/
+	cat $CWD/$PRGNAM.SlackBuild > "$PKG_DOC_DIR"/$PRGNAM.SlackBuild
 
-
+# --- Captain-Slack ---
 
 SUB_PKG=captain-slack
 SUB_PRGNAM=cptn
@@ -193,7 +200,7 @@ install -d "${dirs[@]}"
 
 BIN_DIR="$PKG_BIN_DIR"/"$SUB_PKG"
 ETC_DIR="$PKG_ETC_DIR"/"$SUB_PKG"
-DOC_DIR="$PKG"/usr/doc/"$SUB_PKG"-"$SUB_VERSION"
+DOC_DIR="$PKG_DOC_DIR"/"$SUB_PKG"-"$SUB_VERSION"
 
 install -d "$BIN_DIR" "$ETC_DIR" "$DOC_DIR"
 
@@ -207,10 +214,32 @@ install -m 644 README* "$SUB_PRGNAM".SlackBuild UNLICENSE slack-required "$DOC_D
 
 popd || exit
 
+# --- ISNUM ---
+
+SUB_PKG2=ISNUM
+SUB_PRGNAM2=isnum
+
+FC=${FC:-gfortran}
+FCFLAGS="$SLKCFLAGS"
+
+pushd $SUB_PKG2 || exit 1
+
+rm -rf build
+mkdir -p build
+
+$FC $FCFLAGS -J build -c CheckIfNumeric.f90 -o build/isnum.o
+$FC $FCFLAGS -o isnum build/isnum.o
+
+install -D -m 755 isnum "$PKG_BIN_DIR"/"$SUB_PRGNAM2"
+
+popd || exit 1
+
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
+
+find $PKG -name perllocal.pod -o -name ".packlist" -o -name "*.bs" | xargs rm -f || true
 
 find $PKG/usr/man -type f -exec gzip -9 {} \;
 for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
@@ -219,6 +248,13 @@ for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; r
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
 cat $CWD/doinst.sh > $PKG/install/doinst.sh
+
+# Be sure for permissions
+find $PKG -type f -perm /111 -exec chmod 755 {} \;
+find $PKG/usr/man -type f -exec chmod 644 {} \;
+find $PKG/usr/share/applications -type f -exec chmod 644 {} \;
+find $PKG/usr/share/icons -type f -exec chmod 644 {} \;
+find $PKG/usr/doc -type f -exec chmod 644 {} \;
 
 
 cd $PKG

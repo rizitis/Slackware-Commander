@@ -1,0 +1,224 @@
+#!/usr/bin/python3
+
+# Required PyQt6
+import sys
+import re
+import requests
+from PyQt6.QtCore import QThread, pyqtSignal, QCoreApplication, QTimer
+from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QLineEdit, QListWidget, QLabel, QProgressBar, QTextEdit
+from urllib.parse import urljoin
+import signal
+
+def handle_interrupt(self, signum, frame):
+    """Handle Ctrl+C gracefully."""
+    print("\nCtrl+C detected. Stopping threads and exiting...")
+    for thread in self.threads:
+        thread.stop()  # Stop any active threads not work but leave it here...
+    QCoreApplication.quit()  # Quit application
+
+
+# Worker thread for downloading packages
+class DownloadThread(QThread):
+    finished = pyqtSignal(str)
+    progress = pyqtSignal(int)  # Signal to send progress updates
+    output = pyqtSignal(str)  # Signal to send messages to the GUI
+    should_stop = False  # Flag to control thread stopping not work but leave it here...also
+
+    def __init__(self, url):
+        super().__init__()
+        self.url = url
+
+    def run(self):
+        try:
+            response = requests.get(self.url, stream=True)
+            total_size = int(response.headers.get('Content-Length', 0))
+            downloaded_size = 0
+
+            if total_size == 0:
+                self.finished.emit(f"Failed to download: {self.url} (No content length)")
+                return
+
+            file_path = "/tmp/" + self.url.split("/")[-1]
+            self.output.emit(f"Attempting to download: {self.url}")
+            with open(file_path, 'wb') as f:
+                for data in response.iter_content(chunk_size=1024):
+                    if self.should_stop:
+                        return  # Stop downloading if flagged
+                    f.write(data)
+                    downloaded_size += len(data)
+                    progress_percent = int((downloaded_size / total_size) * 100)
+                    self.progress.emit(progress_percent)  # Emit progress update
+
+            self.finished.emit(f"Downloaded: {file_path}")
+        except Exception as e:
+            self.finished.emit(f"Error: {str(e)}")
+
+    def stop(self):
+        """Stop the download thread."""
+        self.should_stop = True
+        self.quit()  # Signal the thread to stop, bulshits...Qt6 not Stopping!
+
+
+# Main application
+class PackageSearchApp(QWidget):
+    def __init__(self):
+        super().__init__()
+
+        self.setWindowTitle("Conraid Package Search")
+        self.setGeometry(200, 200, 600, 400)
+
+        layout = QVBoxLayout()
+
+        self.search_label = QLabel("Search Package:  (if double click will download it with its dependencies)")
+        layout.addWidget(self.search_label)
+
+        self.search_bar = QLineEdit()
+        self.search_bar.setPlaceholderText("Type package name...")
+        layout.addWidget(self.search_bar)
+
+        self.package_list = QListWidget()
+        layout.addWidget(self.package_list)
+
+        self.progress_label = QLabel("Download Progress:")
+        layout.addWidget(self.progress_label)
+
+        # Progress bar for downloads
+        self.progress_bar = QProgressBar()
+        self.progress_bar.setRange(0, 100)
+        layout.addWidget(self.progress_bar)
+
+        # QTextEdit for showing terminal output in the GUI
+        self.output_text = QTextEdit()
+        self.output_text.setReadOnly(True)  # Make it read-only
+        layout.addWidget(self.output_text)
+
+        self.setLayout(layout)
+
+        self.load_package_data()
+
+        self.search_bar.textChanged.connect(self.filter_packages)
+        self.package_list.itemDoubleClicked.connect(self.download_package)
+
+        self.threads = []  # List to store running threads
+
+        # Set up signal handler to catch Ctrl+C (KeyboardInterrupt), not work ether!!!
+        signal.signal(signal.SIGINT, self.handle_interrupt)
+
+    def load_package_data(self):
+        """Load and parse package data."""
+        self.packages = []
+        url = "https://slackers.it/repository/slackware64-current/PACKAGES.TXT"
+        package_data = requests.get(url).text
+
+        package_blocks = re.findall(
+            r"PACKAGE NAME:\s+(.+?)\n.*?PACKAGE MIRROR:\s+(.+?)\n.*?PACKAGE LOCATION:\s+(.+?)\n.*?PACKAGE REQUIRED:\s*(.*?)\n",
+            package_data, re.DOTALL
+        )
+
+        for block in package_blocks:
+            name, mirror, location, required = block
+            required_list = [
+                dep.strip() for dep in required.split(",") if dep.strip() and "CONFLICTS" not in dep.upper()
+            ]
+            self.packages.append({
+                'name': name.strip(),
+                'mirror': mirror.strip(),
+                'location': location.strip(),
+                'required': required_list
+            })
+
+        self.update_package_list()
+
+    def update_package_list(self):
+        """Update package list in UI."""
+        self.package_list.clear()
+        for package in self.packages:
+            self.package_list.addItem(package['name'])
+
+    def filter_packages(self):
+        """Filter package list based on search."""
+        search_term = self.search_bar.text().lower()
+        filtered_packages = [pkg['name'] for pkg in self.packages if search_term in pkg['name'].lower()]
+        self.package_list.clear()
+        self.package_list.addItems(filtered_packages)
+
+    def download_package(self, item):
+        """Handle double-click event to download a package and its dependencies."""
+        package_name = item.text()
+        selected_package = next(pkg for pkg in self.packages if pkg['name'] == package_name)
+        package_url = self.get_package_url(selected_package)
+
+        self.output_text.append(f"Attempting to download: {package_url}")
+        self.start_download(package_url)
+
+        # Download required dependencies
+        for req_pkg in selected_package['required']:
+            required_url = self.get_package_url_from_name(req_pkg)
+            if required_url:
+                self.output_text.append(f"Downloading dependency: {required_url}")
+                self.start_download(required_url)
+            else:
+                self.output_text.append(f"Warning: Dependency '{req_pkg}' not found in the repository.")
+
+    def start_download(self, url):
+        """Start a new download thread and store it to prevent premature destruction."""
+        thread = DownloadThread(url)
+        thread.finished.connect(self.on_download_finished)
+        thread.progress.connect(self.update_progress)  # Connect progress signal to update GUI
+        thread.output.connect(self.update_output)  # Connect output signal to display in QTextEdit
+        self.threads.append(thread)  # Store thread so it doesn't get destroyed
+        thread.start()
+
+    def on_download_finished(self, message):
+        """Handle download completion."""
+        self.output_text.append(message)
+
+    def get_package_url(self, package):
+        """Construct the full package download URL."""
+        mirror_url = package['mirror']
+        location = package['location'].lstrip('./')
+        package_name = package['name']
+
+        return urljoin(mirror_url, f"{location}/{package_name}")
+
+    def get_package_url_from_name(self, package_name):
+        """Find and return the full URL of a required package."""
+        matching_packages = [pkg for pkg in self.packages if pkg['name'].startswith(package_name)]
+
+        if not matching_packages:
+            return None
+
+        return self.get_package_url(matching_packages[0])
+
+    def handle_interrupt(self, signum, frame):
+        """Handle Ctrl+C gracefully."""
+        print("\nCtrl+C detected. Stopping threads and exiting...")
+        for thread in self.threads:
+            thread.stop()  # Stop any active threads
+        QApplication.quit()  # Gracefully quit the application
+
+    def update_progress(self, value):
+        """Update the progress bar value."""
+        self.progress_bar.setValue(value)
+
+    def update_output(self, message):
+        """Update the QTextEdit with messages."""
+        self.output_text.append(message)
+
+
+# Run the application
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+
+    # Ensure Ctrl+C works, THATS THE ONLY WORKED!
+    signal.signal(signal.SIGINT, lambda *args: app.quit())
+
+    window = PackageSearchApp()
+    window.show()
+
+    # Use a QTimer to periodically process events and allow SIGINT handling
+    timer = QTimer()
+    timer.timeout.connect(lambda: None)  # Dummy function to keep event loop alive
+    timer.start(100)  # Runs every 100ms
+
+    sys.exit(app.exec())

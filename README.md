@@ -1,34 +1,27 @@
-**In the year 2025, everything was written from scratch, a minimal and *KISS*
-Qt6 gui is now what we have** 
+Prefferent OS for Slackware-Commander is a full installation of Slackware(64)-Current with preinstalled:
 
-That means prefferent OS for Slackware-Commander is `Slackware(64)-Current with QT6 and qmake6`
-
-> Note: Slackware-Commander can support my patched version of [slackpkg](https://github.com/rizitis/slackpkg-new)<br>
->      This slackpkg version can support whitelist. That mean if you have in blacklist a set of official slackware packages,assume kde/ ,<br>
->  then you can list in whitelist package names from any blacklisted set that will escape blacklist and will follow official updates.<br>
-> slackpkg+ works fine with this patched slackpkg version ;)
+>  `PyQt6 , jq  qmake6 gfortran`
 
 ##  Installation
 
-> Install all required from Ponce/SBo<br>
+> Build and Install all required from Ponce/SBo<br>
 > Assume you have a full Slackware installation and you use `slpkg`:
 
-1.  `slpkg -i yq jq chafa figlet BeautifulSoup4 ttkbootstrap`
-2.  Download latest `scdm-version.tar.gz` release from [here](https://github.com/rizitis/Slackware-Commander/releases)
-3.  Extract tarball and cd in `scmd.SlackBuild` folder.
-4.  Open terminal and command:
-- `pip install -r requirements.txt`
-- ` su - root -c "bash scmd.SlackBuild"`
-5.  When SlackBuild finish, you may install output package using `upgradepkg --install-new...`
+1.  `slpkg install  yq  chafa figlet BeautifulSoup4 ttkbootstrap`
+2. As root: ` bash scmd.SlackBuild`
+3.  When SlackBuild finish, you may install output package using `upgradepkg --install-new...`
+
+For sbopkg you can use `scmd.sqf`
 
 - - -
-**Note**: Slackware-Commander has only runtime dependencies in a full Slackware64-current installation:
-- `slpkg` as dependency for **sbofinder**.
-- `yq  jq  chafa` as dependencies for **cptn**.
+**Note**: Slackware-Commander in a full a full Slackware current installation has only runtime dependencies:
+- `yq chafa` as dependencies for **cptn**.
 - `figlet` as dependency for **inxifetch**.
-- `PyQt6` *(pip install)*, `BeautifulSoup4, ttkbootstrap` as dependencies for some of the python scripts.
+-  `BeautifulSoup4, ttkbootstrap` as dependencies for some of the python scripts.
 
-So if you dont need or like some of Slackware-Commander tools then you dont need their deps also.
+If you dont need or you dont like some of Slackware-Commander tools then you dont need their deps also.
+
+**Note** Scripts are installed in `/usr/local/bin` as it should be btw...
 
 - - -
 ## Usage:
@@ -37,44 +30,15 @@ So if you dont need or like some of Slackware-Commander tools then you dont need
 - `cptn make-db -a` is a very importand command for create a database that will be used by cptn tools.
 
 
-![Image](https://github.com/user-attachments/assets/38488f3b-e0d7-4be1-93e0-d6179095752d)
-
-- - -
- ![image](./Slackware-Commander-GuiApps.png)
-
-- - -
-https://github.com/user-attachments/assets/67420fc8-a792-4012-b104-6584577a3508
-
----
-
-##  ![image](./slakfinder.png)
-
----
-
-https://github.com/user-attachments/assets/445239df-40c3-4221-a04e-105bb2da6fc3
-
----
-
-https://github.com/user-attachments/assets/318980c2-5aed-4a37-9723-5937e4d44cf1
-
----
-
-## ![image](./sbofinder.png)
-
----
-
-## pkg_search
-
-[![asciicast](https://asciinema.org/a/cuMxLeX7XKPe6fXPIQ0HSa9f1.svg)](https://asciinema.org/a/cuMxLeX7XKPe6fXPIQ0HSa9f1)
-
 ---
 
 Slackware™ is a [trademark](http://www.slackware.com/trademark/trademark.php) of Patrick Volkerding. 
 
+---
+
 Icons are from:<br>
-[uxwing](https://uxwing.com/license/)<br>
-![](https://uxwing.com/wp-content/themes/uxwing/images/logo.svg)<br>
-https://uxwing.com/ <br>
+
+[uxwing](https://uxwing.com/license/) 
 
 And [DALL·E](https://chatgpt.com/g/g-2fkFE8rbu-dall-e)
 

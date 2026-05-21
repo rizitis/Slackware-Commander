@@ -89,9 +89,6 @@ Enter a package name, hit "Fetch," and view .so files.
 .SS slakfinder
 A local GUI version of SlackFinder. It allows searching packages across various repositories but does not download them directly for security reasons.
 
-.SS sbofinder
-An SBo and Ponce repository search tool requiring `slpkg`. It allows reading metadata and downloading SlackBuilds (source included) but does not build/install them.
-
 .SS inxifetch
 A modified `inxi` tool for displaying system information in a `neofetch`-like format. Configurable via `/etc/inxifetch/inxifetch.conf`.
 Usage:
@@ -123,11 +120,12 @@ who_need_me "libQt6Core"
 Output will be after few minutes in "/tmp/who_need_me.txt".
 
 .SS slack-revert
-A powerful but potentially dangerous rollback tool. It allows creating a "snap" (backup) of installed packages and `/etc` configuration, which can later be restored by downloading historical versions from <https://slackware.uk/cumulative/>.
+A powerful but POTENTIALLY DANGEROUS rollback tool. It allows creating backup lists of installed packages and `/etc` configuration files backup, which can later be restored by downloading historical versions from <https://slackware.uk/cumulative/>.
 
 Usage:
 1. Create a txt file (backup of packages) and a tar (of /etc): `slack-revert`
-2. Restore the system: Select a snapshot to revert to that specific system state.
+2. Restore the system: Select a "snapshot" to revert to that specific system state.
+3. PLEASE IF YOU DONT NEED IT DO NOT USE IT YOUR SYSTEM MIGHT BROKE AT ALL.
 
 .SS SBKS (Slack Build Kernel Script)
 A script to build and install custom kernels without affecting the official Slackware kernel. Useful for NVIDIA proprietary driver users:

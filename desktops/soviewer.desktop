@@ -1,9 +1,8 @@
 [Desktop Entry]
 Type=Application
-Encoding=UTF-8
 Name=soviewer
 Comment=Print all Current shared object (.so)
 Exec=python3 /usr/local/bin/soviewer
 Icon=soviewer
 Terminal=false
-Categories=Utilities;Applications;
+Categories=Utility;

@@ -1,3 +1,16 @@
+config() {
+  NEW="$1"
+  OLD="`dirname $NEW`/`basename $NEW .new`"
+  if [ ! -r $OLD ]; then
+    mv $NEW $OLD
+  elif [ "`md5sum $OLD | cut -d' ' -f1`" = "`md5sum $NEW | cut -d' ' -f1`" ]; then
+    mv $NEW $OLD
+  fi
+}
+
+config etc/captain-slack/cptn-main.ini.new
+config etc/inxifetch/inxifetch.conf.new
+
 MAN_DIR=/usr/man/man1
 
 if [ -d "$MAN_DIR" ]; then
@@ -11,27 +24,6 @@ if [ -d "$MAN_DIR" ]; then
     ln -s scmd.1.gz slackware-commander.1.gz
   fi
 fi
-
-
-update_config() {
-    config_file="$1"
-    new_config_file="$2"
-
-    if [ ! -f "$config_file" ]; then
-        mv "$new_config_file" "$config_file"
-    fi
-
-    if diff -u "$config_file" "$new_config_file" > /dev/null; then
-        rm "$new_config_file"
-    else
-        cp "$config_file" "${config_file}.orig"
-        echo "Attention: ${new_config_file} detected..."
-    fi
-}
-
-update_config "/etc/inxifetch/inxifetch.conf" "/etc/inxifetch/inxifetch.conf.new"
-update_config "/etc/captain-slack/cptn-main.ini" "/etc/captain-slack/cptn-main.ini.new"
-
 
 if [ -x /usr/bin/update-desktop-database ]; then
   /usr/bin/update-desktop-database -q usr/share/applications >/dev/null 2>&1
