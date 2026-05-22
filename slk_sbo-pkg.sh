@@ -1,6 +1,5 @@
 #!/bin/bash
 
-source slk-ci.sh
 
 SBSCRIPT="$(find "${BUILDDIR}" -maxdepth 1 -name '*.SlackBuild' | head -1)"
 JUST_NAME=$(basename "$SBSCRIPT" .SlackBuild)

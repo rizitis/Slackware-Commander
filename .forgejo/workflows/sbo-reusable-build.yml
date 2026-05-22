@@ -85,10 +85,14 @@ jobs:
 
       - name: Calculate SBo build dependencies
         run: |
+          set -a
+          source slk-ci.sh
           bash slk_sbo-ci.sh
 
       - name: Install SBo dependencies
         run: |
+          set -a
+          source slk-ci.sh
           bash slk_sbo-pkg.sh
 
       - name: Build package
