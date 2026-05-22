@@ -66,8 +66,12 @@ else
 
         unset PKG OUTPUT
         source "${dep_name}.info"
+
+        _log "Downloading source for ${dep_name}..."
+        curl -L "$DOWNLOAD" -o "$(basename "$DOWNLOAD")" || _err "Failed to download source for ${dep_name}"
+
         chmod +x "${dep_name}.SlackBuild"
-        bash "${dep_name}.SlackBuild"
+        bash "${dep_name}.SlackBuild" || _err "${dep_name} build failed"
         _log "${dep_name} Build succeeded."
 
         _log "Installing ${dep_name}..."
