@@ -87,14 +87,13 @@ jobs:
         run: |
           set -a
           source slk-ci.sh
-          bash slk_sbo-ci.sh
+          BUILDDIR="${GITHUB_WORKSPACE}" bash slk_sbo-ci.sh
 
       - name: Install SBo dependencies
         run: |
           set -a
           source slk-ci.sh
-          echo "BUILDDIR=$BUILDDIR"
-          bash slk_sbo-pkg.sh
+          BUILDDIR="${GITHUB_WORKSPACE}" bash slk_sbo-pkg.sh
 
       - name: Build package
         id: build
