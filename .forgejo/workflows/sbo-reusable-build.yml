@@ -63,6 +63,10 @@ jobs:
       package_file: ${{ steps.build.outputs.package_file }}
 
     steps:
+      - name: Install runner dependencies
+        run: |
+          slackpkg -batch=on -default_answer=y install libuv
+
       - name: Check out repository
         uses: actions/checkout@v4
 
