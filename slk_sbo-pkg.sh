@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "/usr/lib64/go1.26.3/go/bin" >> $GITEA_PATH
+export PATH="/usr/lib64/go1.26.3/go/bin:$PATH"
 
 sbo_txt_url="https://slackbuilds.org/slackbuilds/15.0/SLACKBUILDS.TXT"
 sbo_txt_cache="/tmp/SLACKBUILDS.TXT"
