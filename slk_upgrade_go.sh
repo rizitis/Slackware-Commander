@@ -14,11 +14,11 @@ unset PKG OUTPUT
 source "${dep_name}.info"
 
 _log "Downloading Go ${GO_VERSION} source..."
-wget "https://go.dev/dl/go${GO_VERSION}.src.tar.gz" || _err "Failed to download Go source"
+wget "https://go.dev/dl/go1.26.3.src.tar.gz" || _err "Failed to download Go source"
 
 chmod +x "${dep_name}.SlackBuild"
-VERSION="$GO_VERSION" bash "${dep_name}.SlackBuild" || _err "${dep_name} build failed"
+VERSION="1.26.3" bash "${dep_name}.SlackBuild" || _err "${dep_name} build failed"
 
-upgradepkg --install-new --reinstall /tmp/$PRGNAM-$GO_VERSION-*.t?z
+upgradepkg --install-new --reinstall /tmp/$PRGNAM-*.t?z
 
 popd || exit 1
