@@ -1,10 +1,18 @@
 #!/bin/bash
 
-sbo_txt="/tmp/SLACKBUILDS.TXT"
+sbo_txt_url="https://slackbuilds.org/slackbuilds/15.0/SLACKBUILDS.TXT"
+sbo_txt_cache="/tmp/SLACKBUILDS.TXT"
 
 SBSCRIPT="$(find "${BUILDDIR}" -maxdepth 1 -name '*.SlackBuild' | head -1)"
 JUST_NAME=$(basename "$SBSCRIPT" .SlackBuild)
 DEPS_FILE="$JUST_NAME".dep
+
+fetch_sbo_txt() {
+  if [[ ! -f "$sbo_txt_cache" ]]; then
+    _log "Fetching SLACKBUILDS.TXT..."
+    curl -sL "$sbo_txt_url" -o "$sbo_txt_cache"
+  fi
+}
 
 slk_sbo_check_version() {
     local dep_name="$1"
@@ -24,10 +32,11 @@ slk_sbo_check_version() {
 if [ ! -f "$DEPS_FILE" ]; then
     _log "no deps found for $JUST_NAME"
 else
+    fetch_sbo_txt
     while IFS= read -r dep_name; do
         [ -z "$dep_name" ] && continue
         _log "Looking up '${dep_name}' in SBo..."
-        location=$(grep -A5 "^SLACKBUILD NAME: ${dep_name}$" "$sbo_txt" \
+        location=$(grep -A5 "^SLACKBUILD NAME: ${dep_name}$" "$sbo_txt_cache" \
             | grep "^SLACKBUILD LOCATION:" | head -1 \
             | awk '{print $3}' | sed 's|^\./||')
 
