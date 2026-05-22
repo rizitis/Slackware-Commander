@@ -11,14 +11,15 @@ tar xf "${dep_name}.tar.gz"
 pushd "${dep_name}" || exit 1
 
 unset PKG OUTPUT
-#source "${dep_name}.info"
 
-_log "Downloading Go ${GO_VERSION} source..."
-wget "https://go.dev/dl/go1.26.3.src.tar.gz" || _err "Failed to download Go source"
+_log "Downloading Go source tarballs..."
+for ver in 1.19.13 1.21.13 1.23.12 1.25.10 1.26.3; do
+    wget "https://go.dev/dl/go${ver}.src.tar.gz" || _err "Failed to download go${ver}.src.tar.gz"
+done
 
 chmod +x "${dep_name}.SlackBuild"
-VERSION="1.26.3" bash "${dep_name}.SlackBuild" || _err "${dep_name} build failed"
+VERSION="$GO_VERSION" bash "${dep_name}.SlackBuild" || _err "${dep_name} build failed"
 
-upgradepkg --install-new --reinstall /tmp/$PRGNAM-*.t?z
+upgradepkg --install-new --reinstall /tmp/$dep_name-$GO_VERSION-*.t?z
 
 popd || exit 1
