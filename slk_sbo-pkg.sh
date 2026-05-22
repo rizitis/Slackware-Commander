@@ -75,8 +75,8 @@ else
         _log "${dep_name} Build succeeded."
 
         _log "Installing ${dep_name}..."
-        installpkg --terse /tmp/$PRGNAM-$VERSION-*.t?z
-
+#        installpkg --terse /tmp/$PRGNAM-$VERSION-*.t?z
+        upgradepkg --install-new --reinstall /tmp/$PRGNAM-$VERSION-*.t?z
         slk_sbo_check_version "$dep_name"
 
         rm /tmp/$PRGNAM-$VERSION-*.t?z

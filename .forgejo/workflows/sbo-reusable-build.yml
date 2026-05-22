@@ -35,7 +35,7 @@ on:
           dependencies here.
         required: false
         type: string
-        default: "jq libuv oniguruma PyQt6 PyQt6_sip qt6 gcc-gfortran"
+        default: "jq libuv oniguruma PyQt6 PyQt6_sip qt6 gcc-gfortran google-go-lang"
 
       slackbuild_dir:
         description: >
