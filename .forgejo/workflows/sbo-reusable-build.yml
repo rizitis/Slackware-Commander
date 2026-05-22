@@ -87,7 +87,6 @@ jobs:
         run: |
           set -a
           source slk-ci.sh
-          echo "BUILDDIR=$BUILDDIR"
           bash slk_sbo-ci.sh
 
       - name: Install SBo dependencies
