@@ -88,7 +88,7 @@ jobs:
           set -a
           source slk-ci.sh
           bash slk_upgrade_go.sh
-          echo "/usr/lib64/go/bin" >> $GITHUB_PATH
+          echo "/usr/lib64/go1.26.3/go/bin" >> $GITEA_PATH
 
       - name: Calculate SBo build dependencies
         run: |
