@@ -1,0 +1,113 @@
+# reusable-build.yml
+#
+# Workflow for building a SlackBuild package on the Slackware forge.
+# Store this file in:
+#
+#   slackware/ci-tools/.forgejo/workflows/reusable-build.yml
+#
+# Triggered manually from the Forgejo UI (Actions → Run workflow).
+
+on:
+  workflow_dispatch:
+    inputs:
+
+      package_name:
+        description: >
+          Base name of the package being built. Must match the .SlackBuild
+          filename and the directory passed to slk_build.
+        required: true
+        type: string
+        default: "scmd"
+
+      version:
+        description: >
+          Package version string. Used for the version check after a
+          successful build and as a label in the uploaded artifact name.
+        required: true
+        type: string
+        default: "8.0.0"
+
+      build_deps:
+        description: >
+          Space-separated list of additional Slackware packages to install
+          before building. The builder image already contains the compiler
+          toolchain and common build tools; only list package-specific
+          dependencies here.
+        required: false
+        type: string
+        default: "jq libuv oniguruma PyQt6 PyQt6_sip qt6 gcc-gfortran"
+
+      slackbuild_dir:
+        description: >
+          Path to the directory containing the .SlackBuild script,
+          relative to the repository root.
+        required: false
+        type: string
+        default: "."
+
+      upload_artifact:
+        description: >
+          Whether to upload the built .txz package as a workflow artifact.
+        required: false
+        type: boolean
+        default: false
+
+jobs:
+  build:
+    runs-on: slackware
+
+    container:
+      image: registry.slackware.nl/slackware/slackware-builder:current
+
+    outputs:
+      package_file: ${{ steps.build.outputs.package_file }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Fetch CI helper
+        run: |
+          curl -sf \
+            https://forge.slackware.nl/slackware/ci-tools/raw/branch/main/slk-ci.sh \
+            -o slk-ci.sh
+          chmod +x slk-ci.sh
+
+      - name: Install build dependencies
+        if: inputs.build_deps != ''
+        run: |
+          source slk-ci.sh
+          slk_install_deps ${{ inputs.build_deps }}
+
+      - name: Calculate SBo build dependencies
+        run: |
+          bash slk_sbo-ci.sh
+
+      - name: Install SBo dependencies
+        run: |
+          bash slk_sbo-pkg.sh
+
+      - name: Build package
+        id: build
+        run: |
+          source slk-ci.sh
+          slk_build "${{ inputs.slackbuild_dir }}"
+          PKG=$(find "${SLK_PKGDIR}" -name "${{ inputs.package_name }}-*.t?z" \
+                  | sort -V | tail -1)
+          echo "package_file=$(basename "${PKG}")" >> "${GITHUB_OUTPUT}"
+          echo "package_path=${PKG}"               >> "${GITHUB_OUTPUT}"
+
+      - name: Verify installed version
+        run: |
+          source slk-ci.sh
+          slk_install "${{ inputs.package_name }}"
+          slk_check_version "${{ inputs.package_name }}" "${{ inputs.version }}"
+
+      - name: Upload package artifact
+        if: inputs.upload_artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: "${{ inputs.package_name }}-${{ inputs.version }}-slackware-current-x86_64"
+          path: ${{ steps.build.outputs.package_path }}
+          if-no-files-found: error
+          retention-days: 10

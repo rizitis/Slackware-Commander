@@ -1,0 +1,7 @@
+yq
+chafa
+figlet
+python3-typing-extensions
+python3-soupsieve
+BeautifulSoup4
+ttkbootstrap
