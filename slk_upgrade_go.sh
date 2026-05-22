@@ -11,7 +11,7 @@ tar xf "${dep_name}.tar.gz"
 pushd "${dep_name}" || exit 1
 
 unset PKG OUTPUT
-source "${dep_name}.info"
+#source "${dep_name}.info"
 
 _log "Downloading Go ${GO_VERSION} source..."
 wget "https://go.dev/dl/go1.26.3.src.tar.gz" || _err "Failed to download Go source"
