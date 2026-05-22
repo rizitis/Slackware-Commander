@@ -11,7 +11,8 @@ fi
 dep_name="google-go-lang"
 
 _log "Downloading ${dep_name} from SBo..."
-curl -L "https://slackbuilds.org/slackbuilds/15.0/development/${dep_name}.tar.gz" -o "${dep_name}.tar.gz" || _err "Failed to download ${dep_name}"
+first_download=$(echo "$DOWNLOAD" | awk '{print $1}')
+curl -L "$first_download" -o "$(basename "$first_download")" || _err "Failed to download source for ${dep_name}"
 
 tar xf "${dep_name}.tar.gz"
 pushd "${dep_name}" || exit 1
