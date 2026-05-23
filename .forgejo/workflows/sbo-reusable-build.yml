@@ -63,12 +63,14 @@ jobs:
       package_file: ${{ steps.build.outputs.package_file }}
 
     steps:
-      - name: Install runner dependencies
+      - name: Install runner dep libuv, all set l and export PYTHONPATH
         run: |
           slackpkg -batch=on -default_answer=y install libuv
           echo "python-trove-classifiers" >> /etc/slackpkg/blacklist
           echo "dconf" >> /etc/slackpkg/blacklist
           slackpkg -batch=on -default_answer=y install l
+          echo "PYTHONPATH=/usr/lib64/python3.12/site-packages" >> $GITHUB_ENV
+          echo "PYTHONPATH=/usr/lib64/python3.12/site-packages" >> $FORGEJO_ENV
 
       - name: Check out repository
         uses: actions/checkout@v4
@@ -101,8 +103,6 @@ jobs:
           set -a
           source slk-ci.sh
           BUILDDIR="${GITHUB_WORKSPACE}" bash slk_sbo-ci.sh
-          echo "PYTHONPATH=/usr/lib64/python3.12/site-packages" >> $GITHUB_ENV
-          echo "PYTHONPATH=/usr/lib64/python3.12/site-packages" >> $FORGEJO_ENV
 
       - name: Debug Python
         run: |
