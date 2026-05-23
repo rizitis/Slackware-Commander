@@ -71,6 +71,8 @@ jobs:
           slackpkg -batch=on -default_answer=y install l
           echo "PYTHONPATH=/usr/lib64/python3.12/site-packages" >> $GITHUB_ENV
           echo "PYTHONPATH=/usr/lib64/python3.12/site-packages" >> $FORGEJO_ENV
+          find /usr -name "hatchling" -type d
+          find /usr -name "trove_classifiers*"
 
       - name: Check out repository
         uses: actions/checkout@v4
@@ -109,6 +111,8 @@ jobs:
           python3 -c "import site; print(site.getsitepackages())"
           python3 -c "from hatchling.__about__ import __version__; print(__version__)"
           python3 -c "import trove_classifiers; print(trove_classifiers.__version__)"
+          find /usr -name "hatchling" -type d
+          find /usr -name "trove_classifiers*"
 
       - name: Install SBo dependencies
         run: |
