@@ -50,7 +50,7 @@ on:
           Whether to upload the built .txz package as a workflow artifact.
         required: false
         type: boolean
-        default: false
+        default: true
 
 jobs:
   build:
@@ -114,6 +114,7 @@ jobs:
       - name: Debug dbus
         run: |
           ls -la /usr/lib64/libdbus-1.so*
+#       for some reason dbus eather need reinstall or libdbus-1.so is not linked properly in image
 
 #      - name: Debug GL
 #        run: |
@@ -155,9 +156,10 @@ jobs:
 
       - name: Upload package artifact
         if: inputs.upload_artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: "${{ inputs.package_name }}-${{ inputs.version }}-slackware-current-x86_64"
           path: ${{ steps.build.outputs.package_path }}
           if-no-files-found: error
           retention-days: 10
+# actions/upload-artifact@v4 fails for me, switch to 3 for now
