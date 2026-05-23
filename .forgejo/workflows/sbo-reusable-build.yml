@@ -35,7 +35,7 @@ on:
           dependencies here.
         required: false
         type: string
-        default: "jq gcc-gfortran linuxdoc-tools linuxdoc vala libglvnd mesa opengl-driver libXext"
+        default: "jq gcc-gfortran linuxdoc-tools linuxdoc vala libglvnd mesa opengl-driver libXext libX11 dbus fontconfig"
 
       slackbuild_dir:
         description: >
@@ -67,8 +67,8 @@ jobs:
         run: |
           slackpkg -batch=on -default_answer=y install libuv
           slackpkg -batch=on -default_answer=y -checkmd5=off install l
-          echo "PYTHONPATH=/usr/lib/python3.12/site-packages" >> $GITHUB_ENV
-          echo "PYTHONPATH=/usr/lib/python3.12/site-packages" >> $FORGEJO_ENV
+#          echo "PYTHONPATH=/usr/lib/python3.12/site-packages" >> $GITHUB_ENV
+#          echo "PYTHONPATH=/usr/lib/python3.12/site-packages" >> $FORGEJO_ENV
 
       - name: Check out repository
         uses: actions/checkout@v4
@@ -135,6 +135,10 @@ jobs:
           source slk-ci.sh
           slk_install "${{ inputs.package_name }}"
           slk_check_version "${{ inputs.package_name }}" "${{ inputs.version }}"
+
+      - name: Verify installed version
+        run: |
+          cat cptn.nfo
 
       - name: Upload package artifact
         if: inputs.upload_artifact
