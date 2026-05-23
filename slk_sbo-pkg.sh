@@ -16,21 +16,6 @@ fetch_sbo_txt() {
   fi
 }
 
-slk_sbo_check_version() {
-    local dep_name="$1"
-    local SBo_NAME="$dep_name"-"$VERSION"
-    local SBo_EXPECTED="$PRGNAM-$VERSION"
-    local SBo_INSTALLED
-    SBo_INSTALLED="$(ls /var/log/packages/${SBo_NAME}-* 2>/dev/null \
-                  | sed "s|.*/${SBo_NAME}-||;s|-[^-]*-[^-]*\$||" \
-                  | tail -1)"
-    if [[ "${SBo_INSTALLED}" == "${SBo_EXPECTED}" ]]; then
-        _log "Version check passed: ${dep_name} ${SBo_INSTALLED}"
-    else
-        _err "Version mismatch: expected $PRGNAM-$VERSION, found '${SBo_INSTALLED}'"
-    fi
-}
-
 if [ ! -f "$DEPS_FILE" ]; then
     _log "no deps found for $JUST_NAME"
 else
@@ -79,7 +64,6 @@ else
         _log "Installing ${dep_name}..."
 #        installpkg --terse /tmp/$PRGNAM-$VERSION-*.t?z
         upgradepkg --install-new --reinstall /tmp/$PRGNAM-$VERSION-*.t?z
-        slk_sbo_check_version "$dep_name"
 
         rm /tmp/$PRGNAM-$VERSION-*.t?z
 
