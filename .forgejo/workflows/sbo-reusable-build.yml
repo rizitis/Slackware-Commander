@@ -106,7 +106,7 @@ jobs:
 
       - name: Debug Python
         run: |
-          python3 -c "import hatchling; print(hatchling.__version__)"
+          python3 -c "import hatchling.version; print(hatchling.version.__version__)"
           python3 -c "import trove_classifiers; print(trove_classifiers.__version__)"
 
       - name: Install SBo dependencies
