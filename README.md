@@ -78,13 +78,15 @@ After a successful build:
 
 1. Go to **Actions** → select the completed run
 2. Scroll down to **Artifacts**
-3. Download `scmd-8.0.0-slackware-current-x86_64`
+3. Download `scmd-8.0.0-...-slackware-current-x86_64`
 
-The artifact contains the ready-to-install `scmd-8.0.0-x86_64-1_SC.txz` package.
+The artifact is a `.zip` file — extract it to find the
+`scmd-8.0.0-x86_64-1_SC.txz` package inside.
 
-### Installing
+## Installing
 
 ```bash
+unzip scmd-8.0.0-*-slackware-current-x86_64.zip
 installpkg scmd-8.0.0-x86_64-1_SC.txz
 ```
 
