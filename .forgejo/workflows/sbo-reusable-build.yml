@@ -67,6 +67,7 @@ jobs:
         run: |
           slackpkg -batch=on -default_answer=y install libuv
           echo "python-trove-classifiers" >> /etc/slackpkg/blacklist
+          echo "dconf" >> /etc/slackpkg/blacklist
           slackpkg -batch=on -default_answer=y install l
 
       - name: Check out repository
