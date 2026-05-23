@@ -68,6 +68,7 @@ jobs:
           slackpkg -batch=on -default_answer=y install libuv
           echo "python-trove-classifiers" >> /etc/slackpkg/blacklist
           echo "dconf" >> /etc/slackpkg/blacklist
+          echo "polkit-gnome" >> /etc/slackpkg/blacklist
           slackpkg -batch=on -default_answer=y install l
           echo "PYTHONPATH=/usr/lib64/python3.12/site-packages" >> $GITHUB_ENV
           echo "PYTHONPATH=/usr/lib64/python3.12/site-packages" >> $FORGEJO_ENV
