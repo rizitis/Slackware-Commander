@@ -1,6 +1,7 @@
 #!/bin/bash
 
 export PATH="/usr/lib64/go1.26.3/go/bin:$PATH"
+export PYTHONPATH=$(python3 -c "import site; print(':'.join(site.getsitepackages()))")
 export PYTHONPATH="/usr/lib64/python3.$(python3 -c 'import sys; print(sys.version_info.minor)')/site-packages:$PYTHONPATH"
 
 sbo_txt_url="https://slackbuilds.org/slackbuilds/15.0/SLACKBUILDS.TXT"

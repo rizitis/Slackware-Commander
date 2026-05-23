@@ -35,7 +35,7 @@ on:
           dependencies here.
         required: false
         type: string
-        default: "jq libuv oniguruma PyQt6 PyQt6_sip qt6 gcc-gfortran glib2 libffi pcre2 freetype linuxdoc-tools linuxdoc vala python3-calver python3-trove-classifiers"
+        default: "jq gcc-gfortran linuxdoc-tools linuxdoc vala"
 
       slackbuild_dir:
         description: >
@@ -86,8 +86,8 @@ jobs:
           source slk-ci.sh
           slk_install_deps ${{ inputs.build_deps }}
 
-      - name: Upgrade Go
-        run: |
+#      - name: Upgrade Go
+#        run: |
           set -a
           source slk-ci.sh
           bash slk_upgrade_go.sh
@@ -101,6 +101,13 @@ jobs:
           set -a
           source slk-ci.sh
           BUILDDIR="${GITHUB_WORKSPACE}" bash slk_sbo-ci.sh
+          echo "PYTHONPATH=/usr/lib64/python3.12/site-packages" >> $GITHUB_ENV
+          echo "PYTHONPATH=/usr/lib64/python3.12/site-packages" >> $FORGEJO_ENV
+
+      - name: Debug Python
+        run: |
+          python3 -c "import hatchling; print(hatchling.__version__)"
+          python3 -c "import trove_classifiers; print(trove_classifiers.__version__)"
 
       - name: Install SBo dependencies
         run: |
