@@ -105,11 +105,15 @@ jobs:
           source slk-ci.sh
           BUILDDIR="${GITHUB_WORKSPACE}" bash slk_sbo-ci.sh
 
-      - name: Debug GL
+      - name: Debug dbus
         run: |
-          find /usr -name "libGLX*"
-          find /usr -name "libOpenGL*"
-          ls /usr/lib64/libGL*
+          ls -la /usr/lib64/libdbus-1.so*
+
+#      - name: Debug GL
+#        run: |
+#          find /usr -name "libGLX*"
+#          find /usr -name "libOpenGL*"
+#          ls /usr/lib64/libGL*
 
 #      - name: Debug Python
 #        run: |
