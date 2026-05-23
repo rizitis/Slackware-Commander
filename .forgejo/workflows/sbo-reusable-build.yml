@@ -63,6 +63,10 @@ jobs:
       package_file: ${{ steps.build.outputs.package_file }}
 
     steps:
+      - name: Long Live Slackware
+        run: |
+          cat distro.nfo
+
       - name: Install runner dep libuv AND all l set (not gentoo here :)
         run: |
           slackpkg -batch=on -default_answer=y install libuv
