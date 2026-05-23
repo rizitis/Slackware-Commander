@@ -105,6 +105,12 @@ jobs:
           source slk-ci.sh
           BUILDDIR="${GITHUB_WORKSPACE}" bash slk_sbo-ci.sh
 
+      - name: Debug image
+        run: |
+          cat /etc/slackware-version
+          cat /etc/os-release
+          uname -a
+
       - name: Debug dbus
         run: |
           ls -la /usr/lib64/libdbus-1.so*
