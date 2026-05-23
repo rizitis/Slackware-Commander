@@ -93,8 +93,8 @@ jobs:
           bash slk_upgrade_go.sh
           echo "/usr/lib64/go1.26.3/go/bin" >> $GITHUB_PATH
           echo "/usr/lib64/go1.26.3/go/bin" >> $FORGEJO_PATH
-#          env | grep -i path
-#          ls /var/run/act/
+          env | grep -i path
+          ls /var/run/act/
 
       - name: Calculate SBo build dependencies
         run: |
