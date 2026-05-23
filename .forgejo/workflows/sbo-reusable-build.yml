@@ -35,7 +35,7 @@ on:
           dependencies here.
         required: false
         type: string
-        default: "jq libuv oniguruma PyQt6 PyQt6_sip qt6 gcc-gfortran glib2 libffi pcre2"
+        default: "jq libuv oniguruma PyQt6 PyQt6_sip qt6 gcc-gfortran glib2 libffi pcre2 freetype"
 
       slackbuild_dir:
         description: >
@@ -66,6 +66,8 @@ jobs:
       - name: Install runner dependencies
         run: |
           slackpkg -batch=on -default_answer=y install libuv
+        # enough this is not gentoo
+          slackpkg -batch=on -default_answer=y install l
 
       - name: Check out repository
         uses: actions/checkout@v4
