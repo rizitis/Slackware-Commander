@@ -23,6 +23,71 @@ If you dont need or you dont like some of Slackware-Commander tools then you don
 
 **Note** Scripts are installed in `/usr/local/bin` as it should be btw...
 
+>
+
+---
+## Building Slackware Commander in Docker (Forgejo CI)
+
+### Prerequisites
+
+- A Forgejo account with access to a Slackware runner
+- Fork of this repository
+
+### Important Notes
+
+> **This build workflow is designed exclusively for Slackware-current (x86_64).**
+> It will not work on Slackware 15.0 or any other version.
+
+> **All external dependencies are automatically built from source** using the
+> [Ponce/slackbuilds](https://github.com/Ponce/slackbuilds) repository, which
+> tracks Slackware-current. This means every dependency listed in `scmd.dep`
+> will be compiled inside the Docker container before building `scmd` itself in a magic way ;)
+
+### How to trigger a build
+
+1. Go to your forked repository on Forgejo
+2. Click **Actions** tab
+3. Click **Run workflow**
+4. Fill in the inputs:
+   - `package_name`: `scmd` (default)
+   - `version`: `8.0.0` (default)
+   - `build_deps`: leave as default unless you need extra packages
+   - `upload_artifact`: `true` to download the built `.txz`
+5. Click **Run workflow**
+
+### What happens
+
+The workflow runs inside a Slackware current Docker container
+(`registry.slackware.nl/slackware/slackware-builder:current`) and performs
+the following steps:
+
+1. Installs runtime dependencies (`libuv`, X11, OpenGL, dbus, fontconfig, etc.)
+2. Checks out your repository
+3. Fetches the CI helper (`slk-ci.sh`) from the Slackware forge
+4. Installs build dependencies defined in `build_deps`
+5. Resolves all external dependencies from `scmd.dep` and builds them from
+   source using the [Ponce/slackbuilds](https://github.com/Ponce/slackbuilds)
+   repository
+6. Builds the package using `scmd.SlackBuild`
+7. Verifies the installed version matches the expected version
+8. Uploads the built `.txz` as a workflow artifact (if `upload_artifact` is `true`)
+
+### Downloading the built package
+
+After a successful build:
+
+1. Go to **Actions** → select the completed run
+2. Scroll down to **Artifacts**
+3. Download `scmd-8.0.0-slackware-current-x86_64`
+
+The artifact contains the ready-to-install `scmd-8.0.0-x86_64-1_SC.txz` package.
+
+### Installing
+
+```bash
+installpkg scmd-8.0.0-x86_64-1_SC.txz
+```
+
 - - -
 ## Usage:
 `man scmd` and `cptn -h` will help you.
