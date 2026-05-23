@@ -35,7 +35,7 @@ on:
           dependencies here.
         required: false
         type: string
-        default: "jq gcc-gfortran linuxdoc-tools linuxdoc vala"
+        default: "jq gcc-gfortran linuxdoc-tools linuxdoc vala libglvnd mesa opengl-driver libXext"
 
       slackbuild_dir:
         description: >
@@ -101,6 +101,12 @@ jobs:
           set -a
           source slk-ci.sh
           BUILDDIR="${GITHUB_WORKSPACE}" bash slk_sbo-ci.sh
+
+      - name: Debug GL
+        run: |
+          find /usr -name "libGLX*"
+          find /usr -name "libOpenGL*"
+          ls /usr/lib64/libGL*
 
       - name: Debug Python
         run: |
