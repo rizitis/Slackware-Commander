@@ -106,6 +106,7 @@ jobs:
 
       - name: Debug Python
         run: |
+          python3 -c "import site; print(site.getsitepackages())"
           python3 -c "import hatchling.version; print(hatchling.version.__version__)"
           python3 -c "import trove_classifiers; print(trove_classifiers.__version__)"
 
