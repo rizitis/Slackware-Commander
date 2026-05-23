@@ -8,9 +8,6 @@
 # Triggered manually from the Forgejo UI (Actions → Run workflow).
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
     inputs:
 
