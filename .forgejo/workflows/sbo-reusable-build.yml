@@ -35,7 +35,7 @@ on:
           dependencies here.
         required: false
         type: string
-        default: "jq libuv oniguruma PyQt6 PyQt6_sip qt6 gcc-gfortran glib2 libffi pcre2 freetype linuxdoc-tools linuxdoc vala"
+        default: "jq libuv oniguruma PyQt6 PyQt6_sip qt6 gcc-gfortran glib2 libffi pcre2 freetype linuxdoc-tools linuxdoc vala python3-calver python3-trove-classifiers"
 
       slackbuild_dir:
         description: >
