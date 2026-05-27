@@ -57,16 +57,17 @@ jobs:
     runs-on: slackware
 
     container:
-      image: registry.slackware.nl/slackware/slackware-builder:current
+      image: ghcr.io/rizitis/sb-dev-builder:current-v4
+#registry.slackware.nl/slackware/slackware-builder:current
 
     outputs:
       package_file: ${{ steps.build.outputs.package_file }}
 
     steps:
-      - name: Install runner dep libuv AND all l set (not gentoo here :)
-        run: |
-          slackpkg -batch=on -default_answer=y install libuv
-          slackpkg -batch=on -default_answer=y -checkmd5=off install l
+##      - name: Install runner dep libuv AND all l set (not gentoo here :)
+##        run: |
+##          slackpkg -batch=on -default_answer=y install libuv
+##          slackpkg -batch=on -default_answer=y -checkmd5=off install l
 #          No checkmd5 needed , every day 1-3 packages give wrong md5 and break
 #          echo "PYTHONPATH=/usr/lib/python3.12/site-packages" >> $GITHUB_ENV
 #          echo "PYTHONPATH=/usr/lib/python3.12/site-packages" >> $FORGEJO_ENV
