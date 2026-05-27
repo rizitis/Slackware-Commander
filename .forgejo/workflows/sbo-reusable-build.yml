@@ -35,7 +35,7 @@ on:
           dependencies here.
         required: false
         type: string
-        default: "python-pathspec python-hatchling python-pluggy python-trove-classifiers linuxdoc-tools google-go-lang"
+        default: "python-pathspec python-hatchling python-pluggy python-trove-classifiers linuxdoc-tools"
 
       slackbuild_dir:
         description: >
