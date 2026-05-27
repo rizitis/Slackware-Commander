@@ -57,7 +57,7 @@ jobs:
     runs-on: slackware
 
     container:
-      image: ghcr.io/rizitis/sb-dev-builder:current-v5
+      image: ghcr.io/rizitis/sb-dev-builder:current-v6
 #registry.slackware.nl/slackware/slackware-builder:current
 
     outputs:
