@@ -57,7 +57,7 @@ jobs:
     runs-on: slackware
 
     container:
-      image: ghcr.io/rizitis/sb-dev-builder:current-v4
+      image: ghcr.io/rizitis/sb-dev-builder:current-v5
 #registry.slackware.nl/slackware/slackware-builder:current
 
     outputs:
@@ -99,6 +99,16 @@ jobs:
 #          env | grep -i path
 #          ls /var/run/act/
 #          export in slk_sbo-pkg.sh solved all issues.
+
+      - name: Debug Go
+        run: |
+          which go
+          go version
+          go env GOROOT
+          go env GOPATH
+          go env GOPROXY
+          ls /usr/lib64/go/bin/ 2>/dev/null || echo "google-go-lang NOT installed"
+          ls /usr/bin/go
 
       - name: Calculate SBo build dependencies
         run: |
