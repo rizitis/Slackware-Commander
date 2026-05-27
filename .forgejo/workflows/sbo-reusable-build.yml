@@ -35,7 +35,7 @@ on:
           dependencies here.
         required: false
         type: string
-        default: "jq gcc-gfortran linuxdoc-tools linuxdoc vala libglvnd mesa opengl-driver libXext libX11 fontconfig libxcb libXau libXdmcp dbus"
+        default: "python-pathspec"
 
       slackbuild_dir:
         description: >
