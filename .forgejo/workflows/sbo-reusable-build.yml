@@ -35,7 +35,7 @@ on:
           dependencies here.
         required: false
         type: string
-        default: "python-pathspec"
+        default: "python-pathspec linuxdoc-tools"
 
       slackbuild_dir:
         description: >
