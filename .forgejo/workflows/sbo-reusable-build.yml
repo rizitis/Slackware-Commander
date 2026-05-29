@@ -1,9 +1,6 @@
-# reusable-build.yml
+# sbo-reusable-build.yml
 #
-# Workflow for building a SlackBuild package on the Slackware forge.
-# Store this file in:
-#
-#   slackware/ci-tools/.forgejo/workflows/reusable-build.yml
+# Workflow for building a SBo SlackBuild package on the Slackware forge.
 #
 # Triggered manually from the Forgejo UI (Actions → Run workflow).
 
@@ -35,7 +32,7 @@ on:
           dependencies here.
         required: false
         type: string
-        default: "python-pathspec python-hatchling python-pluggy python-trove-classifiers linuxdoc-tools"
+        default: "linuxdoc-tools"
 
       slackbuild_dir:
         description: >
@@ -57,30 +54,18 @@ jobs:
     runs-on: slackware
 
     container:
-      image: ghcr.io/rizitis/sb-dev-builder:current-v6
+      image: ghcr.io/rizitis/sb-dev-builder:current-v7
 #registry.slackware.nl/slackware/slackware-builder:current
 
     outputs:
       package_file: ${{ steps.build.outputs.package_file }}
 
     steps:
-##      - name: Install runner dep libuv AND all l set (not gentoo here :)
-##        run: |
-##          slackpkg -batch=on -default_answer=y install libuv
-##          slackpkg -batch=on -default_answer=y -checkmd5=off install l
-#          No checkmd5 needed , every day 1-3 packages give wrong md5 and break
-#          echo "PYTHONPATH=/usr/lib/python3.12/site-packages" >> $GITHUB_ENV
-#          echo "PYTHONPATH=/usr/lib/python3.12/site-packages" >> $FORGEJO_ENV
-#          NOT WORKING^^ HAD TO EXPORT IN slk_sbo-pkg.sh :(
-
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Fetch CI helper
+      - name: Uses CI helper PKG=t?z
         run: |
-          curl -sf \
-            https://forge.slackware.nl/slackware/ci-tools/raw/branch/main/slk-ci.sh \
-            -o slk-ci.sh
           chmod +x slk-ci.sh
 
       - name: Install build dependencies
@@ -88,27 +73,6 @@ jobs:
         run: |
           source slk-ci.sh
           slk_install_deps ${{ inputs.build_deps }}
-
-#      - name: Upgrade Go
-#        run: |
-#          set -a
-#          source slk-ci.sh
-#          bash slk_upgrade_go.sh
-#          echo "/usr/lib64/go1.26.3/go/bin" >> $GITHUB_PATH
-#          echo "/usr/lib64/go1.26.3/go/bin" >> $FORGEJO_PATH
-#          env | grep -i path
-#          ls /var/run/act/
-#          export in slk_sbo-pkg.sh solved all issues.
-
-      - name: Debug Go
-        run: |
-          which go
-          go version
-          go env GOROOT
-          go env GOPATH
-          go env GOPROXY
-          ls /usr/lib64/go/bin/ 2>/dev/null || echo "google-go-lang NOT installed"
-          ls /usr/bin/go
 
       - name: Calculate SBo build dependencies
         run: |
@@ -121,23 +85,6 @@ jobs:
           cat /etc/slackware-version
           cat /etc/os-release
           uname -a
-
-      - name: Debug dbus
-        run: |
-          ls -la /usr/lib64/libdbus-1.so*
-#       for some reason dbus eather need reinstall or libdbus-1.so is not linked properly in image
-
-#      - name: Debug GL
-#        run: |
-#          find /usr -name "libGLX*"
-#          find /usr -name "libOpenGL*"
-#          ls /usr/lib64/libGL*
-
-#      - name: Debug Python
-#        run: |
-#          python3 -c "import site; print(site.getsitepackages())"
-#          python3 -c "from hatchling.__about__ import __version__; print(__version__)"
-#          python3 -c "import trove_classifiers; print('trove_classifiers OK')"
 
       - name: Install SBo dependencies
         run: |
