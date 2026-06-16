@@ -1,3 +1,5 @@
+![](./slackware-logo.svg)
+
 Prefferent OS for Slackware-Commander is a full installation of Slackware(64)-Current with preinstalled:
 
 > `PyQt6 , jq  qmake6 gfortran`
