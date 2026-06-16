@@ -32,7 +32,7 @@ on:
           dependencies here.
         required: false
         type: string
-        default: "linuxdoc-tools"
+        default: "linuxdoc-tools liburing"
 
       slackbuild_dir:
         description: >
