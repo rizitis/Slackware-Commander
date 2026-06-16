@@ -85,6 +85,9 @@ jobs:
           cat /etc/slackware-version
           cat /etc/os-release
           uname -a
+          echo "== ldconfig =="; ldconfig -p | grep -i uring || echo "NONE liburing"
+          echo "== files =="; ls -l /usr/lib64/liburing.so* 2>/dev/null || echo "NOT in /usr/lib64"
+          echo "== ldd qmake6 =="; ldd "$(command -v qmake6)" 2>/dev/null | grep -i uring || true
 
       - name: Install SBo dependencies
         run: |
